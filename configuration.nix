@@ -20,7 +20,7 @@
       "${base0D}" # blue
       "${base0E}" # magenta
       "${base0C}" # cyan
-      "${base05}" # base05
+      "${base05}" # base0s
       "${base03}" # base03
       "${base08}" # red
       "${base0B}" # green
@@ -177,7 +177,6 @@
     jdk # java
     impala # wifi tui
     iwd # wifi cli, don't delete!
-    # helix
     bluez
     kitty
     # bottles # run windows programs
@@ -186,6 +185,8 @@
     colord
     xdg-desktop-portal-termfilechooser # make yazi default file chooser
     ueberzugpp
+    wlroots_0_19
+    wlroots_0_18
 
     # GNOME programs
     adwaita-icon-theme

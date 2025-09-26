@@ -25,7 +25,7 @@
     # ./nixvim.nix
     # ./helix.nix
 
-    # ./sway.nix
+    ./sway.nix
     # ./hyprland.nix
     ./niri.nix
 

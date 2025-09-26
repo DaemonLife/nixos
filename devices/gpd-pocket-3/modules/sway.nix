@@ -1,11 +1,17 @@
-{ pkgs, config, lib, ... }: {
-
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   # disable gaps for gpd
   # and gpd output
 
   wayland.windowManager.sway = {
+    extraConfig = ''
+      output * color_profile icc /home/user/nix/test2.icm
+    '';
     config = rec {
-
       gaps = {
         outer = lib.mkForce 0;
         inner = lib.mkForce 0;
@@ -17,9 +23,10 @@
           mode = "1200x1920@60.000Hz";
           scale = "1.6"; # 1920 -> 1200px
           adaptive_sync = "on";
-          render_bit_depth = "10"; # 6, 8, 10
+          # render_bit_depth = "10"; # 6, 8, 10
           position = "0 0"; # main
           transform = "90";
+          # color_profile = "icc ../../../test.icm";
         };
         # TV msk
         "Invalid Vendor Codename - RTK RTK TV 0x01010101" = {
@@ -49,8 +56,6 @@
           output = "DSI-1";
         }
       ];
-
     };
   };
-
 }
