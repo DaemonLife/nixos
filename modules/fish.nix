@@ -41,7 +41,7 @@
           # bash $HOME/nix/scripts/start_niri.sh
           # niri-session
           # exec uwsm start hyprland-uwsm.desktop
-          # exec sway
+          WLR_RENDERER=vulkan exec sway
         end
       end
     '';

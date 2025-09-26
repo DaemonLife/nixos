@@ -10,14 +10,14 @@ in {
   home = {
     username = username;
     homeDirectory = "/home/${username}";
+    sessionPath = ["$HOME/.local/bin"];
     stateVersion = "24.05";
 
-    packages = with pkgs; [
-      # --------------------------------
-      # SOFT FOR DE
-      # --------------------------------
+    # --------------------------------
+    # HOME PKGS
+    # --------------------------------
 
-      # DE and system
+    packages = with pkgs; [
       wl-clipboard
       unzip
       python3
@@ -36,15 +36,23 @@ in {
       tg
       unstable.nchat
       bitwarden-cli
+      qbittorrent # torrent client
+      tor-browser
 
       # Media
+      gimp3-with-plugins
+      helvum # A GTK patchbay for pipewire
+      digikam
+      blender
+      unstable.darktable
       imagemagick
       ffmpegthumbnailer
-      ffmpeg-full
+      ffmpeg_6-full
+      mlt
       pavucontrol # audio gui control
       alsa-utils # audio volume control (?)
       pulsemixer # cli pulse adudio control
-      nomacs-qt6
+      nomacs-qt6 # image viewer
 
       # Theming
       vimix-icon-theme # for icons
@@ -58,10 +66,6 @@ in {
       cantarell-fonts
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
 
-      # --------------------------------
-      # USER SOFT
-      # --------------------------------
-
       # Utils
       cool-retro-term
       bottles
@@ -70,21 +74,7 @@ in {
       wev # key events in wayland
       ansible
 
-      # Media
-      darktable
-      gimp3-with-plugins
-      helvum # A GTK patchbay for pipewire
-      digikam
-      kdePackages.kdenlive
-      vlc
-
-      # Internet
-      qbittorrent # torrent client
-      tor-browser
-      # discord
-
       # Docs
-      # libreoffice
       onlyoffice-desktopeditors
       jrnl
       joplin
@@ -95,22 +85,21 @@ in {
       russ # rss tui reader
       gnome-feeds # gui rss reader
 
-      # Spellcheck for LibreOffice
-      # hunspell
-      # hunspellDicts.ru_RU
-      # hunspellDicts.en_US
-
       # Gaming
       portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
       # dwarf-fortress-packages.dwarf-fortress-full
+
+      # libreoffice
+      # hunspell # spellcheck for LibreOffice
+      # hunspellDicts.ru_RU # spellcheck for LibreOffice
+      # hunspellDicts.en_US # spellcheck for LibreOffice
     ];
-    sessionPath = ["$HOME/.local/bin"];
   };
 
   # --------------------------------
-  # PROGRAMS SETUP
+  # HOME PROGRAMS
   # --------------------------------
 
   programs = {
@@ -147,19 +136,15 @@ in {
 
   dconf = {
     settings = {
-      # disable top right buttons
       "org/gnome/desktop/wm/preferences" = {
-        button-layout = "";
+        button-layout = ""; # disable top right buttons
       };
-
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-and-drag = false;
-        # speed = -0.8;
         natural-scroll = false;
         accel-profile = "adaptive";
       };
       "org/gnome/desktop/peripherals/mouse" = {
-        # speed = -0.3;
         natural-scroll = false;
         accel-profile = "adaptive";
       };
