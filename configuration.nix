@@ -168,16 +168,7 @@
     udiskie # auto disks mount
     nufraw-thumbnailer # RAW preview for thunar
     xdg-desktop-portal-termfilechooser # make yazi default file chooser
-<<<<<<< HEAD
-    ueberzugpp
-    wlroots_0_19
-    wlroots_0_18
-
-    # GNOME programs
-=======
->>>>>>> fa113061395e771f9f7d30fc5924840e32f15c38
     adwaita-icon-theme
-    # darktable
     rocmPackages.clr.icd
 
     protonup-qt

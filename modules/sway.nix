@@ -22,6 +22,7 @@
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste
+    jq
   ];
 
   wayland.windowManager.sway = with config.lib.stylix.colors; {
@@ -46,7 +47,9 @@
       modifier = "Mod4";
       terminal = "${pkgs.kitty}/bin/kitty --single-instance";
       menu = "${pkgs.fuzzel}/bin/fuzzel -l 10";
-      bars = [{command = "waybar";}];
+      bars = [
+        {command = "waybar";}
+      ];
       workspaceAutoBackAndForth = true;
 
       startup = [
@@ -210,8 +213,8 @@
         "PRINT" = "exec bash $HOME/nix/scripts/screenshot.sh output";
 
         # Moving around:
-        "${modifier}+Left" = "focus left";
-        "${modifier}+Right" = "focus right";
+        "${modifier}+Left" = "exec bash $HOME/nix/scripts/sway_focus.sh left";
+        "${modifier}+Right" = "exec bash $HOME/nix/scripts/sway_focus.sh right";
         "${modifier}+Up" = "focus up";
         "${modifier}+Down" = "focus down";
 
