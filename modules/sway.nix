@@ -236,10 +236,12 @@
         "${modifier}+8" = "workspace number 8";
         "${modifier}+9" = "workspace number 9";
         "${modifier}+0" = "workspace number 10";
-        "Alt+Shift+j" = "workspace next";
-        "Alt+Shift+k" = "workspace prev";
-        "Alt+Shift+l" = "workspace next";
-        "Alt+Shift+h" = "workspace prev";
+        "${modifier}+Shift+j" = "workspace next";
+        "${modifier}+Shift+k" = "workspace prev";
+        "${modifier}+Shift+l" = "workspace next";
+        "${modifier}+Shift+h" = "workspace prev";
+        "${modifier}+Tab" = "workspace next";
+        "${modifier}+Shift+Tab" = "workspace prev";
 
         # Move focused container to workspace
         "${modifier}+Ctrl+1" = "move container to workspace number 1";

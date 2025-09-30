@@ -128,18 +128,18 @@
           "clock#date" = {
             format = "{:%d-%b-%y}";
             on-click = "exec gnome-calendar";
-            "tooltip-format" = "<span size='10pt' font='GeistMono Nerd Font Mono'>{calendar}</span>";
+            "tooltip-format" = "<span size='14pt' font='GeistMono Nerd Font Mono'>{calendar}</span>";
             "calendar" = {
               "mode" = "year";
-              "mode-mon-col" = 3;
+              "mode-mon-col" = 4;
               # "weeks-pos"     = "right";
               "on-scroll" = 1;
               "on-click-right" = "mode";
               "format" = {
-                "months" = "<span color='#${base0A}'><b>{}</b></span>";
-                "days" = "<span color='#${base05}'><b>{}</b></span>";
-                "weeks" = "<span color='#${base0C}'><b>W{}</b></span>";
-                "weekdays" = "<span color='#${base0B}'><b>{}</b></span>";
+                "months" = "<span color='#${base0A}'>{}</span>";
+                "days" = "<span color='#${base04}'>{}</span>";
+                "weeks" = "<span color='#${base0C}'>W{}</span>";
+                "weekdays" = "<span color='#${base0B}'>{}</span>";
                 "today" = "<span color='#${base0E}'><b><u>{}</u></b></span>";
               };
             };
@@ -155,8 +155,8 @@
           battery = {
             states = {
               full = 98;
-              good = 90;
-              warning = 35;
+              good = 80;
+              warning = 40;
               critical = 20;
             };
             # interval = 30;
@@ -295,14 +295,18 @@
             /* calendar look */
             tooltip {
               background-color: @dark;
-              border: 2px;
+              border: 4px;
               border-style: solid;
               border-color: @accent;
               font-size: 15px;
+              font-weight: normal;
+              margin: 0px 4px 0px 4px;
             }
 
-          	#network.disconnected { color: @gray;}
-          	#network.disabled { color: @yellow; }
+            /* on but not connect */
+          	#network.disconnected { color: @yellow;}
+            /* off */
+          	#network.disabled { color: @gray; }
 
           	#idle_inhibitor.activated { color: @green; }
           	#idle_inhibitor.deactivated { color: @gray; }
@@ -323,7 +327,7 @@
           	}
           	#battery.warning:not(.charging) { color: @yellow; }
           	#battery.critical:not(.charging) { color: @red; }
-          	@keyframes blink { to { color: @white; } }
+          	@keyframes blink { to { color: @gray; } }
         '';
     };
 }
