@@ -231,7 +231,7 @@
               margin: 0px;
               text-decoration: none;
           	  font-family: "Mononoki Nerd Font Regular";
-              font-size: 16px;
+              font-size: 17px;
               min-height: 0;
               box-shadow: none;
           	}
@@ -240,7 +240,7 @@
             #workspaces button, #window, window#waybar, #tray, #language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock#time, #clock#date { color: @white; }
 
           	/* Default padding for some modules */
-          #tray,	#language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock { padding: 0px 5px 0px 5px; }
+          #tray, #language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock { padding: 0px 8px 0px 8px; }
 
             #custom-sep {
               color: @gray;
@@ -284,13 +284,14 @@
               font-weight: normal;
               color: @dark;
               background-color: @accent;
-              padding: 0px 6px 0px 6px;
+              padding: 0px 10px 0px 10px;
+              margin: 0px 2px 0px 2px;
             }
 
             window#waybar {
               background-color: @dark;
             }
-            #window { padding: 0px 10px 0px 10px; }
+            #window { padding: 0px 10px 0px 6px; }
 
             /* calendar look */
             tooltip {

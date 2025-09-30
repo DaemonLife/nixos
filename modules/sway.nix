@@ -22,6 +22,7 @@
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste
+    jq # json parser for some scripts
   ];
 
   wayland.windowManager.sway = with config.lib.stylix.colors; {
@@ -236,12 +237,12 @@
         "${modifier}+8" = "workspace number 8";
         "${modifier}+9" = "workspace number 9";
         "${modifier}+0" = "workspace number 10";
-        "${modifier}+Shift+j" = "workspace next";
-        "${modifier}+Shift+k" = "workspace prev";
-        "${modifier}+Shift+l" = "workspace next";
-        "${modifier}+Shift+h" = "workspace prev";
-        "${modifier}+Tab" = "workspace next";
-        "${modifier}+Shift+Tab" = "workspace prev";
+        "${modifier}+Shift+j" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
+        "${modifier}+Shift+k" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
+        "${modifier}+Shift+l" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
+        "${modifier}+Shift+h" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
+        # "${modifier}+Tab" = "workspace next";
+        # "${modifier}+Shift+Tab" = "workspace prev";
 
         # Move focused container to workspace
         "${modifier}+Ctrl+1" = "move container to workspace number 1";
