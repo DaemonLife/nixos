@@ -15,7 +15,7 @@
           scale = "1.75"; # 2240 -> 1400
           adaptive_sync = "enable";
           render_bit_depth = "10"; # 6, 8, 10
-          position = "2560 0"; # laptop position for msk
+          position = "2560 380"; # laptop position for msk
           color_profile = "icc /home/user/nix/devices/screens/LEN140WUXGA+_2023-03-29.icm";
         };
         # monitor gg

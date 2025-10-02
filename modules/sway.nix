@@ -106,17 +106,19 @@
           childBorder = "#${base0D}";
           indicator = "#${base0E}";
         };
+        # tabbed windows
         focusedInactive = {
-          text = "#${base05}";
-          background = "#${base00}";
-          border = "#${base01}";
+          text = "#${base00}";
+          background = "#${base0D}";
+          border = "#${base0D}";
           childBorder = "#${base00}";
           indicator = "#${base00}";
         };
+        # tabbed windows
         unfocused = {
-          text = "#${base05}";
+          text = "#${base03}";
           background = "#${base00}";
-          border = "#${base01}";
+          border = "#${base00}";
           childBorder = "#${base00}";
           indicator = "#${base00}";
         };
@@ -169,8 +171,9 @@
         "${modifier}+y" = "exec ${terminal} --hold $HOME/nix/scripts/y.fish";
 
         # broswer
-        "${modifier}+b" = "exec $BROWSER";
-        "${modifier}+Shift+B" = "exec proxychains4 $BROWSER --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
+        # export QT_QPA_PLATFORM=xcb for color fix
+        "${modifier}+b" = "exec export QT_QPA_PLATFORM=xcb && exec $BROWSER";
+        "${modifier}+Shift+B" = "exec export QT_QPA_PLATFORM=xcb && exec proxychains4 $BROWSER --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
         "${modifier}+t" = "exec telegram-desktop"; # telegram
         "F10" = "exec swaylock"; # screen locker
