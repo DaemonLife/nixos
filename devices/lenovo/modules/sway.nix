@@ -21,10 +21,11 @@
         # monitor gg
         "Acer Technologies Acer A231H LQT0W0084320" = {
           mode = "1920x1080@60Hz";
-          scale = "0.8";
+          scale = "0.9";
+          scale_filter = "smart";
           adaptive_sync = "enable";
           render_bit_depth = "8"; # 6, 8, 10
-          position = "3840 0"; # right position (1400+2048?)
+          position = "3840 0";
         };
         # monitor msk
         "Shenzhen KTC Technology Group H27S17 0x00000001" = {

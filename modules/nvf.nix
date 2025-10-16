@@ -46,7 +46,7 @@
       };
 
       ui = {
-        #borders.enable = true;
+        borders.enable = true; # testing
         colorizer.enable = false;
         # fastaction.enable = true;
         #illuminate.enable = true;

@@ -73,6 +73,7 @@ in {
       veracrypt
       cmatrix # matrix in terminal
       wev # key events in wayland
+      nwg-displays # gui for display setup
       ansible
 
       # Docs

@@ -19,6 +19,7 @@
     autotiling-rs
     brightnessctl
     swaybg
+    swayidle
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste
@@ -60,14 +61,7 @@
           command = "bash $HOME/nix/scripts/maze/run.sh '000000' ${base08} ${base09} ${base0A} ${base0B} ${base0C} ${base0D} ${base0E} ${base0F}";
         }
         {
-          command = ''
-            swayidle -w \
-            timeout 600 'brightnessctl -s; brightnessctl set 0%' \
-            timeout 610 'swaymsg "output * dpms off"' \
-            timeout 615 'swaymsg input "type:keyboard xkb_switch_layout 0"; swaylock -f' \
-            resume 'swaymsg "output * dpms on"; brightnessctl -r' \
-            before-sleep 'swaylock -f'
-          '';
+          command = "bash $HOME/nix/scripts/swayidle.sh";
         }
       ];
 
