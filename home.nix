@@ -53,6 +53,7 @@ in {
       alsa-utils # audio volume control (?)
       pulsemixer # cli pulse adudio control
       nomacs-qt6 # image viewer
+      kodi-wayland
 
       # Theming
       vimix-icon-theme # for icons
@@ -91,10 +92,10 @@ in {
       vitetris # tetris cli game
       # dwarf-fortress-packages.dwarf-fortress-full
 
-      # libreoffice
-      # hunspell # spellcheck for LibreOffice
-      # hunspellDicts.ru_RU # spellcheck for LibreOffice
-      # hunspellDicts.en_US # spellcheck for LibreOffice
+      libreoffice
+      hunspell # spellcheck for LibreOffice
+      hunspellDicts.ru_RU # spellcheck for LibreOffice
+      hunspellDicts.en_US # spellcheck for LibreOffice
     ];
   };
 

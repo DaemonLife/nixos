@@ -273,6 +273,48 @@
       settingsFile = "/etc/xray/config.json";
     };
 
+    # samba = {
+    #   enable = true;
+    #   securityType = "user";
+    #   openFirewall = true;
+    #   settings = {
+    #     global = {
+    #       "workgroup" = "WORKGROUP";
+    #       "server string" = "smbnix";
+    #       "netbios name" = "smbnix";
+    #       "security" = "user";
+    #       #"use sendfile" = "yes";
+    #       #"max protocol" = "smb2";
+    #       # note: localhost is the ipv6 localhost ::1
+    #       "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+    #       "hosts deny" = "0.0.0.0/0";
+    #       "guest account" = "nobody";
+    #       "map to guest" = "bad user";
+    #     };
+    #     "public" = {
+    #       "path" = "/mnt/Shares/Public";
+    #       comment = "Public samba share.";
+    #       "browseable" = "yes";
+    #       "read only" = "yes";
+    #       "guest ok" = "yes";
+    #       # "create mask" = "0644";
+    #       # "directory mask" = "0755";
+    #       # "force user" = "user";
+    #       # "force group" = "users";
+    #     };
+    #     "private" = {
+    #       "path" = "/mnt/Shares/Private";
+    #       "browseable" = "yes";
+    #       "read only" = "no";
+    #       "guest ok" = "no";
+    #       "create mask" = "0644";
+    #       "directory mask" = "0777";
+    #       "force user" = "user";
+    #       "force group" = "users";
+    #     };
+    #   };
+    # };
+
     openssh.enable = true;
     flatpak.enable = true;
     gvfs.enable = true; # Mount, trash, and other functionalities
@@ -347,8 +389,9 @@
   # --------------------------------
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    # allowedTCPPorts = [8080];
+    # allowedUDPPorts = [8080];
+  };
 }
