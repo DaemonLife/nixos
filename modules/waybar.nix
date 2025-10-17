@@ -15,9 +15,10 @@
           height = 28;
           modules-left = [
             "${MY_DE}/workspaces"
+          ];
+          modules-center = [
             "${MY_DE}/window"
           ];
-          modules-center = [];
           modules-right = [
             "tray"
             "${MY_DE}/language"
@@ -42,41 +43,41 @@
             on-click = "activate";
             disable-scroll = true;
             format = "{icon}";
-            persistent-workspaces = {
-              # workspace and monitors
-              "1" = [
-                "eDP-1"
-                "DSI-1"
-              ];
-              "2" = [
-                "DP-1"
-                "HDMI-A-1"
-              ];
-              "3" = [
-                "DP-1"
-                "HDMI-A-1"
-              ];
-              "4" = [
-                "DP-1"
-                "HDMI-A-1"
-              ];
-              "5" = [
-                "DP-1"
-                "HDMI-A-1"
-              ];
-            };
-            format-icons = {
-              "1" = 1; # workspace id and icon format
-              "2" = 2;
-              "3" = 3;
-              "4" = 4;
-              "5" = 5;
-              "6" = 6;
-              "7" = 7;
-              "8" = 8;
-              "9" = 9;
-              "10" = 10;
-            };
+            # persistent-workspaces = {
+            #   # workspace and monitors
+            #   "1" = [
+            #     "eDP-1"
+            #     "DSI-1"
+            #   ];
+            #   "2" = [
+            #     "DP-1"
+            #     "HDMI-A-1"
+            #   ];
+            #   "3" = [
+            #     "DP-1"
+            #     "HDMI-A-1"
+            #   ];
+            #   "4" = [
+            #     "DP-1"
+            #     "HDMI-A-1"
+            #   ];
+            #   "5" = [
+            #     "DP-1"
+            #     "HDMI-A-1"
+            #   ];
+            # };
+            # format-icons = {
+            #   "1" = 1; # workspace id and icon format
+            #   "2" = 2;
+            #   "3" = 3;
+            #   "4" = 4;
+            #   "5" = 5;
+            #   "6" = 6;
+            #   "7" = 7;
+            #   "8" = 8;
+            #   "9" = 9;
+            #   "10" = 10;
+            # };
           };
 
           "${MY_DE}/window" = {
@@ -215,7 +216,7 @@
         #css
         ''
           	@define-color dark #${base00};
-          	@define-color gray #${base03};
+          	@define-color gray #${base02};
           	@define-color dark-white #${base04};
           	@define-color white #${base05};
           	@define-color accent #${base0D};
@@ -273,19 +274,18 @@
 
             #workspaces button {
               font-weight: normal;
-              padding: 0px 2px 0px 2px;
+              padding: 0px 6px 0px 6px;
+              margin: 0px 10px 0px 0px;
+              background-color: #${base00};
             }
             #workspaces button.empty {
               font-weight: normal;
-              padding: 0px 2px 0px 2px;
               color: @gray;
             }
             #workspaces button.${focus} {
               font-weight: normal;
               color: @dark;
               background-color: @accent;
-              padding: 0px 10px 0px 10px;
-              margin: 0px 2px 0px 2px;
             }
 
             window#waybar {

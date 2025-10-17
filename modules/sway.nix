@@ -13,6 +13,7 @@
     ./fuzzel.nix
     ./swaylock.nix
     ./swayidle.nix
+    ./swaywsr.nix
   ];
 
   home.packages = with pkgs; [
@@ -20,6 +21,7 @@
     brightnessctl
     swaybg
     swayidle
+    swaywsr
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste
@@ -35,7 +37,7 @@
 
     extraConfig = ''
       focus_on_window_activation focus
-      titlebar_border_thickness 4
+      titlebar_border_thickness 3
     '';
 
     config = rec {
@@ -58,22 +60,26 @@
         {command = "${pkgs.udiskie}/bin/udiskie -a";}
         {command = "wl-paste -t text --watch clipman store --no-persist";}
         {
-          command = "bash $HOME/nix/scripts/maze/run.sh '000000' ${base08} ${base09} ${base0A} ${base0B} ${base0C} ${base0D} ${base0E} ${base0F}";
+          command = "bash $HOME/nix/scripts/swayidle.sh";
         }
         {
-          command = "bash $HOME/nix/scripts/swayidle.sh";
+          command = "pkill swaywsr; sleep 1; ${pkgs.swaywsr}/bin/swaywsr -nr -c $HOME/.config/swaywsr/config.toml";
+          always = true;
         }
       ];
 
       gaps = {
         outer = 2;
         inner = 5;
+        # outer = 0;
+        # inner = 0;
         smartGaps = true;
         smartBorders = "on";
       };
 
       window = {
-        border = lib.mkForce 4;
+        border = lib.mkForce 3;
+        # hideEdgeBorders = "--i3 smart";
         titlebar = false;
         commands = [
           {
@@ -95,38 +101,36 @@
       colors = lib.mkForce {
         focused = {
           text = "#${base05}";
-          background = "#${base00}";
-          border = "#${base0D}";
+          background = "#${base0D}"; # tab header on creation
+          border = "#${base0D}"; # tab header on creation
           childBorder = "#${base0D}";
-          indicator = "#${base0E}";
+          indicator = "#${base09}";
         };
-        # tabbed windows
         focusedInactive = {
           text = "#${base00}";
-          background = "#${base0D}";
-          border = "#${base0D}";
+          background = "#${base01}"; # tab header
+          border = "#${base01}"; # tab header
           childBorder = "#${base00}";
-          indicator = "#${base00}";
+          indicator = "#${base01}";
         };
-        # tabbed windows
         unfocused = {
           text = "#${base03}";
-          background = "#${base00}";
-          border = "#${base00}";
-          childBorder = "#${base00}";
-          indicator = "#${base00}";
+          background = "#${base00}"; # tab header
+          border = "#${base00}"; # tab header
+          childBorder = "#${base01}";
+          indicator = "#${base01}";
         };
         urgent = {
           text = "#${base05}";
-          background = "#${base00}";
+          background = "#${base01}";
           border = "#${base01}";
-          childBorder = "#${base00}";
-          indicator = "#${base00}";
+          childBorder = "#${base01}";
+          indicator = "#${base01}";
         };
         placeholder = {
           text = "#${base05}";
           background = "#${base00}";
-          border = "#${base01}";
+          border = "#${base00}";
           childBorder = "#${base00}";
           indicator = "#${base00}";
         };

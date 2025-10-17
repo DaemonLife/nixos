@@ -161,7 +161,6 @@
     clinfo # opencl info
     mesa # video driver
     jdk # java
-    impala # wifi tui
     iwd # wifi cli, don't delete!
     bluez
     kitty
@@ -169,11 +168,11 @@
     nufraw-thumbnailer # RAW preview for thunar
     xdg-desktop-portal-termfilechooser # make yazi default file chooser
     adwaita-icon-theme
-    # darktable
     rocmPackages.clr.icd
 
-    protonup-qt
-    # vulkan-validation-layers
+    # fonts
+    font-awesome
+    cantarell-fonts
   ];
 
   # --------------------------------

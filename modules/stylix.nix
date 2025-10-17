@@ -1,12 +1,11 @@
-{ pkgs, ... }:
-{
-
+{pkgs, ...}: {
   stylix = {
     enable = true;
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/embers.yaml";
 
-    image = ../images/Saints_3840x2160.jpg;
+    image = ../images/img6_dark.jpg;
 
     # override = {
     # author = "DaemonLife";
