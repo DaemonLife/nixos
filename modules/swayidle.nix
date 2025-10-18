@@ -1,4 +1,5 @@
-{...}: {
+{pkgs, ...}: {
+  home.packages = with pkgs; [swayidle];
   services.swayidle = {
     enable = true;
     #   systemdTarget = "hyprland-session.target";

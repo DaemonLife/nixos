@@ -1,4 +1,8 @@
 {
+  config,
+  pkgs,
+  ...
+}: {
   programs.nvf = {
     enable = true;
     defaultEditor = true;
@@ -32,18 +36,11 @@
         };
       };
 
-      # comments.comment-nvim = {
-      #   enable = true;
-      #   mappings = {
-      #     toggleCurrentLine = "gc";
-      #     toggleSelectedLine = "gc";
-      #   };
-      # };
-
       visuals.indent-blankline = {
         enable = true;
         setupOpts.indent.char = "┆";
       };
+      visuals.nvim-scrollbar.enable = true;
 
       ui = {
         borders.enable = true; # testing
@@ -53,14 +50,11 @@
         smartcolumn.enable = false;
       };
 
-      # formatter.conform-nvim.enable = true;
-
       diagnostics = {
         enable = true;
         nvim-lint.enable = true;
       };
 
-      # git.enable = true;
       autopairs.nvim-autopairs.enable = true;
       notify.nvim-notify.enable = true;
 
@@ -72,11 +66,18 @@
       mini.comment.enable = true;
 
       utility = {
-        multicursors.enable = true;
+        # multicursors.enable = true;
         nvim-biscuits.enable = true;
         nvim-biscuits.setupOpts = {
           cursor_line_only = true;
         };
+      };
+
+      extraPlugins = with pkgs.vimPlugins; {
+        # multicursors-nvim = {
+        #   package = multicursors-nvim;
+        #   setup = "require('multicursors-nvim').setup {}";
+        # };
       };
 
       keymaps = [

@@ -1,28 +1,31 @@
-{lib, ...}: let
-  config = ''
-    [icons]
-    # font awesome
-    "librewolf" = ""
-    Thunderbird = ""
-    # smile emoji
-    MyNiceProgram = "😛"
+{
+  lib,
+  pkgs,
+  ...
+}: {
+  home.packages = with pkgs; [swaywsr];
 
-    [aliases]
-    "Org.gnome.Nautilus" = "Nautilus"
-    "kitty" = " "
-    "org.telegram.desktop" = " "
+  home.activation.swaywsr_config = let
+    config = ''
+      [icons]
 
-    [general]
-    seperator = ">"
-    ignore-char = "#"
+      [aliases]
+      "Org.gnome.Nautilus" = "Nautilus"
+      "kitty" = " "
+      "org.telegram.desktop" = " "
+      "librewolf" = " "
 
-    [options]
-    no-names = true
-    remove-duplicates = true
-  '';
-in {
-  home.activation.swaywsr_config = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    run mkdir -p $HOME/.config/swaywsr/; \
-      echo '${config}' > $HOME/.config/swaywsr/config.toml;
-  '';
+      [general]
+      separator = " | "
+      ignore-char = "#"
+
+      [options]
+      no-names = true
+      remove-duplicates = true
+    '';
+  in
+    lib.hm.dag.entryAfter ["writeBoundary"] ''
+      mkdir -p "$HOME/.config/swaywsr"
+      echo '${config}' > "$HOME/.config/swaywsr/config.toml"
+    '';
 }

@@ -20,8 +20,6 @@
     autotiling-rs
     brightnessctl
     swaybg
-    swayidle
-    swaywsr
     grim # screenshot functionality
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste
@@ -59,11 +57,9 @@
         {command = "${pkgs.mako}/bin/mako";}
         {command = "${pkgs.udiskie}/bin/udiskie -a";}
         {command = "wl-paste -t text --watch clipman store --no-persist";}
+        {command = "exec bash $HOME/nix/scripts/swayidle.sh";}
         {
-          command = "bash $HOME/nix/scripts/swayidle.sh";
-        }
-        {
-          command = "pkill swaywsr; sleep 1; ${pkgs.swaywsr}/bin/swaywsr -nr -c $HOME/.config/swaywsr/config.toml";
+          command = "exec_always pgrep -x swaywsr > /dev/null && pkill -x swaywsr; exec ${pkgs.swaywsr}/bin/swaywsr -nr";
           always = true;
         }
       ];
@@ -78,7 +74,7 @@
       };
 
       window = {
-        border = lib.mkForce 3;
+        border = lib.mkForce 4;
         # hideEdgeBorders = "--i3 smart";
         titlebar = false;
         commands = [
