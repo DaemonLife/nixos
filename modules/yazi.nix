@@ -1,14 +1,23 @@
 # Not all is declarative! You need install and sometimes update plugins. Check 'ya --help' for details, 'ya -l' for list plugins.
-
 # Installation:
-# ya pkg add boydaihungst/file-extra-metadata
-# ya pkg add KKV9/compress
 # ya pkg add atareao/convert
-
-{ pkgs, config, lib, ... }: {
-  home.packages = with pkgs; [ xdragon ];
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
+  home.packages = with pkgs; [
+    dragon-drop
+    bat
+    eza
+    glow
+    ouch
+    # trash-cli
+  ];
 
   programs.yazi = with config.lib.stylix.colors; {
+    package = pkgs.unstable.yazi;
     enable = true;
     enableFishIntegration = true;
 
@@ -17,64 +26,114 @@
       	sync_yanked = true,
       }
       require("git"):setup()
+      require("recycle-bin"):setup()
     '';
 
-    plugins = with pkgs; {
-      mount = yaziPlugins.mount;
-      smart-enter = yaziPlugins.smart-enter;
-      git = yaziPlugins.git;
-      mime-ext = yaziPlugins.mime-ext;
+    plugins = with pkgs.yaziPlugins; {
+      # name = nix_pkg_name
+
+      mount = mount; # mount control
+      # Key Action
+      # q   Quit the plugin
+      # k	Move up
+      # j   Move down
+      # l   Enter the mount point
+      # m   Mount the partition
+      # u   Unmount the partition
+      # e   Eject the disk
+
+      smart-enter = smart-enter; # enter to directories
+      smart-filter = smart-filter; # cool search+filter
+      git = git; # files git status
+      piper = piper; # preview with shell commands
+      relative-motions = relative-motions; # vim keys
+      ouch = ouch; # archive preview and compress
+      recycle-bin = recycle-bin; # system trash bin support
+
+      # mime-ext = mime-ext; # fast mime-type by file extancions
     };
 
     settings = {
       floating_window_scaling_factor = 0.5;
       plugin = {
-        prepend_preloaders = [
-          # ARW support preview
-          # {
-          #   name = "*.ARW";
-          #   run = "magick";
-          # }
-        ];
-
         prepend_fetchers = [
-          # plugin mime-ext
-          {
-            id = "mime";
-            name = "*";
-            run = "mime-ext";
-            prio = "high";
-          }
-          # plugin git
+          # --- plugin mime-ext ---
+          # {
+          #   id = "mime";
+          #   name = "*";
+          #   run = "mime-ext";
+          #   prio = "high";
+          # }
+          # --- plugin git ---
           {
             id = "git";
             name = "*";
             run = "git";
           }
-          # plugin git
           {
             id = "git";
             name = "*/";
             run = "git";
           }
         ];
+
         append_previewers = [
-          # plugin extra metadata
+          # --- Ouch archive previewer ---
           {
-            name = "*";
-            run = "file-extra-metadata";
+            mime = "application/*zip";
+            run = "ouch";
           }
-          # ARW support
-          # {
-          #   name = "*.ARW";
-          #   run = "magick";
-          # }
-        ];
-        spotters = [
-          # plugin extra metadata
           {
-            name = "*";
-            run = "file-extra-metadata";
+            mime = "application/x-tar";
+            run = "ouch";
+          }
+          {
+            mime = "application/x-bzip2";
+            run = "ouch";
+          }
+          {
+            mime = "application/x-7z-compressed";
+            run = "ouch";
+          }
+          {
+            mime = "application/x-rar";
+            run = "ouch";
+          }
+          {
+            mime = "application/vnd.rar";
+            run = "ouch";
+          }
+          {
+            mime = "application/x-xz";
+            run = "ouch";
+          }
+          {
+            mime = "application/xz";
+            run = "ouch";
+          }
+          {
+            mime = "application/x-zstd";
+            run = "ouch";
+          }
+          {
+            mime = "application/zstd";
+            run = "ouch";
+          }
+          {
+            mime = "application/java-archive";
+            run = "ouch";
+          }
+          {
+            name = "*.csv";
+            run = "piper -- bat -p --color=always '$1'";
+          }
+          {
+            name = "*.md";
+            run = ''piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"'';
+          }
+          {
+            name = "*/";
+            run = ''piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'';
           }
         ];
       };
@@ -84,11 +143,6 @@
         image_quality = 70;
         max_width = 800;
         max_height = 800;
-      };
-
-      tasks = {
-        image_alloc = 1536870912; # ARW support
-        image_bound = [ 10000 10000 ]; # no limit for images preview
       };
 
       mgr = {
@@ -166,7 +220,7 @@
       open.append_rules = [
         {
           mime = "image/*";
-          use = [ "image" ];
+          use = ["image"];
         }
         {
           name = "*.ARW";
@@ -174,7 +228,7 @@
         }
         {
           mime = "video/*";
-          use = [ "video" ];
+          use = ["video"];
         }
         {
           name = "*.torrent";
@@ -185,11 +239,11 @@
         }
         {
           mime = "application/json";
-          use = [ "edit" ];
+          use = ["edit"];
         }
         {
           mime = "";
-          use = [ "edit" ];
+          use = ["edit"];
         }
         {
           mime = "text/html";
@@ -202,10 +256,9 @@
         }
         {
           mime = "*";
-          use = [ "edit" ];
+          use = ["edit"];
         }
       ];
-
     }; # settings end
 
     theme = lib.mkForce {
@@ -264,7 +317,6 @@
         #   bg = "#${base0A}";
         #   fg = "#${base0A}";
         # };
-
       };
 
       mode = {
@@ -309,7 +361,6 @@
           bg = "#${base01}";
         };
       };
-
     };
 
     keymap = {
@@ -319,7 +370,7 @@
           on = "<C-y>";
           run = [
             ''
-              shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' 
+              shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
             ''
           ];
         }
@@ -327,7 +378,7 @@
           on = "<C-н>";
           run = [
             ''
-              shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' 
+              shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
             ''
           ];
         }
@@ -335,20 +386,14 @@
         {
           on = "<C-g>";
           run = ''
-            shell --interactive '${pkgs.xdragon}/bin/dragon -x -i -T "$1"'
+            shell --interactive '${pkgs.dragon-drop}/bin/dragon-drop -x -i -T "$1"'
           '';
         }
         {
           on = "<C-п>";
           run = ''
-            shell --interactive '${pkgs.xdragon}/bin/dragon -x -i -T "$1"'
+            shell --interactive '${pkgs.dragon-drop}/bin/dragon-drop -x -i -T "$1"'
           '';
-        }
-        # plugin file-extra-metadata
-        {
-          on = "<Tab>";
-          run = "spot";
-          desc = "Spot hovered file";
         }
         # plugin mount
         {
@@ -372,40 +417,54 @@
           run = "plugin smart-enter";
           desc = "Enter the child directory, or open the file";
         }
+        # plugin smart filter
+        {
+          on = "/";
+          run = "plugin smart-filter";
+          desc = "Smart filter";
+        }
         # plugin compress
         {
-          on = [ "c" "a" "a" ];
-          run = "plugin compress";
-          desc = "Archive selected files";
+          on = ["C"];
+          run = "plugin ouch";
+          desc = "Compress with ouch";
+        }
+
+        # plugin recycle-bin
+        {
+          on = ["b" "o"];
+          run = "plugin recycle-bin -- open";
+          desc = "Open trash";
         }
         {
-          on = [ "c" "a" "p" ];
-          run = "plugin compress -p";
-          desc = "Archive (password)";
+          on = ["b" "e"];
+          run = "plugin recycle-bin -- empty";
+          desc = "Empty trash";
         }
         {
-          on = [ "c" "a" "h" ];
-          run = "plugin compress -ph";
-          desc = "Archive (password+header)";
+          on = ["b" "D"];
+          run = "plugin recycle-bin -- emptyDays";
+          desc = "Empty trash by [DAYS]";
         }
         {
-          on = [ "c" "a" "l" ];
-          run = "plugin compress -l";
-          desc = "Archive (compression level)";
+          on = ["b" "d"];
+          run = "plugin recycle-bin -- delete";
+          desc = "Remove completely";
         }
         {
-          on = [ "c" "a" "u" ];
-          run = "plugin compress -phl";
-          desc = "Archive (password+header+level)";
+          on = ["b" "r"];
+          run = "plugin recycle-bin -- restore";
+          desc = "Restore";
         }
+
         # plugin convert imgs
         {
-          on = [ "c" "p" ];
+          on = ["c" "p"];
           run = "plugin convert -- --extension='png'";
           desc = "Convert to PNG";
         }
         {
-          on = [ "c" "j" ];
+          on = ["c" "j"];
           run = "plugin convert -- --extension='jpg'";
           desc = "Convert to JPG";
         }
@@ -481,10 +540,17 @@
           run = "remove --permanently";
           desc = "ru: delete";
         }
-        { on = "е"; run = "tab_create --current"; desc = "Create a new tab with CWD"; }
-        { on = "ц"; run = "tasks:show"; desc = "Show task manager"; }
+        {
+          on = "е";
+          run = "tab_create --current";
+          desc = "Create a new tab with CWD";
+        }
+        {
+          on = "ц";
+          run = "tasks:show";
+          desc = "Show task manager";
+        }
       ];
     };
-
   };
 }

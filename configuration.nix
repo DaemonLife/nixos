@@ -169,6 +169,7 @@
     xdg-desktop-portal-termfilechooser # make yazi default file chooser
     adwaita-icon-theme
     rocmPackages.clr.icd
+    trash-cli
 
     # fonts
     font-awesome
