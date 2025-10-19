@@ -13,7 +13,10 @@
     eza
     glow
     ouch
-    # trash-cli
+    mediainfo
+    imagemagick
+    trash-cli
+    ffmpeg-full
   ];
 
   programs.yazi = with config.lib.stylix.colors; {
@@ -49,6 +52,7 @@
       relative-motions = relative-motions; # vim keys
       ouch = ouch; # archive preview and compress
       recycle-bin = recycle-bin; # system trash bin support
+      mediainfo = mediainfo;
 
       # mime-ext = mime-ext; # fast mime-type by file extancions
     };
@@ -76,7 +80,37 @@
             run = "git";
           }
         ];
+        # --- plugin mediainfo ---
+        prepend_preloaders = [
+          {
+            mime = "{audio,video,image}/*";
+            run = "mediainfo";
+          }
+          {
+            mime = "application/subrip";
+            run = "mediainfo";
+          }
+          {
+            mime = "application/postscript";
+            run = "mediainfo";
+          }
+        ];
 
+        prepend_previewers = [
+          # --- plugin mediainfo ---
+          {
+            mime = "{audio,video,image}/*";
+            run = "mediainfo";
+          }
+          {
+            mime = "application/subrip";
+            run = "mediainfo";
+          }
+          {
+            mime = "application/postscript";
+            run = "mediainfo";
+          }
+        ];
         append_previewers = [
           # --- Ouch archive previewer ---
           {
@@ -136,6 +170,10 @@
             run = ''piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'';
           }
         ];
+      };
+
+      tasks = {
+        image_alloc = 1073741824; # = 1024*1024*1024 = 1024MB
       };
 
       preview = {

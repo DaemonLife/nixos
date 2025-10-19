@@ -47,7 +47,6 @@ in {
       unstable.darktable
       imagemagick
       ffmpegthumbnailer
-      ffmpeg_6-full
       mlt
       pavucontrol # audio gui control
       alsa-utils # audio volume control (?)
