@@ -21,7 +21,7 @@
     ./nchat.nix
     ./nomacs.nix
 
-    ./nvf.nix
+    # ./nvf.nix # nvf like HM module (don't use like that)
     # ./nixvim.nix
     # ./helix.nix
 

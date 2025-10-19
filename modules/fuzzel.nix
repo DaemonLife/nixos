@@ -1,16 +1,18 @@
-{ config, lib, ... }: {
-
+{
+  config,
+  lib,
+  ...
+}: {
   programs.fuzzel = with config.lib.stylix.colors; {
     enable = true;
     settings = {
       main = {
-        # font = lib.mkForce "Jetbrains Mono:weight=regular:size=16";
         # dpi-aware = "auto";
         icons-enabled = "no";
         show-actions = "no";
-        horizontal-pad = 35;
-        vertical-pad = 25;
-        exit-on-keyboard-focus-loss = "no";
+        horizontal-pad = 25;
+        vertical-pad = 35;
+        exit-on-keyboard-focus-loss = "yes";
       };
 
       colors = {
@@ -23,9 +25,8 @@
         # border = "${base0D}ff";
       };
 
-      border.width = 4;
+      border.width = 6; # like sway's border * 1.5
       border.radius = 0;
     };
   };
-
 }

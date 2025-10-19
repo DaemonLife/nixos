@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+
+# For Sway WM
 swayidle -w \
   timeout 600 'sudo brightnessctl -s; sudo brightnessctl set 0%' resume 'sudo brightnessctl -r' \
   timeout 610 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \

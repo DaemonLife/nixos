@@ -29,6 +29,8 @@ in {
       fzy
       dua # disk usage TUI tool. Run: dua i
 
+      unstable.prettier
+
       # Network
       overskride # bluetooth gui
       bluetui # bluetooth tui

@@ -8,7 +8,10 @@
   # SYSTEM THEME
   # --------------------------------
 
-  imports = [./modules/stylix.nix];
+  imports = [
+    ./modules/stylix.nix
+    ./modules/nvf.nix # nvf like NixOS module (recomended)
+  ];
 
   # TTYI colors
   console = with config.lib.stylix.colors; {

@@ -6,6 +6,7 @@
   programs.nvf = {
     enable = true;
     defaultEditor = true;
+    # enableManpages = true; # man 5 nvf. ERROR with old pkg prettier/prettierd!
 
     settings.vim = {
       options = {
@@ -73,11 +74,19 @@
         };
       };
 
-      extraPlugins = with pkgs.vimPlugins; {
-        # multicursors-nvim = {
-        #   package = multicursors-nvim;
-        #   setup = "require('multicursors-nvim').setup {}";
-        # };
+      lazy.plugins = {
+        "zen-mode.nvim" = {
+          package = pkgs.vimPlugins.zen-mode-nvim;
+          setupModule = "zen-mode";
+          cmd = ["ZenMode"];
+          lazy = true;
+          setupOpts = {
+            window = {
+              backdrop = 1; # disable shadow
+              width = 80; # max line lenght
+            };
+          };
+        };
       };
 
       keymaps = [

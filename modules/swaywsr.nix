@@ -8,12 +8,12 @@
   home.activation.swaywsr_config = let
     config = ''
       [icons]
+      "kitty" = ""
+      "org.telegram.desktop" = ""
+      "librewolf" = ""
 
       [aliases]
       "Org.gnome.Nautilus" = "Nautilus"
-      "kitty" = " "
-      "org.telegram.desktop" = " "
-      "librewolf" = " "
 
       [general]
       separator = " | "

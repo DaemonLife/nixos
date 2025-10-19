@@ -37,6 +37,7 @@
       inherit system;
       modules = builtins.concatLists [
         [
+          nvf.nixosModules.default # nvf with flake and NixOS module (recomended)
           ./configuration.nix # main config
           ./devices/${device}/configuration.nix # device config
           stylix.nixosModules.stylix
@@ -45,7 +46,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.user.imports = [
-              nvf.homeManagerModules.default
+              # nvf.homeManagerModules.default # nvf with flake and HM module
               ./home.nix # main home config
               ./devices/${device}/home.nix # device home config
             ];

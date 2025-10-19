@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# For Sway WM
+
 DIRECTION="$1"
 
 if [ -z "$DIRECTION" ]; then

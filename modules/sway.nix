@@ -47,7 +47,7 @@
 
       modifier = "Mod4";
       terminal = "${pkgs.kitty}/bin/kitty --single-instance";
-      menu = "${pkgs.fuzzel}/bin/fuzzel -l 10";
+      menu = "${pkgs.fuzzel}/bin/fuzzel -l 14";
       bars = [{command = "waybar";}];
       workspaceAutoBackAndForth = true;
 
@@ -170,7 +170,7 @@
         "${modifier}+Shift+B" = "exec export QT_QPA_PLATFORM=xcb && exec proxychains4 $BROWSER --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
         "${modifier}+t" = "exec telegram-desktop"; # telegram
-        "F10" = "exec swaylock"; # screen locker
+        "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker
 
         # ---------------
         # Window control
