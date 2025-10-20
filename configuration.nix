@@ -174,8 +174,8 @@
     rocmPackages.clr.icd
 
     # fonts
-    font-awesome
-    cantarell-fonts
+    # font-awesome
+    # cantarell-fonts
   ];
 
   # --------------------------------

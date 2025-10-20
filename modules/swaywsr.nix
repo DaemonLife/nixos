@@ -3,17 +3,23 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [swaywsr];
+  home.packages = with pkgs; [
+    swaywsr
+    # font-awesome
+  ];
 
   home.activation.swaywsr_config = let
     config = ''
       [icons]
-      "kitty" = ""
-      "org.telegram.desktop" = ""
-      "librewolf" = ""
 
       [aliases]
-      "Org.gnome.Nautilus" = "Nautilus"
+      "org.telegram.desktop" = "telegram"
+      "librewolf" = "libwolf"
+      "Org.gnome.Nautilus" = "nautilus"
+      "kitty" = ">_"
+      "qutebrowser" = "qb"
+      "org.qbittorrent.qBittorrent" = "torrent"
+      "vi" = "vi"
 
       [general]
       separator = " | "

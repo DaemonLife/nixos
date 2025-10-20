@@ -65,10 +65,10 @@
       ];
 
       gaps = {
-        outer = 2;
-        inner = 5;
-        # outer = 0;
-        # inner = 0;
+        # outer = 2;
+        # inner = 5;
+        outer = 0;
+        inner = 0;
         smartGaps = true;
         smartBorders = "on";
       };
@@ -106,7 +106,7 @@
           text = "#${base00}";
           background = "#${base01}"; # tab header
           border = "#${base01}"; # tab header
-          childBorder = "#${base00}";
+          childBorder = "#${base01}";
           indicator = "#${base01}";
         };
         unfocused = {

@@ -37,22 +37,24 @@
     # base0F = "c38cd2"; # bright cyan # no. fixed dumb everforest color
     # };
 
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 26;
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 26;
+    };
 
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.geist-mono;
-        name = "GeistMono Nerd Font Mono";
+        package = pkgs.nerd-fonts.terminess-ttf;
+        name = "Terminess Nerd Font Mono";
       };
       sansSerif = {
-        # package = pkgs.nerd-fonts.mononoki;
-        name = "Cantarell Regular";
+        package = pkgs.nerd-fonts.terminess-ttf;
+        name = "Terminess Nerd Font Mono";
       };
       serif = {
-        # package = pkgs.nerd-fonts.mononoki;
-        name = "Cantarell Regular";
+        package = pkgs.nerd-fonts.terminess-ttf;
+        name = "Terminess Nerd Font Mono";
       };
       emoji = {
         package = pkgs.noto-fonts-emoji;
@@ -60,9 +62,9 @@
       };
       sizes = {
         applications = 22;
-        terminal = 20;
-        desktop = 20;
-        popups = 18;
+        popups = 24;
+        terminal = 22;
+        desktop = 22;
       };
     };
 

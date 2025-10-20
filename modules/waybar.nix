@@ -129,7 +129,7 @@
           "clock#date" = {
             format = "{:%d-%b-%y}";
             on-click = "exec gnome-calendar";
-            "tooltip-format" = "<span size='14pt' font='GeistMono Nerd Font Mono'>{calendar}</span>";
+            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.terminal - 2)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
             "calendar" = {
               "mode" = "year";
               "mode-mon-col" = 4;
@@ -231,8 +231,8 @@
               border-radius: 0;
               margin: 0px;
               text-decoration: none;
-          	  font-family: "Mononoki Nerd Font Regular";
-              font-size: 17px;
+          	  font-family: "${config.stylix.fonts.monospace.name}";
+              font-size: ${toString config.stylix.fonts.sizes.terminal}px;
               min-height: 0;
               box-shadow: none;
           	}
