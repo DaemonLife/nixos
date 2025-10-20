@@ -17,10 +17,11 @@
             "${MY_DE}/workspaces"
           ];
           modules-center = [
-            "${MY_DE}/window"
+            # "${MY_DE}/window"
           ];
           modules-right = [
             "tray"
+            "custom/sep"
             "${MY_DE}/language"
             "custom/sep"
             "network"
@@ -87,7 +88,7 @@
             rewrite = {};
           };
 
-          tray.spacing = 10;
+          tray.spacing = 12;
 
           # Modules
           idle_inhibitor = {
@@ -96,6 +97,7 @@
               activated = "idle";
               deactivated = "idle";
             };
+            tooltip = false;
           };
 
           "custom/sep" = {
@@ -110,15 +112,16 @@
               enabled = "bt";
               disabled = "bt";
             };
-            tooltip-format = "{}";
             on-click = "bluetooth on";
             on-click-right = "bluetooth off";
+            tooltip = false;
           };
 
-          "hyprland/language" = {
+          "${MY_DE}/language" = {
             format = "{}";
             format-en = "us";
             format-ru = "ru";
+            tooltip = false;
           };
 
           "clock#time" = {
@@ -176,6 +179,7 @@
             on-click = ''wifi on && $TERMINAL --hold sh -c "nmcli dev wifi rescan && nmtui"'';
             on-click-right = "wifi off";
             # interval = 2;
+            tooltip = false;
           };
 
           pulseaudio = {

@@ -399,6 +399,43 @@
           bg = "#${base01}";
         };
       };
+
+      icon = {
+        prepend_dirs = [
+          {
+            name = "nix";
+            text = "✼";
+          }
+          {
+            name = "Music";
+            text = "♫";
+          }
+          {
+            name = "Downloads";
+            text = "🢳";
+          }
+          {
+            name = "Documents";
+            text = "🗋";
+          }
+          {
+            name = "Videos";
+            text = "⏯";
+          }
+          {
+            name = "Pictures";
+            text = "";
+          }
+          {
+            name = "home";
+            text = "⌂";
+          }
+          {
+            name = "Public";
+            text = "⌾";
+          }
+        ];
+      };
     };
 
     keymap = {
@@ -457,7 +494,7 @@
         }
         # plugin smart filter
         {
-          on = "/";
+          on = "?";
           run = "plugin smart-filter";
           desc = "Smart filter";
         }

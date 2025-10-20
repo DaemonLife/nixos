@@ -45,16 +45,18 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.terminess-ttf;
-        name = "Terminess Nerd Font Mono";
+        # package = pkgs.nerd-fonts.terminess-ttf;
+        # name = "Terminess Nerd Font Mono";
+        package = pkgs.fairfax;
+        name = "Fairfax";
       };
       sansSerif = {
-        package = pkgs.nerd-fonts.terminess-ttf;
-        name = "Terminess Nerd Font Mono";
+        package = pkgs.fairfax;
+        name = "Fairfax";
       };
       serif = {
-        package = pkgs.nerd-fonts.terminess-ttf;
-        name = "Terminess Nerd Font Mono";
+        package = pkgs.fairfax;
+        name = "Fairfax";
       };
       emoji = {
         package = pkgs.noto-fonts-emoji;
