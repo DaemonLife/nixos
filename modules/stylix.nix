@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   stylix = {
     enable = true;
 
@@ -45,25 +49,20 @@
 
     fonts = {
       monospace = {
-        # package = pkgs.nerd-fonts.terminess-ttf;
-        # name = "Terminess Nerd Font Mono";
-        package = pkgs.fairfax;
-        name = "Fairfax";
+        # package = pkgs.nerd-fonts.iosevka;
+        # name = "Iosevka Nerd Font";
+        # package = pkgs.spleen;
+        # name = "Spleen 6x12";
+        name = "Basis33";
       };
-      sansSerif = {
-        package = pkgs.fairfax;
-        name = "Fairfax";
-      };
-      serif = {
-        package = pkgs.fairfax;
-        name = "Fairfax";
-      };
+      sansSerif = config.stylix.fonts.monospace;
+      serif = config.stylix.fonts.monospace;
       emoji = {
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
       sizes = {
-        applications = 22;
+        applications = 24;
         popups = 24;
         terminal = 22;
         desktop = 22;

@@ -13,6 +13,8 @@
     ./modules/nvf.nix # nvf like NixOS module (recomended)
   ];
 
+  stylix.targets.grub.enable = false;
+
   # TTYI colors
   console = with config.lib.stylix.colors; {
     colors = lib.mkForce [

@@ -12,7 +12,7 @@
         mainBar = {
           layer = "top";
           position = "top";
-          height = 28;
+          height = 37;
           modules-left = [
             "${MY_DE}/workspaces"
           ];
@@ -21,21 +21,14 @@
           ];
           modules-right = [
             "tray"
-            "custom/sep"
             "${MY_DE}/language"
-            "custom/sep"
             "network"
-            "custom/sep"
             "bluetooth"
-            "custom/sep"
             "idle_inhibitor"
-            "custom/sep"
             "battery"
-            "custom/sep"
             "pulseaudio"
-            "custom/sep"
+            # "custom/sep"
             "clock#date"
-            "custom/sep"
             "clock#time"
           ];
 
@@ -43,7 +36,7 @@
             window-rewrite = {};
             on-click = "activate";
             disable-scroll = true;
-            format = "{icon}";
+            format = "{icon} |";
             # persistent-workspaces = {
             #   # workspace and monitors
             #   "1" = [
@@ -164,18 +157,18 @@
               critical = 20;
             };
             # interval = 30;
-            format = "bat {capacity}";
-            format-plugged = "bat {capacity}";
-            format-charging = "bat {capacity}ϟ";
+            format = "ac_{capacity}-";
+            format-plugged = "ac_{capacity}";
+            format-charging = "ac_{capacity}+";
             on-click = "gnome-power-statistics";
           };
 
           network = {
-            format-disabled = "wifi";
-            format-wifi = "wifi";
-            format-ethernet = " {ipaddr}/{cidr}";
-            format-linked = "wifi (No IP)";
-            format-disconnected = "wifi";
+            format-disabled = "net";
+            format-wifi = "net";
+            format-ethernet = "net_{ipaddr}/{cidr}";
+            format-linked = "net_(No IP)";
+            format-disconnected = "net";
             on-click = ''wifi on && $TERMINAL --hold sh -c "nmcli dev wifi rescan && nmtui"'';
             on-click-right = "wifi off";
             # interval = 2;
@@ -184,20 +177,20 @@
 
           pulseaudio = {
             # format = "{icon}{format_source}";
-            format = "{icon} {volume}{format_source}";
-            format-bluetooth = "{icon} {volume}{format_source}";
-            format-bluetooth-muted = "{icon} {volume}{format_source}";
-            format-muted = "muted";
-            format-source = " mic";
+            format = "{icon}_{volume}{format_source}";
+            format-bluetooth = "{icon}_{volume}{format_source}";
+            format-bluetooth-muted = "{icon}_{volume}{format_source}";
+            format-muted = "mut";
+            format-source = "_mic";
             format-source-muted = "";
             format-icons = {
-              hands-free = "headset";
-              headset = "headset";
-              headphone = "headset";
-              phone = "phone";
-              portable = "portable";
-              car = "car";
-              speaker = "speaker";
+              hands-free = "head";
+              headset = "head";
+              headphone = "head";
+              phone = "port";
+              portable = "port";
+              car = "cat";
+              speaker = "vol";
               default = "vol";
               hdmi = "hdmi";
             };
@@ -242,10 +235,10 @@
           	}
 
             /* Default color for modules except workspaces button.active */
-            #workspaces button, #window, window#waybar, #tray, #language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock#time, #clock#date { color: @white; }
+            #window, window#waybar, #tray, #language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock#time, #clock#date { color: @white; }
 
           	/* Default padding for some modules */
-          #tray, #language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock { padding: 0px 8px 0px 8px; }
+          #tray, #language, #network, #bluetooth, #idle_inhibitor, #battery, #pulseaudio, #clock { padding: 0px 6px 0px 6px; }
 
             #custom-sep {
               color: @gray;
@@ -278,8 +271,7 @@
 
             #workspaces button {
               font-weight: normal;
-              padding: 0px 6px 0px 6px;
-              margin: 0px 10px 0px 0px;
+              color: @dark-white;
               background-color: #${base00};
             }
             #workspaces button.empty {
@@ -303,7 +295,6 @@
               border: 4px;
               border-style: solid;
               border-color: @accent;
-              font-size: 15px;
               font-weight: normal;
               margin: 0px 4px 0px 4px;
             }

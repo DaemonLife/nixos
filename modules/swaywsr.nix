@@ -5,7 +5,6 @@
 }: {
   home.packages = with pkgs; [
     swaywsr
-    # font-awesome
   ];
 
   home.activation.swaywsr_config = let
@@ -13,16 +12,17 @@
       [icons]
 
       [aliases]
-      "org.telegram.desktop" = "telegram"
-      "librewolf" = "libwolf"
-      "Org.gnome.Nautilus" = "nautilus"
-      "kitty" = ">_"
-      "qutebrowser" = "qb"
+      "Org.gnome.Nautilus" = "fs"
       "org.qbittorrent.qBittorrent" = "torrent"
       "vi" = "vi"
+      "org.telegram.desktop" = "tg"
+      "librewolf" = "net"
+      "kitty" = "$"
+      "qutebrowser" = "qb"
+      "thunar" = "fs"
 
       [general]
-      separator = " | "
+      separator = " "
       ignore-char = "#"
 
       [options]

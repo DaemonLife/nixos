@@ -404,35 +404,35 @@
         prepend_dirs = [
           {
             name = "nix";
-            text = "✼";
+            text = " ";
           }
           {
             name = "Music";
-            text = "♫";
+            text = "󰝚 ";
           }
           {
             name = "Downloads";
-            text = "🢳";
+            text = " ";
           }
           {
             name = "Documents";
-            text = "🗋";
+            text = "󰈙 ";
           }
           {
             name = "Videos";
-            text = "⏯";
+            text = " ";
           }
           {
             name = "Pictures";
-            text = "";
+            text = " ";
           }
           {
             name = "home";
-            text = "⌂";
+            text = " ";
           }
           {
             name = "Public";
-            text = "⌾";
+            text = "󰿆 ";
           }
         ];
       };

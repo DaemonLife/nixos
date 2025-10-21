@@ -62,6 +62,7 @@ in {
       dconf-editor
       grc
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
+      awesome
 
       # Utils
       cool-retro-term
