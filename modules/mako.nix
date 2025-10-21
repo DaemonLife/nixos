@@ -11,8 +11,8 @@
     settings = {
       layer = "overlay";
       anchor = "top-right";
-      width = 400;
-      icons = true;
+      width = 500;
+      icons = false;
       margin = "4,4,4,4";
       padding = "12,10,12,10";
       border-size = config.wayland.windowManager.sway.config.window.border / 2; # like Sway's border / 2
@@ -20,7 +20,7 @@
       default-timeout = 12000;
       group-by = "summary";
       # format = "<b>%s</b>\\n%b";
-      format = "<b>%a</b>\\n%s%b";
+      format = "<b>%a</b>\\n%s %b";
       "mode=dnd" = {invisible = 1;};
       # makoctl mode -a dnd - add mode
       # makoctl mode -r dnd - remove mode

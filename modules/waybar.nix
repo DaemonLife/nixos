@@ -12,7 +12,7 @@
         mainBar = {
           layer = "top";
           position = "top";
-          height = 37;
+          height = 31;
           modules-left = [
             "${MY_DE}/workspaces"
           ];
@@ -36,7 +36,7 @@
             window-rewrite = {};
             on-click = "activate";
             disable-scroll = true;
-            format = "{icon} |";
+            format = "[{icon}]";
             # persistent-workspaces = {
             #   # workspace and monitors
             #   "1" = [
@@ -273,15 +273,27 @@
               font-weight: normal;
               color: @dark-white;
               background-color: #${base00};
+              padding-right: 3px;
+              padding-left: 3px;
+              margin-right: 0px;
+              margin-left: 0px;
             }
             #workspaces button.empty {
               font-weight: normal;
               color: @gray;
+              padding-right: 3px;
+              padding-left: 3px;
+              margin-right: 0px;
+              margin-left: 0px;
             }
             #workspaces button.${focus} {
               font-weight: normal;
               color: @dark;
               background-color: @accent;
+              padding-right: 3px;
+              padding-left: 3px;
+              margin-right: 0px;
+              margin-left: 0px;
             }
 
             window#waybar {
