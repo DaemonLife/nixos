@@ -167,7 +167,9 @@
           }
           {
             name = "*/";
-            run = ''piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'';
+            # run = ''piper -- eza -TL=3 --color=always --icons=always --group-directories-first --no-quotes "$1"'';
+            # disable all icons
+            run = ''piper -- eza -TL=3 --color=always --group-directories-first --no-quotes "$1"'';
           }
         ];
       };
@@ -401,40 +403,46 @@
       };
 
       icon = {
-        prepend_dirs = [
-          {
-            name = "nix";
-            text = " ";
-          }
-          {
-            name = "Music";
-            text = "󰝚 ";
-          }
-          {
-            name = "Downloads";
-            text = " ";
-          }
-          {
-            name = "Documents";
-            text = "󰈙 ";
-          }
-          {
-            name = "Videos";
-            text = " ";
-          }
-          {
-            name = "Pictures";
-            text = " ";
-          }
-          {
-            name = "home";
-            text = " ";
-          }
-          {
-            name = "Public";
-            text = "󰿆 ";
-          }
-        ];
+        # disable all icons
+        globs = [];
+        dirs = [];
+        files = [];
+        exts = [];
+        conds = [];
+        # prepend_dirs = [
+        #   {
+        #     name = "nix";
+        #     text = " ";
+        #   }
+        #   {
+        #     name = "Music";
+        #     text = "󰝚 ";
+        #   }
+        #   {
+        #     name = "Downloads";
+        #     text = " ";
+        #   }
+        #   {
+        #     name = "Documents";
+        #     text = "󰈙 ";
+        #   }
+        #   {
+        #     name = "Videos";
+        #     text = " ";
+        #   }
+        #   {
+        #     name = "Pictures";
+        #     text = " ";
+        #   }
+        #   {
+        #     name = "home";
+        #     text = " ";
+        #   }
+        #   {
+        #     name = "Public";
+        #     text = "󰿆 ";
+        #   }
+        # ];
       };
     };
 
