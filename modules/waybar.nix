@@ -125,7 +125,7 @@
           "clock#date" = {
             format = "{:%d-%b-%y}";
             on-click = "exec gnome-calendar";
-            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.terminal - 6)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
+            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.terminal)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
             "calendar" = {
               "mode" = "year";
               "mode-mon-col" = 4;
