@@ -49,11 +49,10 @@
 
     fonts = {
       monospace = {
-        # package = pkgs.nerd-fonts.iosevka;
-        # name = "Iosevka Nerd Font";
-        # package = pkgs.spleen;
-        # name = "Spleen 6x12";
-        name = "Basis33";
+        # package = pkgs.nerd-fonts.noto;
+        # name = "Noto Nerd Font";
+        package = pkgs.nerd-fonts.space-mono;
+        name = "SpaceMono Nerd Font";
       };
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
@@ -62,10 +61,10 @@
         name = "Noto Color Emoji";
       };
       sizes = {
-        applications = 24;
-        popups = 24;
-        terminal = 22;
-        desktop = 22;
+        applications = 20;
+        popups = 18;
+        terminal = 18;
+        desktop = 20;
       };
     };
 

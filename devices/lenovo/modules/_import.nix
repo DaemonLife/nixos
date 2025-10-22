@@ -6,8 +6,8 @@
 }: {
   imports = [
     # ./hyprland.nix
-    ./waybar.nix
-    ./mako.nix
+    # ./waybar.nix
+    # ./mako.nix
     ./sway.nix
   ];
 }

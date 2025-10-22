@@ -13,7 +13,7 @@
     ./modules/nvf.nix # nvf like NixOS module (recomended)
   ];
 
-  stylix.targets.grub.enable = false;
+  # stylix.targets.grub.enable = false;
 
   # TTYI colors
   console = with config.lib.stylix.colors; {
@@ -207,6 +207,10 @@
 
     # niri.enable = true;
 
+    dconf = {
+      enable = true;
+    };
+
     nh = {
       enable = true;
       clean.enable = true;
@@ -260,7 +264,6 @@
     gamemode.enable = true; # micro compositor
     # ------ Steam ------
 
-    dconf.enable = true;
     htop.enable = true;
     git.enable = true;
     fish.enable = true;
@@ -277,6 +280,15 @@
       settingsFile = "/etc/xray/config.json";
     };
 
+    # libinput = {
+    #   enable = true;
+    #   touchpad = {
+    #     tappingDragLock = false;
+    #     additionalOptions = ''
+    #       Option "TappingDrag" "false"
+    #     '';
+    #   };
+    # };
     # samba = {
     #   enable = true;
     #   securityType = "user";

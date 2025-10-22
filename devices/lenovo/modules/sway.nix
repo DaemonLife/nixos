@@ -38,6 +38,16 @@
         };
       };
 
+      # input = lib.mkForce {
+      #   "type:touchpad" = {
+      #     drag = "disabled";
+      #     drag_lock = "disabled";
+      #     natural_scroll = "enabled"; # enabled is good for lenovo
+      #     tap = "enabled";
+      #     click_method = "button_areas";
+      #   };
+      # };
+
       workspaceOutputAssign = [
         {
           workspace = "1";

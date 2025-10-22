@@ -140,6 +140,7 @@ in {
       };
       "org/gnome/desktop/peripherals/touchpad" = {
         tap-and-drag = false;
+        tap-and-drag-lock = false;
         natural-scroll = false;
         accel-profile = "adaptive";
       };

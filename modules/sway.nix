@@ -140,7 +140,6 @@
           repeat_rate = "60";
         };
         "type:touchpad" = {
-          natural_scroll = "enabled"; # enabled is good for lenovo
           tap = "enabled";
           click_method = "button_areas";
         };
