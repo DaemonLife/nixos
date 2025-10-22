@@ -29,7 +29,7 @@
     # ./hyprland.nix
     # ./niri.nix
 
-    # ./foot.nix
+    ./foot.nix
     # ./alacritty.nix
     # ./eww/eww.nix
     # ./lf/lf.nix

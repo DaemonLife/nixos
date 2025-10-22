@@ -1,10 +1,10 @@
 {
+  config,
   pkgs,
   lib,
+  username,
   ...
-}: let
-  username = "user";
-in {
+}: {
   imports = [./modules/_import.nix];
 
   home = {
@@ -28,7 +28,6 @@ in {
       zip
       fzy
       dua # disk usage TUI tool. Run: dua i
-      foot
 
       # Network
       overskride # bluetooth gui
@@ -62,7 +61,9 @@ in {
       dconf-editor
       grc
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
-      awesome
+      unifont_upper
+      unifont-csur
+      fairfax
 
       # Utils
       cool-retro-term
@@ -71,6 +72,7 @@ in {
       cmatrix # matrix in terminal
       wev # key events in wayland
       nwg-displays # gui for display setup
+      gucharmap # character map
       ansible
 
       # Docs

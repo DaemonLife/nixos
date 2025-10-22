@@ -46,7 +46,8 @@
       };
 
       modifier = "Mod4";
-      terminal = "${pkgs.kitty}/bin/kitty --single-instance";
+      # terminal = "${pkgs.kitty}/bin/kitty --single-instance";
+      terminal = "${pkgs.foot}/bin/foot";
       menu = "${pkgs.fuzzel}/bin/fuzzel -l 14";
       bars = [{command = "waybar";}];
       workspaceAutoBackAndForth = true;

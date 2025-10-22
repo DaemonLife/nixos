@@ -31,22 +31,24 @@
   } @ inputs: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {inherit system;};
+    user = "user";
 
     # Creating configuration function
     mkNixosConfig = device: {
       inherit system;
+      specialArgs = {username = user;};
       modules = builtins.concatLists [
         [
-          nvf.nixosModules.default # nvf with flake and NixOS module (recomended)
           ./configuration.nix # main config
           ./devices/${device}/configuration.nix # device config
+          nvf.nixosModules.default
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.user.imports = [
-              # nvf.homeManagerModules.default # nvf with flake and HM module
+            home-manager.extraSpecialArgs = {username = user;};
+            home-manager.users.${user}.imports = [
               ./home.nix # main home config
               ./devices/${device}/home.nix # device home config
             ];
@@ -76,6 +78,6 @@
       # create configurations for my devices
       gpd-pocket-3 = nixpkgs.lib.nixosSystem (mkNixosConfig "gpd-pocket-3");
       lenovo = nixpkgs.lib.nixosSystem (mkNixosConfig "lenovo");
-    }; # end of nixosConfigurations
-  }; # end of outputs
+    };
+  };
 }

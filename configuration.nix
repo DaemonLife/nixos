@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  username,
   ...
 }: {
   # --------------------------------
@@ -120,7 +121,7 @@
   # USER SETTINGS
   # --------------------------------
 
-  users.users.user = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "user";
     shell = pkgs.fish;
@@ -215,7 +216,8 @@
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 7d --keep 5";
-      flake = "/home/$USER/nix";
+      clean.dates = "weekly";
+      flake = "/home/${username}/nix";
     };
 
     # --- thunar ---

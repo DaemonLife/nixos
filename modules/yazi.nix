@@ -411,7 +411,7 @@
         prepend_dirs = [
           {
             name = "nix";
-            text = "";
+            text = "";
           }
           # {
           #   name = "Music";

@@ -20,6 +20,7 @@
       "kitty" = "$"
       "qutebrowser" = "qb"
       "thunar" = "fs"
+      "y.fish" = "y"
 
       [general]
       separator = " "
