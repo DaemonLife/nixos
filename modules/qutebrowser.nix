@@ -1,9 +1,12 @@
-{ pkgs, config, ... }: {
-
+{
+  pkgs,
+  config,
+  ...
+}: {
   programs.qutebrowser = with config.lib.stylix.colors; {
     enable = true;
 
-    quickmarks = { };
+    quickmarks = {};
 
     searchEngines = {
       w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
@@ -13,10 +16,8 @@
       gt = "https://translate.google.com/?sl=en&tl=ru&text={}&op=translate";
       yt = "https://www.youtube.com/results?search_query={}";
       yi = "https://ya.ru/images/search?from=tabbar&text={}";
-      nixp =
-        "https://search.nixos.org/packages?&from=0&size=50&sort=relevance&type=packages&query={}";
-      nixo =
-        "https://search.nixos.org/options?size=50&sort=relevance&type=packages&query={}";
+      nixp = "https://search.nixos.org/packages?&from=0&size=50&sort=relevance&type=packages&query={}";
+      nixo = "https://search.nixos.org/options?size=50&sort=relevance&type=packages&query={}";
       nixg = "https://github.com/search?q={}+language%3Anix&type=code";
       git = "https://github.com/search?q={}&type=repositories";
       wttr = "https://wttr.in/{}?FMm"; # Weather. Type ":help" for helping
@@ -24,8 +25,7 @@
 
     greasemonkey = [
       (pkgs.fetchurl {
-        url =
-          "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/1d1be041a65c251692ee082eda64d2637edf6444/youtube_sponsorblock.js";
+        url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/1d1be041a65c251692ee082eda64d2637edf6444/youtube_sponsorblock.js";
         sha256 = "sha256-e3QgDPa3AOpPyzwvVjPQyEsSUC9goisjBUDMxLwg8ZE=";
       })
       # (pkgs.writeText "my.js" ''
@@ -126,17 +126,9 @@
     loadAutoconfig = true;
 
     settings = {
-
       content.blocking.method = "both";
-      content.blocking.whitelist = [ ];
+      content.blocking.whitelist = [];
       content.blocking.adblock.lists = [
-        # "https://easylist.to/easylist/easylist.txt"
-        # "https://easylist.to/easylist/easyprivacy.txt"
-        # "https://easylist-downloads.adblockplus.org/easylistdutch.txt"
-        # "https://easylist-downloads.adblockplus.org/abp-filters-anti-cv.txt"
-        # "https://www.i-dont-care-about-cookies.eu/abp/"
-        # "https://secure.fanboy.co.nz/fanboy-cookiemonster.txt"
-
         # from my uBlockOrigin filters
         "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2020.txt"
         "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2021.txt"
@@ -159,13 +151,21 @@
         "https://github.com/easylist/easylist/raw/refs/heads/master/easylist_cookie/easylist_cookie_general_hide.txt"
 
         "https://easylist-downloads.adblockplus.org/advblock.txt"
+        "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
+        "https://easylist-downloads.adblockplus.org/bitblock.txt"
+        "https://easylist-downloads.adblockplus.org/cntblock.txt"
+        "https://easylist-downloads.adblockplus.org/easylist.txt"
+        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_general_block.txt"
+        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_general_hide.txt"
+        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_international_specific_hide.txt"
+        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_international_specific_block.txt"
       ];
 
       auto_save.session = true;
       scrolling.smooth = false;
       content.autoplay = false;
 
-      window = { hide_decoration = true; };
+      window = {hide_decoration = true;};
 
       tabs = {
         favicons.scale = 0.7;
@@ -182,9 +182,16 @@
         close_mouse_button = "right";
       };
 
-      colors = { webpage.preferred_color_scheme = "dark"; };
+      fileselect = {
+        handler = "external";
+        folder.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--cwd-file" "{}"];
+        multiple_files.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}"];
+        single_file.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}"];
+      };
 
-      qt = { highdpi = false; };
+      colors = {webpage.preferred_color_scheme = "dark";};
+
+      qt = {highdpi = false;};
       zoom.default = "125%";
       zoom.text_only = true;
       zoom.levels = [
@@ -219,7 +226,7 @@
       input.insert_mode.auto_load = false;
 
       # --execute is key only for kitty
-      editor.command = [ "$TERMINAL" "--execute" "$EDITOR" "{file}" ];
+      editor.command = ["$TERMINAL" "--execute" "$EDITOR" "{file}"];
     };
 
     extraConfig = ''

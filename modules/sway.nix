@@ -93,6 +93,9 @@
         {
           class = "Pavucontrol";
         }
+        {
+          app_id = "floating_yazi";
+        }
       ];
 
       colors = lib.mkForce {

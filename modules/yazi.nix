@@ -28,8 +28,13 @@
       require("session"):setup {
       	sync_yanked = true,
       }
+
       require("git"):setup()
       require("recycle-bin"):setup()
+
+      require("smart-enter"):setup {
+        open_multi = true,
+      }
     '';
 
     plugins = with pkgs.yaziPlugins; {
@@ -59,6 +64,7 @@
 
     settings = {
       floating_window_scaling_factor = 0.5;
+
       plugin = {
         prepend_fetchers = [
           # --- plugin mime-ext ---
