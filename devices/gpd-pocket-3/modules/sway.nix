@@ -1,16 +1,14 @@
-{ pkgs, config, lib, ... }: {
-
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   # disable gaps for gpd
   # and gpd output
 
   wayland.windowManager.sway = {
     config = rec {
-
-      gaps = {
-        outer = lib.mkForce 0;
-        inner = lib.mkForce 0;
-      };
-
       output = {
         # gpd laptop
         "DSI-1" = {
@@ -49,8 +47,6 @@
           output = "DSI-1";
         }
       ];
-
     };
   };
-
 }

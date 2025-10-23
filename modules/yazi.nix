@@ -1,6 +1,3 @@
-# Not all is declarative! You need install and sometimes update plugins. Check 'ya --help' for details, 'ya -l' for list plugins.
-# Installation:
-# ya pkg add atareao/convert
 {
   pkgs,
   config,
@@ -59,7 +56,7 @@
       recycle-bin = recycle-bin; # system trash bin support
       mediainfo = mediainfo;
 
-      # mime-ext = mime-ext; # fast mime-type by file extancions
+      mime-ext = mime-ext; # fast mime-type by file extancions
     };
 
     settings = {
@@ -68,12 +65,12 @@
       plugin = {
         prepend_fetchers = [
           # --- plugin mime-ext ---
-          # {
-          #   id = "mime";
-          #   name = "*";
-          #   run = "mime-ext";
-          #   prio = "high";
-          # }
+          {
+            id = "mime";
+            name = "*";
+            run = "mime-ext";
+            prio = "high";
+          }
           # --- plugin git ---
           {
             id = "git";
@@ -180,11 +177,13 @@
 
       tasks = {
         image_alloc = 1073741824; # = 1024*1024*1024 = 1024MB
+        image_bound = [0 0];
       };
 
       preview = {
-        image_filter = "triangle";
-        image_quality = 70;
+        # image_filter = "nearest"; # super fast
+        image_filter = "triangle"; # fast
+        image_quality = 60;
         max_width = 800;
         max_height = 800;
       };
@@ -192,6 +191,7 @@
       mgr = {
         sort_dir_first = true;
         title_format = "{cwd}";
+        linemode = "mtime";
       };
 
       opener = {
@@ -220,13 +220,6 @@
           {
             run = ''nomacs "$@"'';
             desc = "Open in nomacs";
-            orphan = true;
-          }
-        ];
-        "default_browser" = [
-          {
-            run = ''$BROWSER "$@"'';
-            desc = "Open in default browser";
             orphan = true;
           }
         ];
@@ -292,9 +285,8 @@
         {
           mime = "text/html";
           use = [
-            "default_browser"
-            "librewolf"
             "qutebrowser"
+            "librewolf"
             "edit"
           ];
         }
@@ -408,17 +400,17 @@
 
       icon = {
         # disable all icons
-        # globs = [];
-        # dirs = [];
-        # files = [];
-        # exts = [];
-        # conds = [];
+        globs = [];
+        dirs = [];
+        files = [];
+        exts = [];
+        conds = [];
 
         prepend_dirs = [
-          {
-            name = "nix";
-            text = "";
-          }
+          # {
+          #   name = "nix";
+          #   text = "";
+          # }
           # {
           #   name = "Music";
           #   text = "󰝚 ";
@@ -545,17 +537,6 @@
           desc = "Restore";
         }
 
-        # plugin convert imgs
-        {
-          on = ["c" "p"];
-          run = "plugin convert -- --extension='png'";
-          desc = "Convert to PNG";
-        }
-        {
-          on = ["c" "j"];
-          run = "plugin convert -- --extension='jpg'";
-          desc = "Convert to JPG";
-        }
         # other rus
         {
           on = "Р";

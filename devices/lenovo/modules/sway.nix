@@ -21,7 +21,7 @@
         # monitor gg
         "Acer Technologies Acer A231H LQT0W0084320" = {
           mode = "1920x1080@60Hz";
-          scale = "0.9";
+          scale = "1";
           scale_filter = "smart";
           adaptive_sync = "enable";
           render_bit_depth = "8"; # 6, 8, 10
