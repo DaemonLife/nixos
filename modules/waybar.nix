@@ -36,42 +36,7 @@
             window-rewrite = {};
             on-click = "activate";
             disable-scroll = true;
-            format = "[{icon}]";
-            # persistent-workspaces = {
-            #   # workspace and monitors
-            #   "1" = [
-            #     "eDP-1"
-            #     "DSI-1"
-            #   ];
-            #   "2" = [
-            #     "DP-1"
-            #     "HDMI-A-1"
-            #   ];
-            #   "3" = [
-            #     "DP-1"
-            #     "HDMI-A-1"
-            #   ];
-            #   "4" = [
-            #     "DP-1"
-            #     "HDMI-A-1"
-            #   ];
-            #   "5" = [
-            #     "DP-1"
-            #     "HDMI-A-1"
-            #   ];
-            # };
-            # format-icons = {
-            #   "1" = 1; # workspace id and icon format
-            #   "2" = 2;
-            #   "3" = 3;
-            #   "4" = 4;
-            #   "5" = 5;
-            #   "6" = 6;
-            #   "7" = 7;
-            #   "8" = 8;
-            #   "9" = 9;
-            #   "10" = 10;
-            # };
+            format = "[ {icon}]";
           };
 
           "${MY_DE}/window" = {
@@ -123,7 +88,8 @@
             # exec = ../scripts/timezone.sh;
           };
           "clock#date" = {
-            format = "{:%d-%b-%y}";
+            # format = "{:%d-%b-%y}";
+            format = "{:%b-%d}";
             on-click = "exec gnome-calendar";
             "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.terminal)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
             "calendar" = {
@@ -157,9 +123,9 @@
               critical = 20;
             };
             # interval = 30;
-            format = "ac_{capacity}-";
-            format-plugged = "ac_{capacity}";
-            format-charging = "ac_{capacity}+";
+            format = "bat_{capacity}-";
+            format-plugged = "bat_{capacity}";
+            format-charging = "bat_{capacity}+";
             on-click = "gnome-power-statistics";
           };
 
@@ -184,15 +150,15 @@
             format-source = "_mic";
             format-source-muted = "";
             format-icons = {
-              hands-free = "head";
-              headset = "head";
-              headphone = "head";
-              phone = "port";
-              portable = "port";
-              car = "cat";
+              hands-free = "vol-head";
+              headset = "vol-head";
+              headphone = "vol-head";
+              phone = "vol-ph";
+              portable = "vol-port";
+              car = "vol-go-for-a-walk-man-or-buy-a-bicycle";
               speaker = "vol";
-              default = "vol";
-              hdmi = "hdmi";
+              default = "vol-ext";
+              hdmi = "vol-hdmi";
             };
             max-volume = 100;
             tooltip-format = "{desc}, {volume}%";
@@ -273,18 +239,17 @@
               font-weight: normal;
               color: @dark-white;
               background-color: #${base00};
-              padding-right: 3px;
               padding-left: 3px;
-              margin-right: 0px;
-              margin-left: 0px;
+              padding-right: 3px;
+              margin: 0px 0px 0px 0px;
             }
             #workspaces button.empty {
               font-weight: normal;
               color: @gray;
+              background-color: #${base00};
               padding-right: 3px;
               padding-left: 3px;
-              margin-right: 0px;
-              margin-left: 0px;
+              margin: 0px 0px 0px 0px;
             }
             #workspaces button.${focus} {
               font-weight: normal;
@@ -292,8 +257,7 @@
               background-color: @accent;
               padding-right: 3px;
               padding-left: 3px;
-              margin-right: 0px;
-              margin-left: 0px;
+              margin: 0px 0px 0px 0px;
             }
 
             window#waybar {

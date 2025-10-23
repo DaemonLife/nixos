@@ -13,7 +13,8 @@
     ./fuzzel.nix
     ./swaylock.nix
     ./swayidle.nix
-    ./swaywsr.nix
+    # ./swaywsr.nix
+    ./sworkstyle.nix
   ];
 
   home.packages = with pkgs; [
@@ -60,9 +61,13 @@
         {command = "wl-paste -t text --watch clipman store --no-persist";}
         {command = "exec bash $HOME/nix/scripts/swayidle.sh";}
         {
-          command = "exec_always pgrep -x swaywsr > /dev/null && pkill -x swaywsr; exec ${pkgs.swaywsr}/bin/swaywsr -nr";
+          command = "pkill sworkstyle; sleep 2; exec sworkstyle -d &> /tmp/sworkstyle.log";
           always = true;
         }
+        # {
+        #   command = "exec_always pgrep -x swaywsr > /dev/null && pkill -x swaywsr; exec ${pkgs.swaywsr}/bin/swaywsr -nr";
+        #   always = true;
+        # }
       ];
 
       gaps = {
@@ -85,6 +90,7 @@
         ];
       };
 
+      # swaymsg -t get_tree - show window's app_id and class
       floating.criteria = [
         {
           title = "Steam - Update News";
@@ -167,12 +173,12 @@
 
         # file manager
         "${modifier}+n" = "exec thunar";
-        "${modifier}+y" = "exec ${terminal} --hold $HOME/nix/scripts/y.fish";
+        "${modifier}+y" = "exec ${terminal} -a yazi --hold $HOME/nix/scripts/y.fish";
 
         # broswer
         # export QT_QPA_PLATFORM=xcb for color fix
         "${modifier}+b" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER";
-        "${modifier}+Shift+B" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 $BROWSER --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
+        "${modifier}+Shift+B" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 qutebrowser --desktop-file-name vpn_qutebrowser --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
         "${modifier}+t" = "exec telegram-desktop"; # telegram
         "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker

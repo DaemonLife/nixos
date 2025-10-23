@@ -190,7 +190,7 @@
 
       mgr = {
         sort_dir_first = true;
-        title_format = "{cwd}";
+        title_format = "y {cwd}";
         linemode = "mtime";
       };
 

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
   programs.nvf = {
@@ -12,6 +13,8 @@
       options = {
         shiftwidth = 2;
         tabstop = 4;
+        titlestring = "vi";
+        title = true;
       };
 
       lsp = {

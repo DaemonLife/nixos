@@ -8,6 +8,7 @@
   ];
 
   home.activation.swaywsr_config = let
+    # swaymsg -t get_tree - show window's app_id and class
     config = ''
       [icons]
 
@@ -18,9 +19,12 @@
       "org.telegram.desktop" = "tg"
       "librewolf" = "net"
       "kitty" = "$"
+      "foot" = "$"
       "qutebrowser" = "qb"
+      "org.qutebrowser.qutebrowser" = "qb"
+      "vpn_qutebrowser" = "vpn_qb"
       "thunar" = "fs"
-      "y.fish" = "y"
+      "y." = "y"
 
       [general]
       separator = " "
