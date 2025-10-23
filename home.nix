@@ -10,7 +10,16 @@
   home = {
     username = username;
     homeDirectory = "/home/${username}";
-    sessionPath = ["$HOME/.local/bin"];
+    sessionPath = ["/home/${username}/.local/bin"];
+    sessionVariables = let
+      EDITOR = "vi";
+    in {
+      EDITOR = "${EDITOR}";
+      SYSTEMD_EDITOR = "${EDITOR}";
+      VISUAL = "${EDITOR}";
+      BROWSER = "qutebrowser";
+      TERMINAL = "foot";
+    };
     stateVersion = "24.05";
 
     # --------------------------------

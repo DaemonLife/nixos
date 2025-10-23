@@ -11,7 +11,7 @@
         icons-enabled = "no";
         show-actions = "no";
         horizontal-pad = 25;
-        vertical-pad = 35;
+        vertical-pad = 25;
         exit-on-keyboard-focus-loss = "yes";
       };
 
@@ -25,7 +25,7 @@
         # border = "${base0D}ff";
       };
 
-      border.width = 6; # like sway's border * 1.5
+      border.width = config.wayland.windowManager.sway.config.window.border;
       border.radius = 0;
     };
   };

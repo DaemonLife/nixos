@@ -254,48 +254,69 @@
       };
 
       # check file mime type: xdg-mime query filetype [FILE]
-      open.append_rules = [
-        {
-          mime = "image/*";
-          use = ["image"];
-        }
-        {
-          name = "*.ARW";
-          use = "image";
-        }
-        {
-          mime = "video/*";
-          use = ["video"];
-        }
-        {
-          name = "*.torrent";
-          use = [
-            "qbittorrent"
-            "rtorrent"
-          ];
-        }
-        {
-          mime = "application/json";
-          use = ["edit"];
-        }
-        {
-          mime = "";
-          use = ["edit"];
-        }
-        {
-          mime = "text/html";
-          use = [
-            "qutebrowser"
-            "librewolf"
-            "edit"
-          ];
-        }
-        {
-          mime = "*";
-          use = ["edit"];
-        }
-      ];
-    }; # settings end
+      # check mime type in yazi with TAB key if you use mime-ext plugin (mime by files extention)!
+      open = {
+        prepend_rules = [
+          {
+            mime = "";
+            use = ["edit"];
+          }
+          {
+            mime = "text/plain";
+            use = ["edit"];
+          }
+          {
+            mime = "application/octet-stream"; # for files withoin correct mime
+            use = ["edit"];
+          }
+        ];
+        append_rules = [
+          {
+            mime = "image/*";
+            use = ["image"];
+          }
+          {
+            name = "*.ARW";
+            use = "image";
+          }
+          {
+            mime = "video/*";
+            use = ["video"];
+          }
+          {
+            name = "*.torrent";
+            use = [
+              "qbittorrent"
+              "rtorrent"
+            ];
+          }
+          {
+            mime = "application/json";
+            use = ["edit"];
+          }
+          {
+            mime = "application/octet-stream";
+            use = ["edit"];
+          }
+          {
+            mime = "text/plain";
+            use = ["edit"];
+          }
+          {
+            mime = "text/html";
+            use = [
+              "qutebrowser"
+              "librewolf"
+              "edit"
+            ];
+          }
+          {
+            mime = "*";
+            use = ["edit"];
+          }
+        ];
+      };
+    };
 
     theme = lib.mkForce {
       tabs = {

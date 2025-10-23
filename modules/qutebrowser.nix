@@ -165,7 +165,9 @@
       scrolling.smooth = false;
       content.autoplay = false;
 
-      window = {hide_decoration = true;};
+      window = {
+        hide_decoration = false; # with true there is error with colors on wayland
+      };
 
       tabs = {
         favicons.scale = 0.7;

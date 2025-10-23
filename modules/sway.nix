@@ -48,7 +48,7 @@
       modifier = "Mod4";
       # terminal = "${pkgs.kitty}/bin/kitty --single-instance";
       terminal = "${pkgs.foot}/bin/foot";
-      menu = "${pkgs.fuzzel}/bin/fuzzel -l 14";
+      menu = "${pkgs.fuzzel}/bin/fuzzel -l 16";
       bars = [{command = "waybar";}];
       workspaceAutoBackAndForth = true;
 
@@ -76,7 +76,6 @@
 
       window = {
         border = lib.mkForce 4;
-        # hideEdgeBorders = "--i3 smart";
         titlebar = false;
         commands = [
           {
@@ -95,6 +94,9 @@
         }
         {
           app_id = "floating_yazi";
+        }
+        {
+          app_id = "floating_nmtui";
         }
       ];
 
@@ -169,8 +171,8 @@
 
         # broswer
         # export QT_QPA_PLATFORM=xcb for color fix
-        "${modifier}+b" = "exec export QT_QPA_PLATFORM=xcb && exec $BROWSER";
-        "${modifier}+Shift+B" = "exec export QT_QPA_PLATFORM=xcb && exec proxychains4 $BROWSER --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
+        "${modifier}+b" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER";
+        "${modifier}+Shift+B" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 $BROWSER --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
         "${modifier}+t" = "exec telegram-desktop"; # telegram
         "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker
@@ -283,7 +285,8 @@
       # export _JAVA_AWT_WM_NONREPARENTING=1
       export XDG_CURRENT_DESKTOP=sway
       export MOZ_ENABLE_WAYLAND=1
-      export TERMINAL=kitty
+      export EDITOR=vi
+      export TERMINAL=foot
       export WLR_RENDERER=vulkan
     '';
   };

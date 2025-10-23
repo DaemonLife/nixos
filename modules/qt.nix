@@ -1,8 +1,8 @@
-{ ... }:
-{
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    kdePackages.qtwayland
+  ];
   qt = {
     enable = true;
-    # style.name = "adwaita"; # kvantum
-    # platformTheme = "gnome"; # qt5ct ?
   };
 }

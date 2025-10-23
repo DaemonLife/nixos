@@ -11,7 +11,7 @@
 
   imports = [
     ./modules/stylix.nix
-    ./modules/nvf.nix # nvf like NixOS module (recomended)
+    ./modules/nvf.nix
   ];
 
   # stylix.targets.grub.enable = false;
@@ -169,12 +169,12 @@
     jdk # java
     iwd # wifi cli, don't delete!
     bluez
-    kitty
     udiskie # auto disks mount
     nufraw-thumbnailer # RAW preview for thunar
     xdg-desktop-portal-termfilechooser # make yazi default file chooser
     adwaita-icon-theme
     rocmPackages.clr.icd
+    nautilus
 
     # fonts
     # font-awesome
@@ -266,6 +266,7 @@
     gamemode.enable = true; # micro compositor
     # ------ Steam ------
 
+    foot.enable = true;
     htop.enable = true;
     git.enable = true;
     fish.enable = true;
