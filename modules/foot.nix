@@ -17,6 +17,10 @@
           "Unifont CSUR:prepend:size=${toString config.stylix.fonts.sizes.terminal}"
         ];
       };
+      key-bindings = {
+        scrollback-up-line = "Control+Shift+k";
+        scrollback-down-line = "Control+Shift+j";
+      };
 
       cursor = {
         beam-thickness = 1.2;

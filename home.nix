@@ -19,6 +19,7 @@
       VISUAL = "${EDITOR}";
       BROWSER = "qutebrowser";
       TERMINAL = "foot";
+      # MANGOHUD = 1; # Steam performance GUI
     };
     stateVersion = "24.05";
 
@@ -64,17 +65,17 @@
       kodi-wayland
 
       # Theming
-      vimix-icon-theme # for icons
+      vimix-icon-theme # cursor icon
       gnome-tweaks
       gowall # Tool to convert a Wallpaper's color scheme
-      dconf-editor
       grc
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
+      ## Fonts
       unifont_upper
       unifont-csur
-      fairfax
 
       # Utils
+      dconf-editor
       cool-retro-term
       bottles
       veracrypt
@@ -99,6 +100,7 @@
       portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
+      mindustry-wayland
       # dwarf-fortress-packages.dwarf-fortress-full
 
       libreoffice

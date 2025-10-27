@@ -37,6 +37,7 @@
     extraConfig = ''
       focus_on_window_activation focus
       titlebar_border_thickness 3
+      floating_minimum_size 500 x 450
     '';
 
     config = rec {
@@ -61,7 +62,7 @@
         {command = "wl-paste -t text --watch clipman store --no-persist";}
         {command = "exec bash $HOME/nix/scripts/swayidle.sh";}
         {
-          command = "pkill sworkstyle; sleep 2; exec sworkstyle -d &> /tmp/sworkstyle.log";
+          command = "exec_always pkill sworkstyle; exec_always sleep 2; exec_always sworkstyle -d &> /tmp/sworkstyle.log";
           always = true;
         }
         # {
@@ -108,25 +109,25 @@
 
       colors = lib.mkForce {
         focused = {
-          text = "#${base05}";
-          background = "#${base0D}"; # tab header on creation
-          border = "#${base0D}"; # tab header on creation
-          childBorder = "#${base0D}";
-          indicator = "#${base09}";
+          text = "#${base00}"; # tab header on creation
+          background = "#${base09}"; # tab header on creation
+          border = "#${base09}"; # tab header on creation
+          childBorder = "#${base0D}"; # own border color
+          indicator = "#${base09}"; # next window position indicator
         };
         focusedInactive = {
-          text = "#${base00}";
-          background = "#${base01}"; # tab header
-          border = "#${base01}"; # tab header
-          childBorder = "#${base01}";
-          indicator = "#${base01}";
+          text = "#${base00}"; # selected tab header
+          background = "#${base0D}"; # selected tab header
+          border = "#${base0D}"; # selected tab header
+          childBorder = "#${base01}"; # ?
+          indicator = "#${base01}"; # ?
         };
         unfocused = {
-          text = "#${base03}";
-          background = "#${base00}"; # tab header
-          border = "#${base00}"; # tab header
-          childBorder = "#${base01}";
-          indicator = "#${base01}";
+          text = "#${base05}"; # unselected tab header
+          background = "#${base01}"; # unselected tab header
+          border = "#${base01}"; # unselected tab header
+          childBorder = "#${base01}"; # ?
+          indicator = "#${base01}"; # ?
         };
         urgent = {
           text = "#${base05}";
@@ -229,6 +230,8 @@
         "${modifier}+k" = "focus up";
         "${modifier}+j" = "focus down";
 
+        "${modifier}+Alt+f" = "focus mode_toggle"; # floating and tiled layers
+
         "${modifier}+Ctrl+h" = "move left";
         "${modifier}+Ctrl+l" = "move right";
         "${modifier}+Ctrl+k" = "move up";
@@ -245,12 +248,8 @@
         "${modifier}+8" = "workspace number 8";
         "${modifier}+9" = "workspace number 9";
         "${modifier}+0" = "workspace number 10";
-        # "${modifier}+Shift+j" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
-        # "${modifier}+Shift+k" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
-        # "${modifier}+Shift+l" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
-        # "${modifier}+Shift+h" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
-        "${modifier}+u" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
-        "${modifier}+i" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
+        "${modifier}+Shift+j" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
+        "${modifier}+Shift+k" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
 
         # Move focused container to workspace
         "${modifier}+Ctrl+1" = "move container to workspace number 1";

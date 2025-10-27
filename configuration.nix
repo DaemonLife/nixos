@@ -176,6 +176,7 @@
     rocmPackages.clr.icd
     nautilus
 
+    mangohud # Steam performance GUI
     # fonts
     # font-awesome
     # cantarell-fonts
@@ -263,7 +264,19 @@
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    gamemode.enable = true; # micro compositor
+    gamemode = {
+      enable = true; # Set run game parameters in Steam: gamemoderun %command%
+      settings = {
+        custom = {
+          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+        };
+      };
+    };
+    gamescope = {
+      enable = true; # Using: gamescope
+      capSysNice = true;
+    };
     # ------ Steam ------
 
     foot.enable = true;
@@ -283,62 +296,14 @@
       settingsFile = "/etc/xray/config.json";
     };
 
-    # libinput = {
-    #   enable = true;
-    #   touchpad = {
-    #     tappingDragLock = false;
-    #     additionalOptions = ''
-    #       Option "TappingDrag" "false"
-    #     '';
-    #   };
-    # };
-    # samba = {
-    #   enable = true;
-    #   securityType = "user";
-    #   openFirewall = true;
-    #   settings = {
-    #     global = {
-    #       "workgroup" = "WORKGROUP";
-    #       "server string" = "smbnix";
-    #       "netbios name" = "smbnix";
-    #       "security" = "user";
-    #       #"use sendfile" = "yes";
-    #       #"max protocol" = "smb2";
-    #       # note: localhost is the ipv6 localhost ::1
-    #       "hosts allow" = "192.168.0. 127.0.0.1 localhost";
-    #       "hosts deny" = "0.0.0.0/0";
-    #       "guest account" = "nobody";
-    #       "map to guest" = "bad user";
-    #     };
-    #     "public" = {
-    #       "path" = "/mnt/Shares/Public";
-    #       comment = "Public samba share.";
-    #       "browseable" = "yes";
-    #       "read only" = "yes";
-    #       "guest ok" = "yes";
-    #       # "create mask" = "0644";
-    #       # "directory mask" = "0755";
-    #       # "force user" = "user";
-    #       # "force group" = "users";
-    #     };
-    #     "private" = {
-    #       "path" = "/mnt/Shares/Private";
-    #       "browseable" = "yes";
-    #       "read only" = "no";
-    #       "guest ok" = "no";
-    #       "create mask" = "0644";
-    #       "directory mask" = "0777";
-    #       "force user" = "user";
-    #       "force group" = "users";
-    #     };
-    #   };
-    # };
+    getty.loginOptions = "-- \\u";
+    getty.autologinUser = "user";
+    getty.autologinOnce = true;
 
     openssh.enable = true;
     flatpak.enable = true;
     gvfs.enable = true; # Mount, trash, and other functionalities
     tumbler.enable = true; # Thunar thumbnail support for images
-    gnome.gnome-keyring.enable = true; # for sway
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
     # xserver.displayManager.gdm.enable = true;

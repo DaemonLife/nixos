@@ -135,7 +135,7 @@
             format-ethernet = "net_{ipaddr}/{cidr}";
             format-linked = "net_(No IP)";
             format-disconnected = "net";
-            on-click = ''wifi on && $TERMINAL -a "floating_nmtui" --hold sh -c "nmcli dev wifi rescan && nmtui"'';
+            on-click = ''wifi on && $TERMINAL -a "floating_nmtui" sh -c "nmcli dev wifi rescan && nmtui"'';
             on-click-right = "wifi off";
             # interval = 2;
             tooltip = false;

@@ -1,15 +1,30 @@
 # Configuration for Lenovo
 {pkgs, ...}: {
-  # Imports
   imports = [./hardware-configuration.nix];
 
-  # Enable AMD video driver
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [rocmPackages.clr.icd amdvlk];
+  hardware = {
+    graphics = {
+      # radv driver an open-source Vulkan driver from freedesktop
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        intel-media-driver # can be remove ?
+        intel-ocl # openCL for all CPU (amd too)
+        rocmPackages.clr.icd # opencl
+      ];
+    };
+    amdgpu = {
+      amdvlk = {
+        # Warning: AMDVLK is being discontinued
+        # amdvlk driver an open-source Vulkan driver from AMD
+        # In the presence of both drivers, Steam will default to amdvlk. The amdvlk driver can be considered more correct regarding Vulkan specification implementation, but less performant than radv. However, this tradeoff between correctness and performance can sometimes make or break the gaming experience.
+        # To "reset" your driver to radv set either AMD_VULKAN_ICD = "RADV"
+        enable = false;
+        support32Bit.enable = false;
+      };
+      opencl.enable = true; # OpenCL support using ROCM
+    };
   };
-  hardware.amdgpu.opencl.enable = true;
   boot.initrd.kernelModules = ["amdgpu"];
   services.xserver.videoDrivers = ["amdgpu"];
 

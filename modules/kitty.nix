@@ -8,6 +8,10 @@
     # shellIntegration.enableZshIntegration = true;
     shellIntegration.enableFishIntegration = true;
 
+    font = {
+      name = "Unifont";
+    };
+
     keybindings = {
       "ctrl+shift+c" = "copy_or_interrupt";
       "ctrl+shift+v" = "paste_from_clipboard";

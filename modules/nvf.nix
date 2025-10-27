@@ -111,29 +111,53 @@
           key = "U";
           mode = ["n" "v"];
         }
-        {
-          action = "";
-          key = "<C-r>";
-          mode = ["n" "v" "i"];
-        }
+        # {
+        #   action = "";
+        #   key = "<C-r>";
+        #   mode = ["n" "v" "i"];
+        # }
         # --- new redo ---
 
         # --- new clipboard control ---
         {
           action = ''"+yl'';
-          key = "<space>y";
+          key = "<leader>y";
+          mode = ["n" "v"];
+          desc = "Save to system slipboard";
+        }
+        {
+          action = ''"+yyl'';
+          key = "<leader>yy";
           mode = ["n" "v"];
           desc = "Save to system slipboard";
         }
         {
           action = ''"+pl'';
-          key = "<space>p";
+          key = "<leader>p";
+          mode = ["n" "v"];
+          desc = "Paste from system slipboard";
+        }
+        {
+          action = ''"+Pl'';
+          key = "<leader>P";
           mode = ["n" "v"];
           desc = "Paste from system slipboard";
         }
         {
           action = ''"+dl'';
-          key = "<space>d";
+          key = "<leader>d";
+          mode = ["n" "v"];
+          desc = "Cut to system slipboard";
+        }
+        {
+          action = ''"+ddl'';
+          key = "<leader>dd";
+          mode = ["n" "v"];
+          desc = "Cut to system slipboard";
+        }
+        {
+          action = ''"+xl'';
+          key = "<leader>x";
           mode = ["n" "v"];
           desc = "Cut to system slipboard";
         }

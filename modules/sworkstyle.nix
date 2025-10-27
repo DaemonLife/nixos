@@ -10,11 +10,13 @@
     [matching]
     'org.telegram.desktop' = 'tg'
     'org.qutebrowser.qutebrowser' = 'qb'
+    'org.qbittorrent.qBittorrent' = 'torrent'
     '/^vi.*$/' = 'vi'
     '/^.*Nvim$/' = 'vi'
     'foot' = '$'
     'yazi' = 'y'
     'tst' = 'tst'
+
   '';
 in {
   home.packages = with pkgs; [swayest-workstyle];

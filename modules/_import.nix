@@ -1,6 +1,6 @@
 {...}: {
   imports = [
-    ./firefox.nix
+    ./librewolf/firefox.nix
     ./mpv.nix
     ./telegram-theme.nix
     ./git.nix

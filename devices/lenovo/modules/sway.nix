@@ -4,18 +4,23 @@
   lib,
   ...
 }: {
-  # lenovo output
-
+  # lenovo output, command: swaymsg -t get_outputs
   wayland.windowManager.sway = {
     config = rec {
       output = {
         # lenovo laptop
-        "BOE 0x0931 Unknown" = {
-          mode = "2240x1400@60.002Hz";
-          scale = "1.75"; # 2240 -> 1400
-          adaptive_sync = "enable";
-          render_bit_depth = "8"; # 6, 8, 10
-          position = "2560 380"; # laptop position for msk
+        "BOE 0x0931 Unknown" = let
+          w = 2240;
+          h = 1400;
+          scale = 1.75;
+          position_w = 2560;
+          position_h = 380;
+        in {
+          mode = "${toString w}x${toString h}@60.002Hz";
+          scale = "${toString scale}"; # 2240 -> 1400
+          adaptive_sync = "true";
+          render_bit_depth = "10"; # 6, 8, 10
+          position = "${toString position_w} ${toString position_h}"; # laptop position for msk
           color_profile = "icc /home/user/nix/devices/screens/LEN140WUXGA+_2023-03-29.icm";
         };
         # monitor gg
@@ -28,12 +33,17 @@
           position = "3840 0";
         };
         # monitor msk
-        "Shenzhen KTC Technology Group H27S17 0x00000001" = {
-          mode = "2560x1440@164.998Hz";
-          scale = "1";
-          adaptive_sync = "false";
-          render_bit_depth = "10"; # 6, 8, 10
-          position = "0 0"; # left position
+        "Shenzhen KTC Technology Group H27S17 0x00000001" = let
+          w = 2560;
+          h = 1440;
+          scale = 1.25;
+        in {
+          mode = "${toString w}x${toString h}@164.998Hz";
+          scale = "${toString scale}";
+          scale_filter = "smart";
+          adaptive_sync = "false"; # always off at monitor (but there is too...?)
+          render_bit_depth = "10"; # 6, 8, 10. Maybe flickings bc of 10 and 165Hz
+          position = "512 0"; # left position
           color_profile = "icc /home/user/nix/devices/screens/H27S17_2024-06-16.icm";
         };
       };
