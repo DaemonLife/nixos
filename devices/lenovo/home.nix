@@ -9,6 +9,16 @@
 
   # pkgs only for lenovo
   home.packages = with pkgs; [
+    # network
+    discord
+
+    # media
+    digikam
+    blender
+    unstable.darktable
+
+    # games
+    bottles
   ];
 
   dconf.settings = {

@@ -72,8 +72,6 @@
       ];
 
       gaps = {
-        # outer = 2;
-        # inner = 5;
         outer = 0;
         inner = 0;
         smartGaps = true;
@@ -93,57 +91,53 @@
 
       # swaymsg -t get_tree - show window's app_id and class
       floating.criteria = [
-        {
-          title = "Steam - Update News";
-        }
-        {
-          class = "Pavucontrol";
-        }
-        {
-          app_id = "floating_yazi";
-        }
-        {
-          app_id = "floating_nmtui";
-        }
+        {title = "Steam - Update News";}
+        {app_id = "rg.pulseaudio.pavucontrol";}
+        {title = "pulsemixer";}
+        {app_id = "floating_yazi";}
+        {app_id = "floating_nmtui";}
       ];
 
-      colors = lib.mkForce {
-        focused = {
-          text = "#${base00}"; # tab header on creation
-          background = "#${base09}"; # tab header on creation
-          border = "#${base09}"; # tab header on creation
-          childBorder = "#${base0D}"; # own border color
-          indicator = "#${base09}"; # next window position indicator
+      colors = let
+        default_border = "#${base02}";
+      in
+        lib.mkForce {
+          focused = {
+            text = "#${base00}"; # tab header on creation
+            background = "#${base09}"; # tab header on creation
+            border = "#${base09}"; # tab header on creation
+            childBorder = "#${base0D}"; # own border color
+            indicator = "#${base09}"; # next window position indicator
+          };
+          focusedInactive = {
+            text = "#${base00}"; # selected tab header
+            background = "#${base0D}"; # selected tab header
+            border = "#${base0D}"; # selected tab header
+            childBorder = default_border; # default border
+            indicator = default_border; # default border
+          };
+          unfocused = {
+            text = "#${base05}"; # unselected tab header
+            background = default_border; # unselected tab header
+            border = default_border; # unselected tab header
+            childBorder = default_border; # ?
+            indicator = default_border; # ?
+          };
+          urgent = {
+            text = "#${base05}";
+            background = default_border;
+            border = default_border;
+            childBorder = default_border;
+            indicator = default_border;
+          };
+          placeholder = {
+            text = "#${base05}";
+            background = "#${base00}";
+            border = "#${base00}";
+            childBorder = "#${base00}";
+            indicator = "#${base00}";
+          };
         };
-        focusedInactive = {
-          text = "#${base00}"; # selected tab header
-          background = "#${base0D}"; # selected tab header
-          border = "#${base0D}"; # selected tab header
-          childBorder = "#${base01}"; # ?
-          indicator = "#${base01}"; # ?
-        };
-        unfocused = {
-          text = "#${base05}"; # unselected tab header
-          background = "#${base01}"; # unselected tab header
-          border = "#${base01}"; # unselected tab header
-          childBorder = "#${base01}"; # ?
-          indicator = "#${base01}"; # ?
-        };
-        urgent = {
-          text = "#${base05}";
-          background = "#${base01}";
-          border = "#${base01}";
-          childBorder = "#${base01}";
-          indicator = "#${base01}";
-        };
-        placeholder = {
-          text = "#${base05}";
-          background = "#${base00}";
-          border = "#${base00}";
-          childBorder = "#${base00}";
-          indicator = "#${base00}";
-        };
-      };
 
       input = {
         "type:keyboard" = {

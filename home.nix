@@ -19,7 +19,6 @@
       VISUAL = "${EDITOR}";
       BROWSER = "qutebrowser";
       TERMINAL = "foot";
-      # MANGOHUD = 1; # Steam performance GUI
     };
     stateVersion = "24.05";
 
@@ -48,14 +47,10 @@
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
-      discord
 
       # Media
       gimp3-with-plugins
       helvum # A GTK patchbay for pipewire
-      digikam
-      blender
-      unstable.darktable
       imagemagick
       ffmpegthumbnailer
       mlt
@@ -78,7 +73,6 @@
       # Utils
       dconf-editor
       cool-retro-term
-      bottles
       veracrypt
       cmatrix # matrix in terminal
       wev # key events in wayland
@@ -152,16 +146,16 @@
       "org/gnome/desktop/wm/preferences" = {
         button-layout = ""; # disable top right buttons
       };
-      "org/gnome/desktop/peripherals/touchpad" = {
-        tap-and-drag = false;
-        tap-and-drag-lock = false;
-        natural-scroll = false;
-        accel-profile = "adaptive";
-      };
-      "org/gnome/desktop/peripherals/mouse" = {
-        natural-scroll = false;
-        accel-profile = "adaptive";
-      };
+      # "org/gnome/desktop/peripherals/touchpad" = {
+      #   tap-and-drag = false;
+      #   tap-and-drag-lock = false;
+      #   natural-scroll = false;
+      #   accel-profile = "adaptive";
+      # };
+      # "org/gnome/desktop/peripherals/mouse" = {
+      #   natural-scroll = false;
+      #   accel-profile = "adaptive";
+      # };
     };
   };
 }
