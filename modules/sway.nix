@@ -93,9 +93,9 @@
       floating.criteria = [
         {title = "Steam - Update News";}
         {app_id = "rg.pulseaudio.pavucontrol";}
-        {title = "pulsemixer";}
+        # {title = "pulsemixer";} # tailing bag
         {app_id = "floating_yazi";}
-        {app_id = "floating_nmtui";}
+        # {app_id = "floating_nmtui";} # too small window
       ];
 
       colors = let

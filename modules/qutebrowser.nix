@@ -5,6 +5,7 @@
 }: {
   programs.qutebrowser = with config.lib.stylix.colors; {
     enable = true;
+    loadAutoconfig = true;
 
     quickmarks = {};
 
@@ -23,12 +24,14 @@
       wttr = "https://wttr.in/{}?FMm"; # Weather. Type ":help" for helping
     };
 
-    greasemonkey = [
-      (pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/1d1be041a65c251692ee082eda64d2637edf6444/youtube_sponsorblock.js";
-        sha256 = "sha256-e3QgDPa3AOpPyzwvVjPQyEsSUC9goisjBUDMxLwg8ZE=";
-      })
-    ];
+    aliases = {
+      "q" = "close";
+      "qa" = "quit";
+      "w" = "session-save";
+      "wq" = "quit --save";
+      "dme" = "set colors.webpage.darkmode.enabled true";
+      "dmd" = "set colors.webpage.darkmode.enabled false";
+    };
 
     keyBindings = {
       normal = {
@@ -40,134 +43,116 @@
       };
     };
 
-    keyMappings = {
-      "й" = "q";
-      "Й" = "Q";
-      "ц" = "w";
-      "Ц" = "W";
-      "у" = "e";
-      "У" = "E";
-      "к" = "r";
-      "К" = "R";
-      "е" = "t";
-      "Е" = "T";
-      "н" = "y";
-      "Н" = "Y";
-      "г" = "u";
-      "Г" = "U";
-      "ш" = "i";
-      "Ш" = "I";
-      "щ" = "o";
-      "Щ" = "O";
-      "з" = "p";
-      "З" = "P";
-      "х" = "[";
-      "Х" = "{";
-      "ф" = "a";
-      "Ф" = "A";
-      "ы" = "s";
-      "Ы" = "S";
-      "в" = "d";
-      "В" = "D";
-      "а" = "f";
-      "А" = "F";
-      "п" = "g";
-      "П" = "G";
-      "р" = "h";
-      "Р" = "H";
-      "О" = "J";
-      "о" = "j";
-      "Л" = "K";
-      "л" = "k";
-      "д" = "l";
-      "Д" = "L";
-      "ж" = ";";
-      "Ж" = ":";
-      "я" = "z";
-      "Я" = "Z";
-      "ч" = "x";
-      "Ч" = "X";
-      "с" = "c";
-      "С" = "C";
-      "м" = "v";
-      "М" = "V";
-      "и" = "b";
-      "И" = "B";
-      "т" = "n";
-      "Т" = "N";
-      "ь" = "m";
-      "Ь" = "M";
-      "б" = ",";
-      "Б" = "<";
-      "ю" = ".";
-      "Ю" = ">";
-    };
-
-    aliases = {
-      "q" = "close";
-      "qa" = "quit";
-      "w" = "session-save";
-      "wq" = "quit --save";
-      "dme" = "set colors.webpage.darkmode.enabled true";
-      "dmd" = "set colors.webpage.darkmode.enabled false";
-    };
-
-    loadAutoconfig = true;
+    greasemonkey = [
+      (pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/1d1be041a65c251692ee082eda64d2637edf6444/youtube_sponsorblock.js";
+        sha256 = "sha256-e3QgDPa3AOpPyzwvVjPQyEsSUC9goisjBUDMxLwg8ZE=";
+      })
+    ];
 
     settings = {
-      content.blocking.method = "both";
-      content.blocking.whitelist = [];
-      content.blocking.adblock.lists = [
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2020.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2021.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2022.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2023.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2024.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2025.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/badware.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/privacy.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/quick-fixes.txt"
-        "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/unbreak.txt"
-        "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/annoyances-cookies.txt"
-        "https://easylist.to/easylist/easylist.txt"
-        "https://easylist.to/easylist/easyprivacy.txt"
-        "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
-        "https://easylist.to/easylist/fanboy-social.txt"
-        "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-domains.txt"
-        "https://github.com/easylist/easylist/raw/refs/heads/master/easylist_cookie/easylist_cookie_general_block.txt"
-        "https://github.com/easylist/easylist/raw/refs/heads/master/easylist_cookie/easylist_cookie_general_hide.txt"
-        "https://easylist-downloads.adblockplus.org/advblock.txt"
-        "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
-        "https://easylist-downloads.adblockplus.org/bitblock.txt"
-        "https://easylist-downloads.adblockplus.org/cntblock.txt"
-        "https://easylist-downloads.adblockplus.org/easylist.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_general_block.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_general_hide.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_international_specific_hide.txt"
-        "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_international_specific_block.txt"
-      ];
-
       auto_save.session = true;
-      scrolling.smooth = false;
-      content.autoplay = false;
+
+      content = {
+        autoplay = false;
+
+        blocking = {
+          method = "both";
+          whitelist = [];
+          adblock.lists = [
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2020.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2021.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2022.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2023.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2024.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2025.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/badware.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/privacy.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/quick-fixes.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/unbreak.txt"
+            "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/annoyances-cookies.txt"
+            "https://easylist.to/easylist/easylist.txt"
+            "https://easylist.to/easylist/easyprivacy.txt"
+            "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
+            "https://easylist.to/easylist/fanboy-social.txt"
+            "https://malware-filter.gitlab.io/malware-filter/urlhaus-filter-domains.txt"
+            "https://github.com/easylist/easylist/raw/refs/heads/master/easylist_cookie/easylist_cookie_general_block.txt"
+            "https://github.com/easylist/easylist/raw/refs/heads/master/easylist_cookie/easylist_cookie_general_hide.txt"
+            "https://easylist-downloads.adblockplus.org/advblock.txt"
+            "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
+            "https://easylist-downloads.adblockplus.org/bitblock.txt"
+            "https://easylist-downloads.adblockplus.org/cntblock.txt"
+            "https://easylist-downloads.adblockplus.org/easylist.txt"
+            "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_general_block.txt"
+            "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_general_hide.txt"
+            "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_international_specific_hide.txt"
+            "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/easylist_cookie/easylist_cookie_international_specific_block.txt"
+          ];
+        };
+      };
 
       window = {
         hide_decoration = false; # with true there is error with colors on wayland
       };
 
+      scrolling = {
+        bar = "always";
+        smooth = false;
+      };
+
       tabs = {
+        show = "multiple";
         favicons.scale = 0.7;
         favicons.show = "always"; # always, never or pinned
-        # padding = { one string format!? no:/?
-        #   "bottom" = 0;
-        #   "left" = 2;
-        #   "right" = 2;
-        #   "top" = 0;
-        # };
-        show = "multiple";
         title.format = "{audio}{current_title}";
         title.format_pinned = "{index}";
         close_mouse_button = "right";
+      };
+
+      colors = {
+        webpage = {
+          preferred_color_scheme = "dark";
+          bg = "#${base01}";
+          darkmode.enabled = true;
+        };
+      };
+
+      hints.radius = 0;
+
+      qt.highdpi = false;
+      zoom = {
+        default = "125%";
+        text_only = true;
+        levels = [
+          "25%"
+          "33%"
+          "50%"
+          "67%"
+          "75%"
+          "90%"
+          "100%"
+          "110%"
+          "120%"
+          "130%"
+          "140%"
+          "150%"
+          "175%"
+          "190%"
+          "200%"
+          "225%"
+          "250%"
+          "300%"
+          "350%"
+          "400%"
+          "500%"
+        ];
+      };
+
+      fonts = {
+        web.size = {
+          default_fixed = 20;
+          minimum = 20;
+        };
       };
 
       fileselect = {
@@ -177,54 +162,17 @@
         single_file.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}"];
       };
 
-      colors = {webpage.preferred_color_scheme = "dark";};
-
-      qt = {highdpi = false;};
-      zoom.default = "125%";
-      zoom.text_only = true;
-      zoom.levels = [
-        "25%"
-        "33%"
-        "50%"
-        "67%"
-        "75%"
-        "90%"
-        "100%"
-        "110%"
-        "120%"
-        "130%"
-        "140%"
-        "150%"
-        "175%"
-        "190%"
-        "200%"
-        "225%"
-        "250%"
-        "300%"
-        "350%"
-        "400%"
-        "500%"
-      ];
-      fonts = {
-        web.size = {
-          default_fixed = 20;
-          minimum = 20;
-        };
-      };
-      hints.radius = 0;
-      # hints.padding = ''{"bottom": 0, "left": 3, "right": 3, "top": 0}'';
-      # Leave insert mode if a non-editable element is clicked.
-      input.insert_mode.auto_leave = true;
-      # Leave insert mode when starting a new page load.
-      input.insert_mode.leave_on_load = true;
-      # Automatically enter insert mode if an editable element is focused after loading the page.
-      input.insert_mode.auto_load = false;
-
       editor.command = ["foot" "sh" "-c" "vi" "{file}"];
+
+      input = {
+        insert_mode.auto_leave = true; # if a non-editable element is clicked.
+        insert_mode.leave_on_load = true;
+        insert_mode.auto_load = false; # if an editable element is focused after loading the page.
+      };
     };
 
+    # --- EXTRA OPTIONS ---
     extraConfig = ''
-
       # cool setting for fix exit from insert mode - no cursor and active form!
       config.bind('<Escape>', 'mode-leave ;; jseval -q document.activeElement.blur()', mode='insert')
 
@@ -502,6 +450,12 @@
 
       # Background color of pinned selected even tabs.
       c.colors.tabs.pinned.selected.even.bg = '#${base0D}'
+
+      # --- RUS KEYMAP SUPPORT ---
+      config.unbind('.')
+      en_keys = "qwertyuiop[]asdfghjkl;'zxcvbnm,./"+'QWERTYUIOP{}ASDFGHJKL:"ZXCVBNM<>?'
+      ru_keys = 'йцукенгшщзхъфывапролджэячсмитьбю.'+'ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,'
+      c.bindings.key_mappings.update(dict(zip(ru_keys, en_keys)))
     '';
   };
 }
