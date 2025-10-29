@@ -375,6 +375,8 @@
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
+    allowedTCPPorts = [6567];
+    allowedUDPPorts = [6567];
     # allowedTCPPorts = [8080];
     # allowedUDPPorts = [8080];
   };

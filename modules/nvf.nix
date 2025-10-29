@@ -13,87 +13,186 @@
       options = {
         shiftwidth = 2;
         tabstop = 4;
-        titlestring = "vi";
         title = true;
+        titlestring = "vi";
       };
 
+      autocmds = [
+        {
+          event = ["FileType"];
+          pattern = ["markdown"];
+          # group = "UserSetup";
+          desc = "Set spellcheck for Markdown";
+          command = "setlocal spell";
+          # once = true; # Run only once per session trigger. EXAMPLE
+        }
+      ];
+
+      # Disable lspconfig error annoying message
+      luaConfigPre = let
+        msg = ''is deprecated, use vim.lsp.config'';
+      in ''
+        vim.notify = function(msg, level, opts)
+          if type(msg) == "string" and msg:match("${msg}") then
+            return
+          end
+          vim.api.nvim_echo({{msg}}, true, {})
+        end
+      '';
+
       lsp = {
-        formatOnSave = true;
         enable = true;
+        formatOnSave = true;
       };
 
       languages = {
+        enableFormat = true;
         enableTreesitter = true;
         enableExtraDiagnostics = true;
-        enableFormat = true;
+
         nix.enable = true;
+        html.enable = true;
+        # css.enable = true; # prettier error again
+        lua.enable = true;
         bash.enable = true;
         markdown.enable = true;
         python.enable = true;
       };
 
-      autocomplete = {
-        enableSharedCmpSources = true;
-        blink-cmp = {
+      visuals = {
+        # nvim-scrollbar.enable = true;
+        fidget-nvim.enable = true; # new notification window
+        cellular-automaton.enable = true; # fun animation
+        indent-blankline = {
           enable = true;
-          friendly-snippets.enable = true;
+          setupOpts.indent.char = "┆";
         };
       };
 
-      visuals.indent-blankline = {
-        enable = true;
-        setupOpts.indent.char = "┆";
-      };
-      visuals.nvim-scrollbar.enable = true;
-
       ui = {
-        borders.enable = true; # testing
-        colorizer.enable = false;
-        # fastaction.enable = true;
-        #illuminate.enable = true;
-        smartcolumn.enable = false;
+        borders.enable = true;
+        colorizer = {
+          enable = true;
+        };
+        breadcrumbs = {
+          enable = true;
+          navbuddy.enable = true; # table of contents for code
+          lualine.winbar.enable = false; # disable stupid top bar in lualine
+          lualine.winbar.alwaysRender = false;
+        };
+        illuminate.enable = true; # for same words under the cursor
+      };
+      statusline.lualine = {
+        enable = true;
+        icons.enable = false;
+        globalStatus = false;
+        activeSection = {
+          a = ["'mode'"];
+          b = ["{'filename', symbols = {modified = '~', readonly = 'READONLY'}}"];
+          c = ["'branch'" "{'diff', symbols = {added = '+', modified = '~', removed = '-'}}"];
+          x = ["'diagnostics'" "'encoding'" "'fileformat'"];
+          y = ["'progress'"];
+          z = ["'location'"];
+        };
       };
 
+      notify.nvim-notify.enable = true;
+      mini.comment.enable = true;
+
+      autopairs.nvim-autopairs.enable = true;
+      autocomplete = {
+        nvim-cmp = {
+          enable = true;
+          setupOpts = {
+            preselect = "none";
+            completion.completeopt = "menu,menuone,noinsert,noselect";
+          };
+        };
+      };
+      snippets.luasnip.enable = true;
       diagnostics = {
         enable = true;
         nvim-lint.enable = true;
       };
 
-      autopairs.nvim-autopairs.enable = true;
-      notify.nvim-notify.enable = true;
-
       binds = {
         cheatsheet.enable = true;
-        whichKey.enable = true;
-      };
-
-      mini.comment.enable = true;
-
-      utility = {
-        # multicursors.enable = true;
-        nvim-biscuits.enable = true;
-        nvim-biscuits.setupOpts = {
-          cursor_line_only = true;
+        whichKey = {
+          enable = true;
+          setupOpts = {
+            # “none”, “single”, “double”, “rounded”, “solid”, “shadow”
+            win.border = "single";
+            preset = "classic";
+            # triggers_blacklist = {
+            #   n = ["d" "y"];
+            # };
+          };
         };
       };
 
+      git = {
+        enable = true;
+        gitsigns = {
+          enable = true;
+          # codeActions.enable = false;
+        };
+      };
+
+      minimap = {
+        minimap-vim.enable = true;
+        # codewindow.enable = true; # lighter, faster, and uses lua for configuration
+      };
+
+      utility = {
+        multicursors.enable = true;
+        surround.enable = true;
+        images.image-nvim.enable = false;
+        nvim-biscuits = {
+          enable = true;
+          setupOpts.cursor_line_only = true;
+        };
+      };
+
+      notes = {
+        todo-comments.enable = true;
+      };
+
+      # -------- EXTRA PLUGINS --------
+
+      extraPlugins = with pkgs.vimPlugins; {
+        # \/ standard plugin setup example
+        # aerial = {
+        #   package = aerial-nvim;
+        #   setup = "require('aerial').setup {}";
+        # };
+      };
+
       lazy.plugins = {
+        # \/ lazy plugin setup
         "zen-mode.nvim" = {
           package = pkgs.vimPlugins.zen-mode-nvim;
           setupModule = "zen-mode";
-          cmd = ["ZenMode"];
-          lazy = true;
           setupOpts = {
             window = {
               backdrop = 1; # disable shadow
               width = 80; # max line lenght
             };
           };
+          after = "print('Zen loaded')";
+
+          # Explicitly mark plugin as lazy. You don't need this
+          # if you define one of the trigger "events" below
+          lazy = true;
+          cmd = ["ZenMode"]; # load on command
+          # event = ["BufEnter"]; # load on event (EXAMPLE!)
+          # event = [{event = "User"; pattern = "LazyFile";}]; # LazyFile - alias for open any file
         };
       };
 
+      # -------- KEYMAPS --------
+
       keymaps = [
-        # disable space
+        # --- disable space ---
         {
           action = "";
           key = "<space>";
@@ -111,59 +210,59 @@
           key = "U";
           mode = ["n" "v"];
         }
-        # {
-        #   action = "";
-        #   key = "<C-r>";
-        #   mode = ["n" "v" "i"];
-        # }
-        # --- new redo ---
 
         # --- new clipboard control ---
         {
           action = ''"+yl'';
           key = "<leader>y";
           mode = ["n" "v"];
+          silent = true;
           desc = "Save to system slipboard";
         }
         {
           action = ''"+yyl'';
           key = "<leader>yy";
           mode = ["n" "v"];
+          silent = true;
           desc = "Save to system slipboard";
         }
         {
           action = ''"+pl'';
           key = "<leader>p";
           mode = ["n" "v"];
+          silent = true;
           desc = "Paste from system slipboard";
         }
         {
           action = ''"+Pl'';
           key = "<leader>P";
           mode = ["n" "v"];
+          silent = true;
           desc = "Paste from system slipboard";
         }
         {
           action = ''"+dl'';
           key = "<leader>d";
           mode = ["n" "v"];
+          silent = true;
           desc = "Cut to system slipboard";
         }
         {
           action = ''"+ddl'';
           key = "<leader>dd";
           mode = ["n" "v"];
+          silent = true;
           desc = "Cut to system slipboard";
         }
         {
           action = ''"+xl'';
           key = "<leader>x";
           mode = ["n" "v"];
+          silent = true;
           desc = "Cut to system slipboard";
         }
-        # --- new clipboard control ---
 
-        # --- new comment control ---
+        # --- new comment control (not works) ---
         # {
         #   action = "gcc";
         #   key = "<space>c";
@@ -180,7 +279,6 @@
         #   noremap = false;
         #   silent = true;
         # }
-        # --- new comment control ---
 
         # --- soft string jumping ---
         {
@@ -193,7 +291,14 @@
           key = "k";
           mode = ["n" "v"];
         }
-        # --- soft string jumping ---
+
+        # --- zenmode plugin ---
+        {
+          action = ":ZenMode<CR>";
+          key = "<leader>z";
+          mode = ["n" "v"];
+          nowait = true;
+        }
 
         # --- rus layout support ---
         {
@@ -506,7 +611,6 @@
           key = "Я";
           mode = ["n" "v"];
         }
-        # --- rus layout support ---
       ];
     };
   };

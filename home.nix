@@ -48,6 +48,7 @@
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
+      discord
 
       # Media
       gimp3-with-plugins
@@ -100,7 +101,7 @@
       portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
-      mindustry-wayland
+      unstable.mindustry-wayland
       # dwarf-fortress-packages.dwarf-fortress-full
 
       libreoffice

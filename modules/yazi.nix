@@ -358,22 +358,23 @@
         };
 
         # Color block on the left side separator line in the filename.
-        # marker_copied = {
-        #   bg = "#${base0B}";
-        #   fg = "#${base0B}";
-        # };
-        # marker_cut = {
-        #   bg = "#${base0E}";
-        #   fg = "#${base0E}";
-        # };
-        # marker_marked = { # SEL/V mode
-        #   bg = "#${base0F}";
-        #   fg = "#${base0F}";
-        # };
-        # marker_selected = {
-        #   bg = "#${base0A}";
-        #   fg = "#${base0A}";
-        # };
+        marker_copied = {
+          bg = "#${base0B}";
+          fg = "#${base0B}";
+        };
+        marker_cut = {
+          bg = "#${base08}";
+          fg = "#${base08}";
+        };
+        marker_marked = {
+          # SEL/V mode
+          bg = "#${base03}";
+          fg = "#${base03}";
+        };
+        marker_selected = {
+          bg = "#${base0A}";
+          fg = "#${base0A}";
+        };
       };
 
       mode = {
