@@ -61,7 +61,7 @@
 
       visuals = {
         # nvim-scrollbar.enable = true;
-        fidget-nvim.enable = true; # new notification window
+        # fidget-nvim.enable = true; # new notification window
         cellular-automaton.enable = true; # fun animation
         indent-blankline = {
           enable = true;

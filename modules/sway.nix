@@ -35,7 +35,7 @@
     wrapperFeatures.gtk = true; # gtk apps support
 
     extraConfig = ''
-      focus_on_window_activation focus
+      popup_during_fullscreen smart
       titlebar_border_thickness 3
       floating_minimum_size 500 x 450
     '';
@@ -45,6 +45,7 @@
         followMouse = "yes";
         mouseWarping = true;
         wrapping = "yes";
+        newWindow = "urgent"; # no autofocus on new windows
       };
 
       modifier = "Mod4";
@@ -62,13 +63,9 @@
         {command = "wl-paste -t text --watch clipman store --no-persist";}
         {command = "exec bash $HOME/nix/scripts/swayidle.sh";}
         {
-          command = "exec_always pkill sworkstyle; exec_always sleep 2; exec_always sworkstyle -d &> /tmp/sworkstyle.log";
+          command = "pkill sworkstyle; sleep 2; exec sworkstyle -d &> /tmp/sworkstyle.log";
           always = true;
         }
-        # {
-        #   command = "exec_always pgrep -x swaywsr > /dev/null && pkill -x swaywsr; exec ${pkgs.swaywsr}/bin/swaywsr -nr";
-        #   always = true;
-        # }
       ];
 
       gaps = {
@@ -83,8 +80,20 @@
         titlebar = false;
         commands = [
           {
-            command = "title_format \"kitty: %title\"";
             criteria.app_id = "kitty";
+            command = "title_format \"kitty: %title\"";
+          }
+          {
+            criteria.app_id = "org.telegram.desktop";
+            command = "move container to workspace 1";
+          }
+          {
+            criteria.class = "^[Ss]team.*$";
+            command = "move container to workspace 9";
+          }
+          {
+            criteria.class = "^[Ss]team_app_.*$";
+            command = "move container to workspace 10";
           }
         ];
       };
@@ -93,7 +102,7 @@
       floating.criteria = [
         {title = "Steam - Update News";}
         {app_id = "rg.pulseaudio.pavucontrol";}
-        # {title = "pulsemixer";} # tailing bag
+        # {title = "pulsemixer";} # tailing bug
         {app_id = "floating_yazi";}
         # {app_id = "floating_nmtui";} # too small window
       ];

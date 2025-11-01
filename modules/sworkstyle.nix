@@ -5,18 +5,17 @@
 }: let
   conf = ''
     fallback = '?'
-    separator = '-'
+    separator = ' '
 
     [matching]
     'org.telegram.desktop' = 'tg'
     'org.qutebrowser.qutebrowser' = 'qb'
     'org.qbittorrent.qBittorrent' = 'torrent'
+    '/^.*[Ss]team.*$/' = 'steam'
     '/^vi.*$/' = 'vi'
     '/^.*Nvim$/' = 'vi'
     'foot' = '$'
     'yazi' = 'y'
-    'tst' = 'tst'
-
   '';
 in {
   home.packages = with pkgs; [swayest-workstyle];

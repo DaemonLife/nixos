@@ -13,8 +13,8 @@
     discord
 
     # media
-    digikam
-    blender
+    unstable.digikam
+    # blender
     unstable.darktable
 
     # games

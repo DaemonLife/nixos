@@ -17,6 +17,7 @@
     ./GIMP.nix
     ./nchat.nix
     ./nomacs.nix
+    ./cli-chess.nix
 
     # --- EDITOR ---
     # nvf acivated in flake.nix !!! # best!

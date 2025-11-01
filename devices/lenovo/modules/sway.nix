@@ -41,7 +41,7 @@
           mode = "${toString w}x${toString h}@164.998Hz";
           scale = "${toString scale}";
           scale_filter = "smart";
-          adaptive_sync = "false"; # always off at monitor (but there is too...?)
+          adaptive_sync = "true"; # always off at monitor (but there is too...?)
           render_bit_depth = "10"; # 6, 8, 10. Maybe flickings bc of 10 and 165Hz
           position = "512 0"; # left position
           color_profile = "icc /home/user/nix/devices/screens/H27S17_2024-06-16.icm";

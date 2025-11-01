@@ -53,12 +53,12 @@
       helvum # A GTK patchbay for pipewire
       imagemagick
       ffmpegthumbnailer
-      mlt
       pavucontrol # audio gui control
       alsa-utils # audio volume control (?)
       pulsemixer # cli pulse adudio control
       nomacs-qt6 # image viewer
       kodi-wayland
+      obs-studio
 
       # Theming
       vimix-icon-theme # cursor icon
@@ -69,6 +69,7 @@
       ## Fonts
       unifont_upper
       unifont-csur
+      # https://github.com/ChrisBuilds/terminaltexteffects
 
       # Utils
       dconf-editor
