@@ -11,7 +11,7 @@
 
   imports = [
     ./modules/stylix.nix
-    ./modules/nvf.nix
+    ./modules/editor/nvf.nix
   ];
 
   # stylix.targets.grub.enable = false;

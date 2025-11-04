@@ -75,6 +75,9 @@ with config.lib.stylix.colors; let
     }
   '';
 in {
+  home.packages = with pkgs; [
+    (writeShellScriptBin "chess" (builtins.readFile ./nix-shell/run_chess.sh))
+  ];
   home.activation.cli-chess_style = lib.hm.dag.entryAfter ["writeBoundary"] ''
 
     mkdir -p $HOME/.config/cli-chess
