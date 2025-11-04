@@ -25,6 +25,7 @@
     slurp # screenshot functionality
     wl-clipboard # wl-copy and wl-paste
     jq # json parser for some scripts
+    nodejs # for run javascript
   ];
 
   wayland.windowManager.sway = with config.lib.stylix.colors; {

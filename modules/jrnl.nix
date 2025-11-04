@@ -1,14 +1,13 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   confTemplate = ''
     colors:
       body: none
-      date: white 
-      tags: blue 
+      date: white
+      tags: blue
       title: cyan
     default_hour: 9
     default_minute: 0
-    editor: vi 
+    editor: vi
     encrypt: false
     highlight: true
     indent_character: '|'
@@ -25,7 +24,7 @@ let
   '';
 
   # Создаем Nix-деривацию, которая выполнит команду и извлечет версию
-  jrnlVersion = pkgs.runCommand "jrnl-version-extractor" { buildInputs = [ pkgs.jrnl ]; } ''
+  jrnlVersion = pkgs.runCommand "jrnl-version-extractor" {buildInputs = [pkgs.jrnl];} ''
     # Выполняем jrnl --version и получаем первую строку (например, "jrnl v4.2")
     version_output="$(${pkgs.jrnl}/bin/jrnl --version | head -n 1)"
     # Используем awk для извлечения последнего поля (т.е. самой версии "v4.2")
@@ -36,8 +35,10 @@ let
   actualJrnlVersion = builtins.readFile jrnlVersion;
 
   # Объединяем шаблон с реальной версией, заменяя плейсхолдер
-  finalConf = builtins.replaceStrings [ "<VERSION_PLACEHOLDER>" ] [ actualJrnlVersion ] confTemplate;
-in
-{
+  finalConf = builtins.replaceStrings ["<VERSION_PLACEHOLDER>"] [actualJrnlVersion] confTemplate;
+in {
+  home.packages = with pkgs; [
+    jrnl
+  ];
   home.file.".config/jrnl/jrnl.yaml".text = finalConf;
 }

@@ -208,29 +208,35 @@
         {
           action = "<cmd>redo<CR><CR>";
           key = "U";
-          mode = ["n" "v"];
+          mode = ["n"];
+          silent = true;
+          nowait = true;
+          desc = "Redo";
         }
 
         # --- new clipboard control ---
         {
           action = ''"+yl'';
           key = "<leader>y";
-          mode = ["n" "v"];
+          mode = ["v"];
           silent = true;
-          desc = "Save to system slipboard";
+          nowait = true;
+          desc = "cp to system";
         }
         {
           action = ''"+yyl'';
           key = "<leader>yy";
-          mode = ["n" "v"];
+          mode = ["n"];
           silent = true;
-          desc = "Save to system slipboard";
+          nowait = true;
+          desc = "cp to system";
         }
         {
           action = ''"+pl'';
           key = "<leader>p";
           mode = ["n" "v"];
           silent = true;
+          nowait = true;
           desc = "Paste from system slipboard";
         }
         {
@@ -238,47 +244,33 @@
           key = "<leader>P";
           mode = ["n" "v"];
           silent = true;
+          nowait = true;
           desc = "Paste from system slipboard";
         }
         {
           action = ''"+dl'';
           key = "<leader>d";
-          mode = ["n" "v"];
+          mode = ["v"];
           silent = true;
-          desc = "Cut to system slipboard";
+          nowait = true;
+          desc = "Cut to system";
         }
         {
           action = ''"+ddl'';
           key = "<leader>dd";
-          mode = ["n" "v"];
+          mode = ["n"];
           silent = true;
-          desc = "Cut to system slipboard";
+          nowait = true;
+          desc = "Cut line to system";
         }
         {
           action = ''"+xl'';
           key = "<leader>x";
           mode = ["n" "v"];
           silent = true;
-          desc = "Cut to system slipboard";
+          nowait = true;
+          desc = "Cut to system";
         }
-
-        # --- new comment control (not works) ---
-        # {
-        #   action = "gcc";
-        #   key = "<space>c";
-        #   # mode = "n";
-        #   mode = ["n" "v"];
-        #   noremap = false;
-        #   silent = true;
-        # }
-        # {
-        #   action = "gc";
-        #   key = "<space>c";
-        #   # mode = "v";
-        #   mode = ["n" "v"];
-        #   noremap = false;
-        #   silent = true;
-        # }
 
         # --- soft string jumping ---
         {
@@ -297,6 +289,7 @@
           action = ":ZenMode<CR>";
           key = "<leader>z";
           mode = ["n" "v"];
+          silent = true;
           nowait = true;
         }
 

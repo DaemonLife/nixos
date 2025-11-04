@@ -299,7 +299,7 @@
       settingsFile = "/etc/xray/config.json";
     };
 
-    mpd.enable = true; # music daemon
+    # mpd.enable = true; # music daemon
     colord.enable = false;
 
     # auto username in tty

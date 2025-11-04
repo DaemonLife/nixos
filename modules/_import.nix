@@ -2,9 +2,10 @@
   imports = [
     ./librewolf/firefox.nix
     ./mpv.nix
-    ./telegram-theme.nix
+    ./telegram.nix
     ./git.nix
     ./cmus.nix
+    # ./rmpc.nix
     ./jrnl.nix
     ./rtorrent.nix
     ./qutebrowser.nix
@@ -13,12 +14,11 @@
     ./gtk.nix
     ./fzf.nix
     ./stylix.nix
-    ./joplin-cli.nix
+    ./joplin.nix
     ./GIMP.nix
     ./nchat.nix
     ./nomacs.nix
     ./cli-chess.nix
-    ./rmpc.nix
 
     # --- EDITOR ---
     # nvf acivated in flake.nix !!! # best!

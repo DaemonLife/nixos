@@ -4,8 +4,42 @@
   pkgs,
   ...
 }:
-with config.lib.stylix.colors;
-let
+with config.lib.stylix.colors; let
+  telegram_experimental_options = ''
+    {
+        "send-large-photos": true
+    }
+  '';
+  telegram_binds = ''
+    // This is a list of changed shortcuts for Telegram Desktop
+    // You can edit them in Settings > Chat Settings > Keyboard Shortcuts.
+    [
+        {
+            "command": "search",
+            "keys": "alt+/"
+        },
+        {
+            "command": "show_contacts",
+            "keys": "alt+c"
+        },
+        {
+            "command": "next_chat",
+            "keys": "alt+j"
+        },
+        {
+            "command": "previous_chat",
+            "keys": "alt+k"
+        },
+        {
+            "command": "next_folder",
+            "keys": "alt+shift+j"
+        },
+        {
+            "command": "previous_folder",
+            "keys": "alt+shift+k"
+        }
+    ]
+  '';
 
   telegram_style = ''
     // --- Main UI ---
@@ -101,7 +135,7 @@ let
     titleButtonCloseBgActiveOver: titleButtonCloseBgOver;
     titleButtonCloseFgActiveOver: titleButtonCloseFgOver;
 
-    // --- Scroll in CHAT LIST --- 
+    // --- Scroll in CHAT LIST ---
     // bar itself
     scrollBarBg: #${base04};
     scrollBarBgOver: #${base05};
@@ -109,7 +143,7 @@ let
     scrollBg: #${base01};
     scrollBgOver: #${base02};
 
-    // --- Scroll in CHAT --- 
+    // --- Scroll in CHAT ---
     // bar itself
     historyScrollBarBg: scrollBarBg;
     historyScrollBarBgOver: scrollBarBgOver;
@@ -118,7 +152,7 @@ let
     historyScrollBgOver: scrollBgOver;
 
     // --- Media player ---
-    windowBgActive: #${base0D}; // player progress line fg in chat and (NO WAY!!!...) sliders color, blue default 
+    windowBgActive: #${base0D}; // player progress line fg in chat and (NO WAY!!!...) sliders color, blue default
     mediaviewPlaybackProgressFg: #${base04}; // player progress line bg in chat and FUCK DAMN time clock in full screen video
 
     // --- Top compact media player ---
@@ -538,12 +572,13 @@ let
     dialogsOnlineBadgeFgActive: #${base08};
     menuBgOver: #${base02};
   '';
+in {
+  home.packages = with pkgs; [
+    telegram-desktop
+  ];
 
-in
-{
-
-  home.activation.telegram_style = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-
+  home.activation.telegram_style = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    # create theme
     cd $HOME/.config && echo "${telegram_style}" > tmp_colors.tdesktop-theme;
     sed '/^#/d' tmp_colors.tdesktop-theme > colors.tdesktop-theme;
     ${pkgs.imagemagick}/bin/magick -size 2960x2960 xc:#${base02} background.jpg;
@@ -551,5 +586,12 @@ in
     mv telegram-base16.zip telegram-base16.tdesktop-theme;
     rm -rf colors.tdesktop-theme tmp_colors.tdesktop-theme background.jpg;
 
+    # create binds
+    mkdir -p $HOME/.local/share/TelegramDesktop/tdata &&
+    cd $HOME/.local/share/TelegramDesktop/tdata &&
+    echo '${telegram_binds}' > shortcuts-custom.json
+
+    # create experimental options
+    echo '${telegram_experimental_options}' > experimental_options.json
   '';
 }

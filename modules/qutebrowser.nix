@@ -41,6 +41,7 @@
 
         # default setup for esc and unfocus all elements (*.blur)
         "<Escape>" = "clear-keychain ;; search ;; fullscreen --leave ;; jseval -q document.activeElement.blur()";
+        "<Ctrl+v>" = "nop";
       };
     };
 

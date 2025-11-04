@@ -1,9 +1,9 @@
-{ ... }:
-{
+{...}: {
   programs.cmus = {
     enable = true;
 
-    extraConfig = # sh
+    extraConfig =
+      # sh
       ''
         # --- COLORS ---
         # set color_cmdline_attr=default # doint nothing
@@ -68,6 +68,8 @@
         bind -f common c toggle continue
         bind -f common space player-pause
         bind -f common q quit
+        # remove played file
+        bind -f common D shell sh -c 'f="$(cmus-remote -Q | sed -n "s/^file //p")"; [ -n "$f" ] && trash-put "$f" && cmus-remote -C update'
       '';
   };
 }

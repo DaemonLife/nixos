@@ -1,6 +1,9 @@
-{ ... }: {
+{pkgs, ...}: {
+  home.packages = with pkgs; [
+    joplin
+  ];
 
-  # evil keymap
+  # evil keymap for joplin-cli
   home.file.".config/joplin/keymap.json".text = ''
     [
     	{ "keys": [":"], "type": "function", "command": "enter_command_line_mode" },

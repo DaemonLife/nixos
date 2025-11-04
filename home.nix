@@ -27,23 +27,18 @@
     # --------------------------------
 
     packages = with pkgs; [
-      wl-clipboard
-      unzip
       python3
-      nodejs # for run javascript
       pipx
       exiftool
       imagemagick
       zip
+      unzip
       fzy
       dua # disk usage TUI tool. Run: dua i
 
       # Network
       overskride # bluetooth gui
       bluetui # bluetooth tui
-      telegram-desktop
-      tg
-      unstable.nchat
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
@@ -79,12 +74,9 @@
       wev # key events in wayland
       nwg-displays # gui for display setup
       gucharmap # character map
-      ansible
 
       # Docs
       onlyoffice-desktopeditors
-      jrnl
-      joplin
       stellarium # astro map
       astroterm # astro map ASCII
       epy # cli book reader
