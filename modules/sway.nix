@@ -63,7 +63,8 @@
         {command = "wl-paste -t text --watch clipman store --no-persist";}
         {command = "exec bash $HOME/nix/scripts/swayidle.sh";}
         {
-          command = "pkill sworkstyle; sleep 2; exec sworkstyle -d &> /tmp/sworkstyle.log";
+          # command = "pkill sworkstyle; sleep 5; ${pkgs.swayest-workstyle}/bin/sworkstyle -d &> /tmp/sworkstyle.log";
+          command = "${pkgs.swayest-workstyle}/bin/sworkstyle -d";
           always = true;
         }
       ];
@@ -85,15 +86,15 @@
           }
           {
             criteria.app_id = "org.telegram.desktop";
-            command = "move container to workspace 1";
+            command = "move container to workspace number 1";
           }
           {
             criteria.class = "^[Ss]team.*$";
-            command = "move container to workspace 9";
+            command = "move container to workspace number 9";
           }
           {
             criteria.class = "^[Ss]team_app_.*$";
-            command = "move container to workspace 10";
+            command = "move container to workspace number 10";
           }
         ];
       };
@@ -176,7 +177,7 @@
         "${modifier}+a" = ''exec swaymsg input "type:keyboard" xkb_switch_layout 0 && exec ${menu}'';
 
         # file manager
-        "${modifier}+n" = "exec thunar";
+        "${modifier}+n" = "exec nautilus";
         "${modifier}+y" = "exec ${terminal} -a yazi --hold $HOME/nix/scripts/y.fish";
 
         # broswer
@@ -211,12 +212,12 @@
         "Ctrl+h" = "exec brightnessctl set 5%-";
 
         # Audio
-        "XF86AudioRaiseVolume" = "exec bash $HOME/nix/scripts/volume.sh 5";
-        "XF86AudioLowerVolume" = "exec bash $HOME/nix/scripts/volume.sh -5";
-        "Ctrl+j" = "exec bash $HOME/nix/scripts/volume.sh 5";
-        "Ctrl+k" = "exec bash $HOME/nix/scripts/volume.sh -5";
-        "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-        "XF86AudioMicMute" = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+        "XF86AudioRaiseVolume" = "exec bash $HOME/nix/scripts/volume.sh 5%+";
+        "XF86AudioLowerVolume" = "exec bash $HOME/nix/scripts/volume.sh 5%-";
+        "Ctrl+j" = "exec bash $HOME/nix/scripts/volume.sh 5%+";
+        "Ctrl+k" = "exec bash $HOME/nix/scripts/volume.sh 5%-";
+        "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
 
         # Screenshot
         "${modifier}+Shift+s" = "exec bash $HOME/nix/scripts/screenshot.sh region";

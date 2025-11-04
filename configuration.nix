@@ -64,6 +64,9 @@
   # Network
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
+  # defaultGateway = "192.168.1.1";
+  # nameservers = ["1.1.1.1" "1.0.0.1"];
+  # };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Bluetooth
@@ -292,13 +295,19 @@
 
   services = {
     xray = {
-      enable = true;
+      enable = false;
       settingsFile = "/etc/xray/config.json";
     };
 
-    getty.loginOptions = "-- \\u";
-    getty.autologinUser = "user";
-    getty.autologinOnce = true;
+    mpd.enable = true; # music daemon
+    colord.enable = false;
+
+    # auto username in tty
+    getty = {
+      loginOptions = "-- \\u";
+      autologinUser = "${username}";
+      autologinOnce = true; # only first login after boot
+    };
 
     openssh.enable = true;
     flatpak.enable = true;
@@ -358,7 +367,7 @@
       default = "saved";
       splashImage = lib.mkForce null;
       theme = lib.mkForce null;
-      fontSize = lib.mkForce 30;
+      fontSize = lib.mkForce 40;
       extraConfig = lib.mkForce ''
         GRUB_CMDLINE_LINUX_DEFAULT="loglevel=1"
       '';
@@ -375,9 +384,11 @@
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [6567];
-    allowedUDPPorts = [6567];
-    # allowedTCPPorts = [8080];
-    # allowedUDPPorts = [8080];
+    allowedTCPPorts = [
+      6567 # mindusty server
+    ];
+    allowedUDPPorts = [
+      6567 # mindusty server
+    ];
   };
 }

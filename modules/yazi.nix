@@ -56,7 +56,7 @@
       recycle-bin = recycle-bin; # system trash bin support
       mediainfo = mediainfo;
 
-      mime-ext = mime-ext; # fast mime-type by file extancions
+      # mime-ext = mime-ext; # fast mime-type by file extancions
     };
 
     settings = {
@@ -65,12 +65,12 @@
       plugin = {
         prepend_fetchers = [
           # --- plugin mime-ext ---
-          {
-            id = "mime";
-            name = "*";
-            run = "mime-ext";
-            prio = "high";
-          }
+          # {
+          #   id = "mime";
+          #   name = "*";
+          #   run = "mime-ext";
+          #   prio = "high";
+          # }
           # --- plugin git ---
           {
             id = "git";
@@ -258,6 +258,10 @@
       open = {
         prepend_rules = [
           {
+            mime = "application/octet-stream";
+            use = ["edit"];
+          }
+          {
             mime = "";
             use = ["edit"];
           }
@@ -266,8 +270,8 @@
             use = ["edit"];
           }
           {
-            mime = "application/octet-stream"; # for files withoin correct mime
-            use = ["edit"];
+            name = "*.ARW";
+            use = ["image"];
           }
         ];
         append_rules = [
@@ -277,7 +281,7 @@
           }
           {
             name = "*.ARW";
-            use = "image";
+            use = ["image"];
           }
           {
             mime = "video/*";
@@ -295,10 +299,6 @@
             use = ["edit"];
           }
           {
-            mime = "application/octet-stream";
-            use = ["edit"];
-          }
-          {
             mime = "text/plain";
             use = ["edit"];
           }
@@ -310,10 +310,10 @@
               "edit"
             ];
           }
-          {
-            mime = "*";
-            use = ["edit"];
-          }
+          # {
+          #   mime = "*";
+          #   use = ["edit"];
+          # }
         ];
       };
     };

@@ -163,7 +163,7 @@
             max-volume = 100;
             tooltip-format = "{desc}, {volume}%";
             on-click = "$TERMINAL sh -c 'pulsemixer'"; # or pavucontrol
-            on-click-right = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+            on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; # mic mute
             on-click-middle = "helvum";
             scroll-step = 5;
           };

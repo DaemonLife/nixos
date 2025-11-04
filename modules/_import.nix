@@ -18,6 +18,7 @@
     ./nchat.nix
     ./nomacs.nix
     ./cli-chess.nix
+    ./rmpc.nix
 
     # --- EDITOR ---
     # nvf acivated in flake.nix !!! # best!

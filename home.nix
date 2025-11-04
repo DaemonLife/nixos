@@ -91,6 +91,10 @@
       tldr # community documentation
       russ # rss tui reader
       gnome-feeds # gui rss reader
+      # libreoffice
+      hunspell # spellcheck
+      hunspellDicts.ru_RU # spellcheck
+      hunspellDicts.en_US # spellcheck
 
       # Gaming
       portablemc # minecraft cli launcher
@@ -98,11 +102,6 @@
       vitetris # tetris cli game
       unstable.mindustry-wayland
       # dwarf-fortress-packages.dwarf-fortress-full
-
-      libreoffice
-      hunspell # spellcheck for LibreOffice
-      hunspellDicts.ru_RU # spellcheck for LibreOffice
-      hunspellDicts.en_US # spellcheck for LibreOffice
     ];
   };
 
