@@ -1,10 +1,14 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: {
   stylix = {
     enable = true;
+
+    # targets.qt.enable = true;
+    # targets.qt.platform = lib.mkForce "gnome";
 
     # my base
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
@@ -38,10 +42,10 @@
         name = "Noto Color Emoji";
       };
       sizes = {
-        applications = 21;
-        popups = 21;
-        terminal = 20;
-        desktop = 21;
+        applications = 20;
+        popups = 20;
+        terminal = 19;
+        desktop = 20;
       };
     };
 

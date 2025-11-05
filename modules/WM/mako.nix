@@ -17,7 +17,7 @@
       markup = true;
       margin = "4,4,4,4";
       padding = "12,10,12,10";
-      border-size = config.wayland.windowManager.sway.config.window.border / 2; # like Sway's border / 2
+      border-size = config.wayland.windowManager.sway.config.window.border;
       border-radius = 0;
       default-timeout = 12000;
       group-by = "summary";

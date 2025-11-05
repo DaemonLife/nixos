@@ -152,8 +152,8 @@
 
       fonts = {
         web.size = {
-          default_fixed = 20;
-          minimum = 20;
+          default_fixed = 21;
+          minimum = 21;
         };
       };
 

@@ -57,9 +57,10 @@
         # --- COLORS ---
 
         set show_current_bitrate=true
-        set shuffle=tracks
+        set shuffle=off
         set continue=true
         set ignore_duplicates=true
+        set follow=true # select follow played track, toggle with f key
 
         # binds. -f means overwrite conflicts.
         bind -f common n player-next
@@ -68,8 +69,12 @@
         bind -f common c toggle continue
         bind -f common space player-pause
         bind -f common q quit
+
         # remove played file
-        bind -f common D shell sh -c 'f="$(cmus-remote -Q | sed -n "s/^file //p")"; [ -n "$f" ] && trash-put "$f" && cmus-remote -C update'
+        # bind -f common D shell sh -c 'f="$(cmus-remote -Q | sed -n "s/^file //p")"; [ -n "$f" ] && trash-put "$f" && cmus-remote -C update'
+        # remove selected file
+        bind -f common D run sh -c 'trash-put "$@" && cmus-remote -C update &' sh {}
+
       '';
   };
 }
