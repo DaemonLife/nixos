@@ -5,7 +5,7 @@
 }: {
   programs.qutebrowser = with config.lib.stylix.colors; {
     enable = true;
-    package = pkgs.unstable.qutebrowser;
+    # package = pkgs.unstable.qutebrowser;
     loadAutoconfig = true;
 
     quickmarks = {};

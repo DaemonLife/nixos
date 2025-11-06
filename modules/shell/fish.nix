@@ -19,7 +19,8 @@
     };
 
     shellAbbrs = {
-      jrnl = " jrnl"; # hide from shell history
+      jrnl = " jrnl"; # symbold ' ' for hide from shell history
+      jrnl-tags = " jrnl -on year --format json | jq -r '.entries[] | \"\\(.date) \\(.tags | join(\", \"))\"'";
     };
 
     plugins = [
@@ -63,7 +64,7 @@
 
     functions = {
       # disable it
-      fish_greeting = "";
+      fish_greeting = "echo 'Hello!'";
 
       fish_prompt = ''
         printf '%s@%s %s%s%s%s \n> ' $USER $hostname (set_color $fish_color_cwd) $PWD (set_color normal) (fish_vcs_prompt)
