@@ -9,13 +9,10 @@
 
   # pkgs only for lenovo
   home.packages = with pkgs; [
-    # network
-    discord
-
     # media
-    unstable.digikam
+    digikam
     # blender
-    unstable.darktable
+    darktable
 
     # games
     bottles

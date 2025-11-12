@@ -2,19 +2,23 @@
   description = "DaemonLife's flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
+      # url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
-      url = "github:nix-community/stylix/release-25.05";
+      url = "github:nix-community/stylix";
+      # url = "github:nix-community/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.05";
+      url = "github:nix-community/nixvim";
+      # url = "github:nix-community/nixvim/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # nvf = {
@@ -28,7 +32,7 @@
     , nixpkgs
     , home-manager
     , stylix
-    , nixpkgs-unstable
+    # , nixpkgs-unstable
     , nixos-hardware
       # , nvf
     , nixvim
@@ -61,16 +65,17 @@
               home-manager.backupFileExtension = "bkp";
               home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
             }
-            {
-              nixpkgs.overlays = [
-                (final: prev: {
-                  unstable = import nixpkgs-unstable {
-                    inherit system;
-                    config.allowUnfree = true;
-                  };
-                })
-              ];
-            }
+            # unstable pkgs
+            # {
+              # nixpkgs.overlays = [
+              #   (final: prev: {
+              #     unstable = import nixpkgs-unstable {
+              #       inherit system;
+              #       config.allowUnfree = true;
+              #     };
+              #   })
+              # ];
+            # }
           ]
           # Add device module from flake hardware
           (

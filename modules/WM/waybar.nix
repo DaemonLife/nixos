@@ -167,7 +167,7 @@
             on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; # mic mute
             on-click-middle = "helvum";
             scroll-step = 5;
-            reverse-scrolling = true;
+            # reverse-scrolling = true;
           };
 
           "pulseaudio/slider" = {
