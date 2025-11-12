@@ -11,6 +11,7 @@
         selection-target = "both"; # copy to foot and system clipboard
         dpi-aware = lib.mkForce "yes";
         pad = "5x5";
+        resize-by-cells = "no";
         font = lib.mkForce [
           "Unifont:append:size=${toString config.stylix.fonts.sizes.terminal}"
           "Unifont Upper:prepend:size=${toString config.stylix.fonts.sizes.terminal}"

@@ -15,7 +15,7 @@
     # media
     unstable.digikam
     # blender
-    unstable.darktable
+    darktable
 
     # games
     bottles

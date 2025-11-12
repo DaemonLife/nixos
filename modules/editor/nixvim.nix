@@ -13,10 +13,6 @@
       vimPlugins.nvim-biscuits # annotations at the end of a closing tag/bracket/parenthesis/etc
     ];
 
-    extraConfigLua = ''
-      require("nvim-biscuits").setup({ cursor_line_only = true })
-    '';
-
     plugins = {
 
       treesitter.enable = true; # need for nvim-biscuits
@@ -130,8 +126,8 @@
       wrap = true;
       linebreak = true;
       termguicolors = true; # like base16 color scheme for me
-      langmap = # Russian language support
-        "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz";
+      # langmap = # Russian language support
+      #   "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz";
     };
 
     extraConfigVim = "";
@@ -185,15 +181,26 @@
 
     keymaps = [
 
-      # disable space
+      # disable 
       {
         action = "";
         key = "<space>";
       }
       {
         action = "";
+        # D is Super key
         key = "<D-Space>";
         mode = "i";
+      }
+
+      # fixs for ru 
+      {
+        action = "<C-u>";
+        key = "<C-г>";
+      }
+      {
+        action = "<C-d>";
+        key = "<C-в>";
       }
 
       # --- new redo ---
@@ -202,9 +209,11 @@
         key = "U";
         options.desc = "Redo.";
       }
+      # rus
       {
-        action = "";
-        key = "<C-r>";
+        action = "<cmd>redo<CR><CR>";
+        key = "Г";
+        options.desc = "Redo.";
       }
       # --- new redo ---
 
@@ -218,6 +227,19 @@
       {
         action = ''"+pl'';
         key = "<space>p";
+        mode = [ "n" "v" ];
+        options.desc = "Paste from system clipboard.";
+      }
+      # rus
+      {
+        action = ''"+yl'';
+        key = "<space>н";
+        mode = [ "n" "v" ];
+        options.desc = "Copy to system clipboard.";
+      }
+      {
+        action = ''"+pl'';
+        key = "<space>з";
         mode = [ "n" "v" ];
         options.desc = "Paste from system clipboard.";
       }
@@ -242,6 +264,25 @@
           desc = "Comment in visual mode.";
         };
       }
+      # rus
+      {
+        action = "gcc";
+        key = "<space>с";
+        mode = "n";
+        options = {
+          remap = true;
+          desc = "Comment in normal mode.";
+        };
+      }
+      {
+        action = "gc";
+        key = "<space>с";
+        mode = "v";
+        options = {
+          remap = true;
+          desc = "Comment in visual mode.";
+        };
+      }
       # --- new comment control ---
 
       # --- soft string jumping ---
@@ -253,259 +294,45 @@
         action = "gk";
         key = "k";
       }
+      # rus
+      {
+        action = "gj";
+        key = "о";
+      }
+      {
+        action = "gk";
+        key = "л";
+      }
       # --- soft string jumping ---
-
-      # --- rus layout support ---
-      # {
-      #   action = "q";
-      #   key = "й";
-      # }
-      # {
-      #   action = "Q";
-      #   key = "Й";
-      # }
-      # {
-      #   action = "w";
-      #   key = "ц";
-      # }
-      # {
-      #   action = "W";
-      #   key = "Ц";
-      # }
-      # {
-      #   action = "e";
-      #   key = "у";
-      # }
-      # {
-      #   action = "E";
-      #   key = "У";
-      # }
-      # {
-      #   action = "r";
-      #   key = "к";
-      # }
-      # {
-      #   action = "R";
-      #   key = "К";
-      # }
-      # {
-      #   action = "t";
-      #   key = "е";
-      # }
-      # {
-      #   action = "T";
-      #   key = "Е";
-      # }
-      # {
-      #   action = "y";
-      #   key = "н";
-      # }
-      # {
-      #   action = "Y";
-      #   key = "Н";
-      # }
-      # {
-      #   action = "u";
-      #   key = "г";
-      # }
-      # {
-      #   action = "U";
-      #   key = "Г";
-      # }
-      # {
-      #   action = "i";
-      #   key = "ш";
-      # }
-      # {
-      #   action = "I";
-      #   key = "Ш";
-      # }
-      # {
-      #   action = "o";
-      #   key = "щ";
-      # }
-      # {
-      #   action = "O";
-      #   key = "Щ";
-      # }
-      # {
-      #   action = "p";
-      #   key = "з";
-      # }
-      # {
-      #   action = "P";
-      #   key = "З";
-      # }
-      # {
-      #   action = "[";
-      #   key = "х";
-      # }
-      # {
-      #   action = "{";
-      #   key = "Х";
-      # }
-      # {
-      #   action = "a";
-      #   key = "ф";
-      # }
-      # {
-      #   action = "A";
-      #   key = "Ф";
-      # }
-      # {
-      #   action = "s";
-      #   key = "ы";
-      # }
-      # {
-      #   action = "S";
-      #   key = "Ы";
-      # }
-      # {
-      #   action = "d";
-      #   key = "в";
-      # }
-      # {
-      #   action = "D";
-      #   key = "В";
-      # }
-      # {
-      #   action = "f";
-      #   key = "а";
-      # }
-      # {
-      #   action = "F";
-      #   key = "А";
-      # }
-      # {
-      #   action = "g";
-      #   key = "п";
-      # }
-      # {
-      #   action = "G";
-      #   key = "П";
-      # }
-      # {
-      #   action = "h";
-      #   key = "р";
-      # }
-      # {
-      #   action = "H";
-      #   key = "Р";
-      # }
-      # {
-      #   action = "gj";
-      #   key = "о";
-      # }
-      # {
-      #   action = "J";
-      #   key = "О";
-      # }
-      # {
-      #   action = "gk";
-      #   key = "л";
-      # }
-      # {
-      #   action = "K";
-      #   key = "Л";
-      # }
-      # {
-      #   action = "l";
-      #   key = "д";
-      # }
-      # {
-      #   action = "L";
-      #   key = "Д";
-      # }
-      # {
-      #   action = ";";
-      #   key = "ж";
-      # }
-      # {
-      #   action = ":";
-      #   key = "Ж";
-      # }
-      # {
-      #   action = "z";
-      #   key = "я";
-      # }
-      # {
-      #   action = "Z";
-      #   key = "Я";
-      # }
-      # {
-      #   action = "x";
-      #   key = "ч";
-      # }
-      # {
-      #   action = "X";
-      #   key = "Ч";
-      # }
-      # {
-      #   action = "c";
-      #   key = "с";
-      # }
-      # {
-      #   action = "C";
-      #   key = "С";
-      # }
-      # {
-      #   action = "v";
-      #   key = "м";
-      # }
-      # {
-      #   action = "V";
-      #   key = "М";
-      # }
-      # {
-      #   action = "b";
-      #   key = "и";
-      # }
-      # {
-      #   action = "B";
-      #   key = "И";
-      # }
-      # {
-      #   action = "n";
-      #   key = "т";
-      # }
-      # {
-      #   action = "N";
-      #   key = "Т";
-      # }
-      # {
-      #   action = "m";
-      #   key = "ь";
-      # }
-      # {
-      #   action = "M";
-      #   key = "Ь";
-      # }
-      # {
-      #   action = ",";
-      #   key = "б";
-      # }
-      # {
-      #   action = "<";
-      #   key = "Б";
-      # }
-      # {
-      #   action = ".";
-      #   key = "ю";
-      # }
-      # {
-      #   action = ">";
-      #   key = "Ю";
-      # }
-      # {
-      #   action = "/";
-      #   key = "я";
-      # }
-      # {
-      #   action = "?";
-      #   key = "Я";
-      # }
-      # --- rus layout support ---
     ];
+
+    # extra plugin and ru keymap support
+    extraConfigLua = ''
+      require("nvim-biscuits").setup({ cursor_line_only = true })
+
+      vim.opt.langmap = table.concat({
+        "ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz",
+        "Ё;~",
+        "ё;`",
+        "№;#",
+        "Х;[",
+        "Ъ;]",
+        "х;{",
+        "ъ;}",
+        "Ж;:",
+        "ж;\;",
+        "Э;\"",
+        "э;'",
+        "Б;<",
+        "Ю;>",
+        "б;\\,",
+        "ю;.",
+        ".;/",
+        "\\,;?",
+      }, ",")
+
+    '';
   };
 
 }

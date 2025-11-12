@@ -1,25 +1,26 @@
-{
-  config,
-  pkgs,
-  lib,
-  username,
-  ...
+{ config
+, pkgs
+, lib
+, username
+, ...
 }: {
-  imports = [./modules/_import.nix];
+  imports = [ ./modules/_import.nix ];
 
   home = {
     username = username;
     homeDirectory = "/home/${username}";
-    sessionPath = ["/home/${username}/.local/bin"];
-    sessionVariables = let
-      EDITOR = "vi";
-    in {
-      EDITOR = "${EDITOR}";
-      SYSTEMD_EDITOR = "${EDITOR}";
-      VISUAL = "${EDITOR}";
-      BROWSER = "qutebrowser";
-      TERMINAL = "foot";
-    };
+    sessionPath = [ "/home/${username}/.local/bin" ];
+    sessionVariables =
+      # let
+      # EDITOR = "vi";
+      # in
+      {
+        # EDITOR = "${EDITOR}";
+        # SYSTEMD_EDITOR = "${EDITOR}";
+        # VISUAL = "${EDITOR}";
+        BROWSER = "qutebrowser";
+        TERMINAL = "foot";
+      };
     stateVersion = "24.05";
 
     # --------------------------------

@@ -1,7 +1,6 @@
-{
-  pkgs,
-  config,
-  ...
+{ pkgs
+, config
+, ...
 }: {
   programs.fish = with config.lib.stylix.colors; {
     enable = true;
@@ -64,7 +63,7 @@
 
     functions = {
       # disable it
-      fish_greeting = "echo 'Hello!'";
+      fish_greeting = "bash $HOME/nix/scripts/print_art.sh";
 
       fish_prompt = ''
         printf '%s@%s %s%s%s%s \n> ' $USER $hostname (set_color $fish_color_cwd) $PWD (set_color normal) (fish_vcs_prompt)

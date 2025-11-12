@@ -13,6 +13,7 @@
         horizontal-pad = 25;
         vertical-pad = 25;
         exit-on-keyboard-focus-loss = "yes";
+        font = lib.mkForce "${config.stylix.fonts.monospace.name}:size=${toString config.stylix.fonts.sizes.terminal}";
       };
 
       colors = {

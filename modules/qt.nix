@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   home.packages = with pkgs; [
     libsForQt5.qt5.qtwayland
     kdePackages.qtwayland
@@ -6,5 +11,6 @@
   ];
   qt = {
     enable = true;
+    # style.name = lib.mkForce "adwaita";
   };
 }

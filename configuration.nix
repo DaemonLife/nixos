@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  lib,
-  username,
-  ...
+{ config
+, pkgs
+, lib
+, username
+, ...
 }: {
   # --------------------------------
   # SYSTEM THEME
@@ -11,7 +10,7 @@
 
   imports = [
     ./modules/stylix.nix
-    ./modules/editor/nvf.nix
+    # ./modules/editor/nvf.nix
   ];
 
   # stylix.targets.grub.enable = false;
@@ -43,14 +42,16 @@
   # --------------------------------
 
   environment = {
-    variables = let
-      EDITOR = "vi";
-    in {
-      EDITOR = "${EDITOR}";
-      SYSTEMD_EDITOR = "${EDITOR}";
-      VISUAL = "${EDITOR}";
-      BROWSER = "qutebrowser";
-    };
+    variables =
+      let
+        EDITOR = "vi";
+      in
+      {
+        EDITOR = "${EDITOR}";
+        SYSTEMD_EDITOR = "${EDITOR}";
+        VISUAL = "${EDITOR}";
+        BROWSER = "qutebrowser";
+      };
     sessionVariables.NIXOS_OZONE_WL = "1"; # Run Electron apps without XWayland
   };
 
@@ -89,8 +90,8 @@
     # foomatic-db-ppds-withNonfreeDb
   ];
   hardware.sane.enable = true; # enables support for scanners
-  hardware.sane.extraBackends = [pkgs.sane-airscan];
-  services.udev.packages = [pkgs.sane-airscan]; # device manager for the Linux kernel
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+  services.udev.packages = [ pkgs.sane-airscan ]; # device manager for the Linux kernel
 
   # Sound
   security.rtkit.enable = true; # rtkit is optional but recommended for pipewire
@@ -139,7 +140,7 @@
       "lp"
     ];
 
-    packages = with pkgs; [flatpak];
+    packages = with pkgs; [ flatpak ];
   };
 
   # --------------------------------
@@ -190,13 +191,14 @@
   # --------------------------------
 
   qt.enable = true;
+  # qt.style = lib.mkForce "adwaita";
 
   # for flatpak
   xdg.portal = {
     enable = true;
     config.common.default = "gtk";
     wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid
@@ -324,9 +326,9 @@
     # authentication for programs
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = ["graphical-session.target"];
-      wants = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -351,7 +353,7 @@
 
   security = {
     polkit.enable = true; # authentication support for sway
-    pam.services.swaylock = {}; # screen lock
+    pam.services.swaylock = { }; # screen lock
   };
 
   # --------------------------------

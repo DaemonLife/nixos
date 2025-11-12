@@ -29,23 +29,29 @@
         package = pkgs.unifont;
         name = "Unifont";
       };
-      sansSerif = {
-        package = config.stylix.fonts.monospace.package;
-        name = "${config.stylix.fonts.monospace.name}";
-      };
-      serif = {
-        package = config.stylix.fonts.monospace.package;
-        name = "${config.stylix.fonts.monospace.name}";
-      };
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
+
+      sansSerif = config.stylix.fonts.monospace;
+      serif = config.stylix.fonts.monospace;
+      emoji = config.stylix.fonts.monospace;
+
+      # sansSerif = {
+      #   package = config.stylix.fonts.monospace.package;
+      #   name = "${config.stylix.fonts.monospace.name}";
+      # };
+      # serif = {
+      #   package = config.stylix.fonts.monospace.package;
+      #   name = "${config.stylix.fonts.monospace.name}";
+      # };
+      # emoji = {
+      #   package = pkgs.noto-fonts-emoji;
+      #   name = "Noto Color Emoji";
+      # };
       sizes = {
-        applications = 20;
-        popups = 20;
+        applications = 17;
         terminal = 19;
-        desktop = 20;
+        # Window titles, status bars, and other general elements of the desktop.
+        desktop = 16;
+        popups = config.stylix.fonts.sizes.desktop;
       };
     };
 

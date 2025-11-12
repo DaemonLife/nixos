@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }: {
   programs.nvf = {
     enable = true;
@@ -19,8 +18,8 @@
 
       autocmds = [
         {
-          event = ["FileType"];
-          pattern = ["markdown"];
+          event = [ "FileType" ];
+          pattern = [ "markdown" ];
           # group = "UserSetup";
           desc = "Set spellcheck for Markdown";
           command = "setlocal spell";
@@ -29,16 +28,18 @@
       ];
 
       # Disable lspconfig error annoying message
-      luaConfigPre = let
-        msg = ''is deprecated, use vim.lsp.config'';
-      in ''
-        vim.notify = function(msg, level, opts)
-          if type(msg) == "string" and msg:match("${msg}") then
-            return
+      luaConfigPre =
+        let
+          msg = ''is deprecated, use vim.lsp.config'';
+        in
+        ''
+          vim.notify = function(msg, level, opts)
+            if type(msg) == "string" and msg:match("${msg}") then
+              return
+            end
+            vim.api.nvim_echo({{msg}}, true, {})
           end
-          vim.api.nvim_echo({{msg}}, true, {})
-        end
-      '';
+        '';
 
       lsp = {
         enable = true;
@@ -62,7 +63,7 @@
       visuals = {
         # nvim-scrollbar.enable = true;
         # fidget-nvim.enable = true; # new notification window
-        cellular-automaton.enable = true; # fun animation
+        # cellular-automaton.enable = true; # fun animation
         indent-blankline = {
           enable = true;
           setupOpts.indent.char = "┆";
@@ -70,29 +71,29 @@
       };
 
       ui = {
-        borders.enable = true;
-        colorizer = {
-          enable = true;
-        };
-        breadcrumbs = {
-          enable = true;
-          navbuddy.enable = true; # table of contents for code
-          lualine.winbar.enable = false; # disable stupid top bar in lualine
-          lualine.winbar.alwaysRender = false;
-        };
-        illuminate.enable = true; # for same words under the cursor
+        # borders.enable = true;
+        # colorizer = {
+        # enable = true;
+        # };
+        # breadcrumbs = {
+        #   enable = true;
+        #   navbuddy.enable = true; # table of contents for code
+        #   lualine.winbar.enable = false; # disable stupid top bar in lualine
+        #   lualine.winbar.alwaysRender = false;
+        # };
+        # illuminate.enable = true; # for same words under the cursor
       };
       statusline.lualine = {
         enable = true;
         icons.enable = false;
         globalStatus = false;
         activeSection = {
-          a = ["'mode'"];
-          b = ["{'filename', symbols = {modified = '~', readonly = 'READONLY'}}"];
-          c = ["'branch'" "{'diff', symbols = {added = '+', modified = '~', removed = '-'}}"];
-          x = ["'diagnostics'" "'encoding'" "'fileformat'"];
-          y = ["'progress'"];
-          z = ["'location'"];
+          a = [ "'mode'" ];
+          b = [ "{'filename', symbols = {modified = '~', readonly = 'READONLY'}}" ];
+          c = [ "'branch'" "{'diff', symbols = {added = '+', modified = '~', removed = '-'}}" ];
+          x = [ "'diagnostics'" "'encoding'" "'fileformat'" ];
+          y = [ "'progress'" ];
+          z = [ "'location'" ];
         };
       };
 
@@ -138,15 +139,15 @@
         };
       };
 
-      minimap = {
-        minimap-vim.enable = true;
-        # codewindow.enable = true; # lighter, faster, and uses lua for configuration
-      };
+      # minimap = {
+      #   minimap-vim.enable = true;
+      #   # codewindow.enable = true; # lighter, faster, and uses lua for configuration
+      # };
 
       utility = {
         multicursors.enable = true;
         surround.enable = true;
-        images.image-nvim.enable = false;
+        # images.image-nvim.enable = false;
         nvim-biscuits = {
           enable = true;
           setupOpts.cursor_line_only = true;
@@ -183,7 +184,7 @@
           # Explicitly mark plugin as lazy. You don't need this
           # if you define one of the trigger "events" below
           lazy = true;
-          cmd = ["ZenMode"]; # load on command
+          cmd = [ "ZenMode" ]; # load on command
           # event = ["BufEnter"]; # load on event (EXAMPLE!)
           # event = [{event = "User"; pattern = "LazyFile";}]; # LazyFile - alias for open any file
         };
@@ -196,7 +197,7 @@
         {
           action = "";
           key = "<space>";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "";
@@ -208,7 +209,7 @@
         {
           action = "<cmd>redo<CR><CR>";
           key = "U";
-          mode = ["n"];
+          mode = [ "n" ];
           silent = true;
           nowait = true;
           desc = "Redo";
@@ -218,7 +219,7 @@
         {
           action = ''"+yl'';
           key = "<leader>y";
-          mode = ["v"];
+          mode = [ "v" ];
           silent = true;
           nowait = true;
           desc = "cp to system";
@@ -226,7 +227,7 @@
         {
           action = ''"+yyl'';
           key = "<leader>yy";
-          mode = ["n"];
+          mode = [ "n" ];
           silent = true;
           nowait = true;
           desc = "cp to system";
@@ -234,7 +235,7 @@
         {
           action = ''"+pl'';
           key = "<leader>p";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
           silent = true;
           nowait = true;
           desc = "Paste from system slipboard";
@@ -242,7 +243,7 @@
         {
           action = ''"+Pl'';
           key = "<leader>P";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
           silent = true;
           nowait = true;
           desc = "Paste from system slipboard";
@@ -250,7 +251,7 @@
         {
           action = ''"+dl'';
           key = "<leader>d";
-          mode = ["v"];
+          mode = [ "v" ];
           silent = true;
           nowait = true;
           desc = "Cut to system";
@@ -258,7 +259,7 @@
         {
           action = ''"+ddl'';
           key = "<leader>dd";
-          mode = ["n"];
+          mode = [ "n" ];
           silent = true;
           nowait = true;
           desc = "Cut line to system";
@@ -266,7 +267,7 @@
         {
           action = ''"+xl'';
           key = "<leader>x";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
           silent = true;
           nowait = true;
           desc = "Cut to system";
@@ -276,19 +277,19 @@
         {
           action = "gj";
           key = "j";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "gk";
           key = "k";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
 
         # --- zenmode plugin ---
         {
           action = ":ZenMode<CR>";
           key = "<leader>z";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
           silent = true;
           nowait = true;
         }
@@ -297,312 +298,312 @@
         {
           action = "q";
           key = "й";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "Q";
           key = "Й";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "w";
           key = "ц";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "W";
           key = "Ц";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "e";
           key = "у";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "E";
           key = "У";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "r";
           key = "к";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "R";
           key = "К";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "t";
           key = "е";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "T";
           key = "Е";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "y";
           key = "н";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "Y";
           key = "Н";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "u";
           key = "г";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "U";
           key = "Г";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "i";
           key = "ш";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "I";
           key = "Ш";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "o";
           key = "щ";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "O";
           key = "Щ";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "p";
           key = "з";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "P";
           key = "З";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "[";
           key = "х";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "{";
           key = "Х";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "a";
           key = "ф";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "A";
           key = "Ф";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "s";
           key = "ы";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "S";
           key = "Ы";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "d";
           key = "в";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "D";
           key = "В";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "f";
           key = "а";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "F";
           key = "А";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "g";
           key = "п";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "G";
           key = "П";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "h";
           key = "р";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "H";
           key = "Р";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "gj";
           key = "о";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "J";
           key = "О";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "gk";
           key = "л";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "K";
           key = "Л";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "l";
           key = "д";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "L";
           key = "Д";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = ";";
           key = "ж";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = ":";
           key = "Ж";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "z";
           key = "я";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "Z";
           key = "Я";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "x";
           key = "ч";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "X";
           key = "Ч";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "c";
           key = "с";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "C";
           key = "С";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "v";
           key = "м";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "V";
           key = "М";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "b";
           key = "и";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "B";
           key = "И";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "n";
           key = "т";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "N";
           key = "Т";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "m";
           key = "ь";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "M";
           key = "Ь";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = ",";
           key = "б";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "<";
           key = "Б";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = ".";
           key = "ю";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = ">";
           key = "Ю";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "/";
           key = "я";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
         {
           action = "?";
           key = "Я";
-          mode = ["n" "v"];
+          mode = [ "n" "v" ];
         }
       ];
     };

@@ -12,7 +12,7 @@
         mainBar = {
           layer = "top";
           position = "top";
-          height = 31;
+          # height = 31;
           modules-left = [
             "${MY_DE}/workspaces"
           ];
@@ -27,6 +27,7 @@
             "idle_inhibitor"
             "battery"
             "pulseaudio"
+            # "pulseaudio/slider"
             # "custom/sep"
             "clock#date"
             "clock#time"
@@ -166,6 +167,13 @@
             on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; # mic mute
             on-click-middle = "helvum";
             scroll-step = 5;
+            reverse-scrolling = true;
+          };
+
+          "pulseaudio/slider" = {
+            min = 0;
+            max = 100;
+            orientation = "horizontal";
           };
         };
       };
@@ -195,7 +203,7 @@
               margin: 0px;
               text-decoration: none;
           	  font-family: "${config.stylix.fonts.monospace.name}";
-              font-size: ${toString config.stylix.fonts.sizes.terminal}px;
+              font-size: ${toString config.stylix.fonts.sizes.desktop}pt;
               min-height: 0;
               box-shadow: none;
           	}
