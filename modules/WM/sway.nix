@@ -1,8 +1,7 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
   imports = [
     (import ./waybar.nix {
@@ -53,16 +52,16 @@
       # terminal = "${pkgs.kitty}/bin/kitty --single-instance";
       terminal = "${pkgs.foot}/bin/foot";
       menu = "${pkgs.fuzzel}/bin/fuzzel -l 16";
-      bars = [{command = "waybar";}];
+      bars = [{ command = "waybar"; }];
       workspaceAutoBackAndForth = true;
 
       startup = [
-        {command = "bluetooth off";}
-        {command = "autotiling-rs";}
-        {command = "${pkgs.mako}/bin/mako";}
-        {command = "${pkgs.udiskie}/bin/udiskie -a";}
-        {command = "wl-paste -t text --watch clipman store --no-persist";}
-        {command = "exec bash $HOME/nix/scripts/swayidle.sh";}
+        { command = "bluetooth off"; }
+        { command = "autotiling-rs"; }
+        { command = "${pkgs.mako}/bin/mako"; }
+        { command = "${pkgs.udiskie}/bin/udiskie -a"; }
+        { command = "wl-paste -t text --watch clipman store --no-persist"; }
+        { command = "exec bash $HOME/nix/scripts/swayidle.sh"; }
         {
           # command = "pkill sworkstyle; sleep 5; ${pkgs.swayest-workstyle}/bin/sworkstyle -d &> /tmp/sworkstyle.log";
           command = "${pkgs.swayest-workstyle}/bin/sworkstyle -d";
@@ -102,16 +101,17 @@
 
       # swaymsg -t get_tree - show window's app_id and class
       floating.criteria = [
-        {title = "Steam - Update News";}
-        {app_id = "rg.pulseaudio.pavucontrol";}
+        { title = "Steam - Update News"; }
+        { app_id = "rg.pulseaudio.pavucontrol"; }
         # {title = "pulsemixer";} # tailing bug
-        {app_id = "floating_yazi";}
+        { app_id = "floating_yazi"; }
         # {app_id = "floating_nmtui";} # too small window
       ];
 
-      colors = let
-        default_border = "#${base02}";
-      in
+      colors =
+        let
+          default_border = "#${base02}";
+        in
         lib.mkForce {
           focused = {
             text = "#${base00}"; # tab header on creation
@@ -154,8 +154,8 @@
         "type:keyboard" = {
           xkb_layout = "us,ru";
           xkb_options = "grp:win_space_toggle";
-          repeat_delay = "300";
-          repeat_rate = "90";
+          repeat_delay = "200";
+          repeat_rate = "45";
         };
         "type:touchpad" = {
           tap = "enabled";
