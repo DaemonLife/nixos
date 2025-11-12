@@ -59,7 +59,7 @@
   # HARDWARE SETTINGS
   # --------------------------------
 
-  hardware.graphics.enable = true; # gparhic drivers
+  # hardware.graphics.enable = true; # gparhic drivers
   powerManagement.enable = true; # NixOS power management tool
 
   # Network
@@ -174,10 +174,10 @@
     iwd # wifi cli, don't delete!
     bluez
     udiskie # auto disks mount
-    nufraw-thumbnailer # RAW preview for thunar
+    # nufraw-thumbnailer # RAW preview for thunar
     xdg-desktop-portal-termfilechooser # make yazi default file chooser
-    adwaita-icon-theme
-    rocmPackages.clr.icd
+    # adwaita-icon-theme
+    # rocmPackages.clr.icd
     nautilus
 
     mangohud # Steam performance GUI
@@ -191,7 +191,6 @@
   # --------------------------------
 
   qt.enable = true;
-  # qt.style = lib.mkForce "adwaita";
 
   # for flatpak
   xdg.portal = {
@@ -214,10 +213,6 @@
 
     # niri.enable = true;
 
-    dconf = {
-      enable = true;
-    };
-
     nh = {
       enable = true;
       clean.enable = true;
@@ -227,14 +222,14 @@
     };
 
     # --- thunar ---
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-archive-plugin
-        thunar-media-tags-plugin
-      ];
-    };
-    xfconf.enable = true;
+    # thunar = {
+    #   enable = true;
+    #   plugins = with pkgs.xfce; [
+    #     thunar-archive-plugin
+    #     thunar-media-tags-plugin
+    #   ];
+    # };
+    # xfconf.enable = true;
     # --- thunar ---
 
     proxychains = {
@@ -284,6 +279,7 @@
     };
     # ------ Steam ------
 
+    dconf.enable = true;
     foot.enable = true;
     htop.enable = true;
     git.enable = true;
@@ -301,9 +297,6 @@
       settingsFile = "/etc/xray/config.json";
     };
 
-    # mpd.enable = true; # music daemon
-    colord.enable = false;
-
     # auto username in tty
     getty = {
       loginOptions = "-- \\u";
@@ -317,9 +310,6 @@
     tumbler.enable = true; # Thunar thumbnail support for images
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
-    # xserver.displayManager.gdm.enable = true;
-    # xserver.displayManager.startx.enable = true;
-    # xserver.desktopManager.gnome.enable = true;
   }; # close services
 
   systemd = {

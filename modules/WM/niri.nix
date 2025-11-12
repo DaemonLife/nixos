@@ -18,7 +18,8 @@
     brightnessctl
     swayidle
     swaybg
-    xwayland-satellite # x11 support
+    # xwayland-satellite # x11 support
+    niri
   ];
 
   home.file.".config/niri/config.kdl".text = with config.lib.stylix.colors;
