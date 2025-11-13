@@ -179,7 +179,7 @@
 
         # file manager
         "${modifier}+n" = "exec nautilus";
-        "${modifier}+y" = "exec ${terminal} -a yazi --hold $HOME/nix/scripts/y.fish";
+        "${modifier}+y" = "exec ${terminal} --hold $HOME/nix/scripts/y.fish";
 
         # broswer
         # export QT_QPA_PLATFORM=xcb for color fix

@@ -8,15 +8,23 @@ let
     separator = ' '
 
     [matching]
+    # top priority /\
+    # low priority \/
+
+    # by title
     '/^.* - cmus$/' = 'cmus'
+    '/^man .*$/' = 'man'
     'org.telegram.desktop' = 'tg'
     'org.qutebrowser.qutebrowser' = 'qb'
     'org.qbittorrent.qBittorrent' = 'torrent'
     '/^.*[Ss]team.*$/' = 'steam'
     '/^vi.*$/' = 'vi'
     '/^.*Nvim$/' = 'vi'
+    '/^nvim$/' = 'vi'
+    '/^y .*$/' = 'y'
+
+    # by app id
     'darktable' = 'darktable'
-    'yazi' = 'y'
     'foot' = '$'
   '';
 in
