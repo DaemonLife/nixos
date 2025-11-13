@@ -1,4 +1,4 @@
-{...}: {
+{ ... }: {
   programs.cmus = {
     enable = true;
 
@@ -92,6 +92,7 @@
         set shuffle=false
         set continue=true
         set ignore_duplicates=true
+        set format_title=%a - %l - %t (%y) - cmus
 
         # select follow played track, toggle with f key
         set follow=true

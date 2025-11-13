@@ -32,7 +32,7 @@
     , nixpkgs
     , home-manager
     , stylix
-    # , nixpkgs-unstable
+      # , nixpkgs-unstable
     , nixos-hardware
       # , nvf
     , nixvim
@@ -63,18 +63,18 @@
                 ./devices/${device}/home.nix # device home config
               ];
               home-manager.backupFileExtension = "bkp";
-              home-manager.sharedModules = [ nixvim.homeManagerModules.nixvim ];
+              home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
             }
             # unstable pkgs
             # {
-              # nixpkgs.overlays = [
-              #   (final: prev: {
-              #     unstable = import nixpkgs-unstable {
-              #       inherit system;
-              #       config.allowUnfree = true;
-              #     };
-              #   })
-              # ];
+            # nixpkgs.overlays = [
+            #   (final: prev: {
+            #     unstable = import nixpkgs-unstable {
+            #       inherit system;
+            #       config.allowUnfree = true;
+            #     };
+            #   })
+            # ];
             # }
           ]
           # Add device module from flake hardware
