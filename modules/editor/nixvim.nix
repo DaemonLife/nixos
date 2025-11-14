@@ -9,6 +9,11 @@
       viAlias = true;
       vimAlias = true;
 
+      globals = {
+        mapleader = " ";
+        maplocalleader = " ";
+      };
+
       # --- Plugins ---
       extraPlugins = with pkgs; [
         vimPlugins.nvim-biscuits # annotations at the end of a closing tag/bracket/parenthesis/etc
@@ -127,7 +132,6 @@
         wrap = true;
         linebreak = true;
         termguicolors = true; # like base16 color scheme for me
-
       };
 
       extraConfigVim = "
@@ -139,8 +143,7 @@
       autoCmd = [
         # Setups for some files 
         {
-          event = "FileType";
-          pattern = [ "tex" "latex" "markdown" ];
+          event = "VimEnter";
           command = "setlocal spell spelllang=en,ru";
         }
         {
@@ -188,13 +191,14 @@
         # disable 
         {
           action = "";
-          key = "<space>";
+          key = "<leader>";
+          mode = [ "v" ];
         }
         {
           action = "";
           # D is Super key
           key = "<D-Space>";
-          mode = "i";
+          mode = [ "i" ];
         }
 
         # fixs for ru 
@@ -224,26 +228,26 @@
         # --- new clipboard control ---
         {
           action = ''"+yl'';
-          key = "<space>y";
+          key = "<leader>y";
           mode = [ "n" "v" ];
           options.desc = "Copy to system clipboard.";
         }
         {
-          action = ''" + pl'';
-          key = "<space>p";
+          action = ''"+pl'';
+          key = "<leader>p";
           mode = [ "n" "v" ];
           options.desc = "Paste from system clipboard.";
         }
         # rus
         {
           action = ''"+yl'';
-          key = "<space>н";
+          key = "<leader>н";
           mode = [ "n" "v" ];
           options.desc = "Copy to system clipboard.";
         }
         {
           action = ''"+pl'';
-          key = "<space>з";
+          key = "<leader>з";
           mode = [ "n" "v" ];
           options.desc = "Paste from system clipboard.";
         }
@@ -252,7 +256,7 @@
         # --- new comment control ---
         {
           action = "gcc";
-          key = "<space>c";
+          key = "<leader>c";
           mode = "n";
           options = {
             remap = true;
@@ -261,7 +265,7 @@
         }
         {
           action = "gc";
-          key = "<space>c";
+          key = "<leader>c";
           mode = "v";
           options = {
             remap = true;
@@ -271,7 +275,7 @@
         # rus
         {
           action = "gcc";
-          key = "<space>с";
+          key = "<leader>с";
           mode = "n";
           options = {
             remap = true;
@@ -280,7 +284,7 @@
         }
         {
           action = "gc";
-          key = "<space>с";
+          key = "<leader>с";
           mode = "v";
           options = {
             remap = true;

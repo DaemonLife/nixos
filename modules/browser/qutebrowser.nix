@@ -1,14 +1,9 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{ pkgs, config, lib, ... }: {
   programs.qutebrowser = with config.lib.stylix.colors; {
     enable = true;
-    # package = pkgs.unstable.qutebrowser;
     loadAutoconfig = true;
 
-    quickmarks = {};
+    quickmarks = { };
 
     searchEngines = {
       w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
@@ -60,7 +55,7 @@
 
         blocking = {
           method = "both";
-          whitelist = [];
+          whitelist = [ ];
           adblock.lists = [
             "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2020.txt"
             "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2021.txt"
@@ -150,21 +145,27 @@
         ];
       };
 
-      fonts = {
-        web.size = {
-          default_fixed = 21;
-          minimum = 21;
+      fonts =
+        let
+          font_size = config.stylix.fonts.sizes.terminal;
+        in
+        {
+          web.size = lib.mkForce {
+            default = font_size;
+            default_fixed = font_size;
+            minimum = font_size;
+            minimum_logical = font_size;
+          };
         };
-      };
 
       fileselect = {
         handler = "external";
-        folder.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--cwd-file" "{}"];
-        multiple_files.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}"];
-        single_file.command = ["foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}"];
+        folder.command = [ "foot" "-a" "floating_yazi" "-e" "yazi" "--cwd-file" "{}" ];
+        multiple_files.command = [ "foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}" ];
+        single_file.command = [ "foot" "-a" "floating_yazi" "-e" "yazi" "--chooser-file" "{}" ];
       };
 
-      editor.command = ["foot" "sh" "-c" "vi" "{file}"];
+      editor.command = [ "foot" "sh" "-c" "vi" "{file}" ];
 
       input = {
         insert_mode.auto_leave = true; # if a non-editable element is clicked.

@@ -24,6 +24,7 @@ let
     '/^y .*$/' = 'y'
 
     # by app id
+    'librewolf' = 'browser'
     'darktable' = 'darktable'
     'foot' = '$'
   '';
