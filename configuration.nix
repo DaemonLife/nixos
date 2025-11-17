@@ -66,7 +66,7 @@
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
   # defaultGateway = "192.168.1.1";
-  # nameservers = ["1.1.1.1" "1.0.0.1"];
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   # };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -179,6 +179,7 @@
     # adwaita-icon-theme
     # rocmPackages.clr.icd
     nautilus
+    # zapret
 
     mangohud # Steam performance GUI
     # fonts
@@ -296,6 +297,25 @@
       enable = false;
       settingsFile = "/etc/xray/config.json";
     };
+
+    # zapret = {
+    #   enable = true;
+    #   params =
+    #     [
+    #       # "--methodeol"
+    #       "--dpi-desync=multisplit --dpi-desync-split-pos=method+2"
+    #     ];
+    #   whitelist =
+    #     [
+    #       "youtube.com"
+    #       "googlevideo.com"
+    #       "ytimg.com"
+    #       "youtu.be"
+    #
+    #       "search.nixos.org"
+    #       "nixos.org"
+    #     ];
+    # };
 
     # auto username in tty
     getty = {

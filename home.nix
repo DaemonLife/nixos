@@ -55,6 +55,7 @@
       nomacs-qt6 # image viewer
       kodi-wayland
       obs-studio
+      upscayl
 
       # Theming
       vimix-icon-theme # cursor icon
@@ -65,7 +66,6 @@
       ## Fonts
       unifont_upper
       unifont-csur
-      # https://github.com/ChrisBuilds/terminaltexteffects
 
       # Utils
       dconf-editor
@@ -75,6 +75,7 @@
       wev # key events in wayland
       nwg-displays # gui for display setup
       gucharmap # character map
+      # https://github.com/ChrisBuilds/terminaltexteffects
 
       # Docs
       onlyoffice-desktopeditors

@@ -13,7 +13,7 @@
     ./nomacs.nix
     ./chess/cli-chess.nix
     # ./typer.nix
-    # ./tt.nix
+    ./tt.nix
 
     ./shell/_import.nix
     ./terminal/_import.nix

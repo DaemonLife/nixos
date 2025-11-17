@@ -110,36 +110,39 @@
 
       colors =
         let
-          default_border = "#${base02}";
+          default_color = "#${base02}"; # no focus
+          focused_color = "#${base0E}";
+          indicator_color = "#${base08}";
+          attenction_color = "#${base0D}";
         in
         lib.mkForce {
           focused = {
             text = "#${base00}"; # tab header on creation
-            background = "#${base09}"; # tab header on creation
-            border = "#${base09}"; # tab header on creation
-            childBorder = "#${base0D}"; # own border color
-            indicator = "#${base09}"; # next window position indicator
+            background = attenction_color; # tab header on creation
+            border = attenction_color; # tab header on creation
+            childBorder = focused_color; # own border color
+            indicator = indicator_color; # next window position indicator
           };
           focusedInactive = {
             text = "#${base00}"; # selected tab header
-            background = "#${base0D}"; # selected tab header
-            border = "#${base0D}"; # selected tab header
-            childBorder = default_border; # default border
-            indicator = default_border; # default border
+            background = focused_color; # selected tab header
+            border = focused_color; # selected tab header
+            childBorder = default_color; # default border
+            indicator = default_color; # default border
           };
           unfocused = {
             text = "#${base05}"; # unselected tab header
-            background = default_border; # unselected tab header
-            border = default_border; # unselected tab header
-            childBorder = default_border; # ?
-            indicator = default_border; # ?
+            background = default_color; # unselected tab header
+            border = default_color; # unselected tab header
+            childBorder = default_color; # ?
+            indicator = default_color; # ?
           };
           urgent = {
             text = "#${base05}";
-            background = default_border;
-            border = default_border;
-            childBorder = default_border;
-            indicator = default_border;
+            background = default_color;
+            border = default_color;
+            childBorder = default_color;
+            indicator = default_color;
           };
           placeholder = {
             text = "#${base05}";
@@ -186,7 +189,7 @@
         "${modifier}+b" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER";
         "${modifier}+Shift+B" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 qutebrowser --desktop-file-name vpn_qutebrowser --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
-        "${modifier}+t" = "exec telegram-desktop"; # telegram
+        "${modifier}+t" = "exec telegram-desktop || exec Telegram"; # telegram
         "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker
 
         # ---------------

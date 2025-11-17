@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  MY_DE,
-  ...
+{ config
+, lib
+, MY_DE
+, ...
 }: {
   programs.waybar = with config.lib.stylix.colors;
     lib.mkForce {
@@ -34,7 +33,7 @@
           ];
 
           "${MY_DE}/workspaces" = {
-            window-rewrite = {};
+            window-rewrite = { };
             on-click = "activate";
             disable-scroll = true;
             format = "[ {icon}]";
@@ -43,8 +42,8 @@
           "${MY_DE}/window" = {
             max-length = 60;
             separate-outputs = true;
-            format = {};
-            rewrite = {};
+            format = { };
+            rewrite = { };
           };
 
           tray.spacing = 12;
@@ -92,19 +91,19 @@
             # format = "{:%d-%b-%y}";
             format = "{:%b-%d}";
             on-click = "exec gnome-calendar";
-            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.terminal)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
+            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.desktop)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
             "calendar" = {
               "mode" = "year";
-              "mode-mon-col" = 4;
+              "mode-mon-col" = 3;
               # "weeks-pos"     = "right";
               "on-scroll" = 1;
               "on-click-right" = "mode";
               "format" = {
                 "months" = "<span color='#${base0A}'>{}</span>";
-                "days" = "<span color='#${base04}'>{}</span>";
+                "days" = "<span color='#${base03}'>{}</span>";
                 "weeks" = "<span color='#${base0C}'>W{}</span>";
                 "weekdays" = "<span color='#${base0B}'>{}</span>";
-                "today" = "<span color='#${base0E}'><b><u>{}</u></b></span>";
+                "today" = "<span color='#${base08}'><b>{}</b></span>";
               };
             };
             "actions" = {
@@ -178,12 +177,13 @@
         };
       };
 
-      style = let
-        focus =
-          if "${MY_DE}" == "sway"
-          then "focused"
-          else "active";
-      in
+      style =
+        let
+          focus =
+            if "${MY_DE}" == "sway"
+            then "focused"
+            else "active";
+        in
         #css
         ''
           	@define-color dark #${base00};

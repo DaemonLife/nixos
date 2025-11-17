@@ -1,8 +1,7 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
   stylix = {
     enable = true;
@@ -16,7 +15,7 @@
     # blue light free
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
 
-    image = ../images/img6_dark.jpg;
+    image = ../images/medusa.jpg;
 
     cursor = {
       package = pkgs.bibata-cursors;

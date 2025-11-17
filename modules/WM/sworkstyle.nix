@@ -5,7 +5,7 @@
 let
   conf = ''
     fallback = '?'
-    separator = ' '
+    separator = '-'
 
     [matching]
     # top priority /\
@@ -22,11 +22,15 @@ let
     '/^.*Nvim$/' = 'vi'
     '/^nvim$/' = 'vi'
     '/^y .*$/' = 'y'
+    '/^rtorrent.*$/' = 'rtorrent'
 
     # by app id
     'librewolf' = 'browser'
+    'Upscayl' = 'upscayl'
     'darktable' = 'darktable'
     'foot' = '$'
+    'mpv' = 'mpv'
+    'Mindustry' = 'mindustry'
   '';
 in
 {

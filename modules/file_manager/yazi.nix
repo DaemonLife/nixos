@@ -1,8 +1,7 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
+{ pkgs
+, config
+, lib
+, ...
 }: {
   home.packages = with pkgs; [
     dragon-drop
@@ -177,7 +176,7 @@
 
       tasks = {
         image_alloc = 1073741824; # = 1024*1024*1024 = 1024MB
-        image_bound = [0 0];
+        image_bound = [ 0 0 ];
       };
 
       preview = {
@@ -259,33 +258,33 @@
         prepend_rules = [
           {
             mime = "application/octet-stream";
-            use = ["edit"];
+            use = [ "edit" ];
           }
           {
-            mime = "";
-            use = ["edit"];
+            mime = "*";
+            use = [ "edit" ];
           }
           {
             mime = "text/plain";
-            use = ["edit"];
+            use = [ "edit" ];
+          }
+          {
+            mime = "application/java-applet";
+            use = [ "edit" ];
           }
           {
             name = "*.ARW";
-            use = ["image"];
+            use = [ "image" ];
           }
         ];
         append_rules = [
           {
             mime = "image/*";
-            use = ["image"];
-          }
-          {
-            name = "*.ARW";
-            use = ["image"];
+            use = [ "image" ];
           }
           {
             mime = "video/*";
-            use = ["video"];
+            use = [ "video" ];
           }
           {
             name = "*.torrent";
@@ -296,11 +295,11 @@
           }
           {
             mime = "application/json";
-            use = ["edit"];
+            use = [ "edit" ];
           }
           {
             mime = "text/plain";
-            use = ["edit"];
+            use = [ "edit" ];
           }
           {
             mime = "text/html";
@@ -422,11 +421,11 @@
 
       icon = {
         # disable all icons
-        globs = [];
-        dirs = [];
-        files = [];
-        exts = [];
-        conds = [];
+        globs = [ ];
+        dirs = [ ];
+        files = [ ];
+        exts = [ ];
+        conds = [ ];
 
         prepend_dirs = [
           # {
@@ -532,34 +531,34 @@
         }
         # plugin compress
         {
-          on = ["C"];
+          on = [ "C" ];
           run = "plugin ouch";
           desc = "Compress with ouch";
         }
 
         # plugin recycle-bin
         {
-          on = ["b" "o"];
+          on = [ "b" "o" ];
           run = "plugin recycle-bin -- open";
           desc = "Open trash";
         }
         {
-          on = ["b" "e"];
+          on = [ "b" "e" ];
           run = "plugin recycle-bin -- empty";
           desc = "Empty trash";
         }
         {
-          on = ["b" "D"];
+          on = [ "b" "D" ];
           run = "plugin recycle-bin -- emptyDays";
           desc = "Empty trash by [DAYS]";
         }
         {
-          on = ["b" "d"];
+          on = [ "b" "d" ];
           run = "plugin recycle-bin -- delete";
           desc = "Remove completely";
         }
         {
-          on = ["b" "r"];
+          on = [ "b" "r" ];
           run = "plugin recycle-bin -- restore";
           desc = "Restore";
         }

@@ -23,14 +23,14 @@
 
     # my theme for zsh + oh-my-zsh
     initExtra = ''
-      source $HOME/nix/modules/zsh/themes/my.zsh-theme;
+      source $HOME/nix/modules/shell/my.zsh-theme;
     '';
   };
 
-  home.file."$HOME/nix/modules/zsh/themes/my.zsh-theme".text = ''
+  home.file."/nix/modules/shell/my.zsh-theme".text = ''
     PROMPT=$'
-    %{$fg[blue]%}%/%{$reset_color%} $(git_prompt_info)$(bzr_prompt_info)%{$fg[white]%}[%n@%m]%{$reset_color%} %{$fg[white]%}[%T]%{$reset_color%}
-    %{$fg_bold[white]%}>%{$reset_color%} '
+    %{$fg[green]%}%/%{$reset_color%} $(git_prompt_info)$(bzr_prompt_info)%{$fg[white]%}[%n@%m]%{$reset_color%} %{$fg[white]%}[%T]%{$reset_color%}
+    %{$fg[white]%}>%{$reset_color%} '
 
     PROMPT2="%{$fg_bold[white]%}%_> %{$reset_color%}"
 
