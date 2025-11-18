@@ -257,11 +257,34 @@
       open = {
         prepend_rules = [
           {
-            mime = "application/octet-stream";
-            use = [ "edit" ];
+            mime = "image/*";
+            use = [ "image" ];
           }
           {
-            mime = "*";
+            mime = "video/*";
+            use = [ "video" ];
+          }
+          {
+            name = "*.ARW";
+            use = [ "image" ];
+          }
+          {
+            name = "*.torrent";
+            use = [
+              "qbittorrent"
+              "rtorrent"
+            ];
+          }
+          {
+            mime = "text/html";
+            use = [
+              "qutebrowser"
+              "librewolf"
+              "edit"
+            ];
+          }
+          {
+            mime = "application/octet-stream";
             use = [ "edit" ];
           }
           {
@@ -273,47 +296,15 @@
             use = [ "edit" ];
           }
           {
-            name = "*.ARW";
-            use = [ "image" ];
-          }
-        ];
-        append_rules = [
-          {
-            mime = "image/*";
-            use = [ "image" ];
-          }
-          {
-            mime = "video/*";
-            use = [ "video" ];
-          }
-          {
-            name = "*.torrent";
-            use = [
-              "qbittorrent"
-              "rtorrent"
-            ];
-          }
-          {
             mime = "application/json";
             use = [ "edit" ];
           }
           {
-            mime = "text/plain";
+            mime = "*";
             use = [ "edit" ];
           }
-          {
-            mime = "text/html";
-            use = [
-              "qutebrowser"
-              "librewolf"
-              "edit"
-            ];
-          }
-          # {
-          #   mime = "*";
-          #   use = ["edit"];
-          # }
         ];
+        append_rules = [ ];
       };
     };
 

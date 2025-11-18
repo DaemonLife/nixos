@@ -9,9 +9,9 @@
       # os help - for help
       os = "$HOME/nix/scripts/nix_rebuild.sh";
 
-      # for windows fs on lenovo
-      mwin = "$HOME/nix/scripts/cdwin.fish && cd /mnt/windows/Users/user";
-
+      # # for windows fs on lenovo
+      # cdwin = "$HOME/nix/scripts/cdwin.sh && cd /mnt/windows/Users/user/$1";
+      #
       # battery configuration will be restored at the next boot
       tlp_full = "sudo tlp fullcharge bat1";
       tlp_conserv = "sudo tlp setcharge bat1";

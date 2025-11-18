@@ -50,8 +50,16 @@
     settings = {
       auto_save.session = true;
 
+      # spellcheck.languages = [
+      #   "en-US"
+      # ];
+
       content = {
         autoplay = false;
+
+        canvas_reading = false;
+        javascript.clipboard = "access";
+        pdfjs = true;
 
         blocking = {
           method = "both";
@@ -90,6 +98,7 @@
 
       window = {
         hide_decoration = false; # with true there is error with colors on wayland
+        transparent = true;
       };
 
       scrolling = {
@@ -104,6 +113,7 @@
         title.format = "{audio}{current_title}";
         title.format_pinned = "{index}";
         close_mouse_button = "right";
+
       };
 
       colors = {
@@ -115,7 +125,6 @@
       };
 
       hints.radius = 0;
-
       qt.highdpi = true; # f this setting, sometime you need true, sometime false
       zoom = {
         default = "125%";
@@ -156,6 +165,9 @@
             minimum = font_size;
             minimum_logical = font_size;
           };
+          default_family = lib.mkForce config.stylix.fonts.monospace.name;
+          default_size = lib.mkForce "${toString (font_size)}pt";
+          web.family.fixed = lib.mkForce config.stylix.fonts.monospace.name;
         };
 
       fileselect = {

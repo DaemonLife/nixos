@@ -1,12 +1,12 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 with config.lib.stylix.colors; let
   telegram_experimental_options = ''
     {
+        "fractional-scaling-enabled": true,
         "send-large-photos": true
     }
   '';
@@ -572,12 +572,13 @@ with config.lib.stylix.colors; let
     dialogsOnlineBadgeFgActive: #${base08};
     menuBgOver: #${base02};
   '';
-in {
+in
+{
   home.packages = with pkgs; [
     telegram-desktop
   ];
 
-  home.activation.telegram_style = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.telegram_style = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     # create theme
     cd $HOME/.config && echo "${telegram_style}" > tmp_colors.tdesktop-theme;
     sed '/^#/d' tmp_colors.tdesktop-theme > colors.tdesktop-theme;

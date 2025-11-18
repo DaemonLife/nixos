@@ -46,7 +46,7 @@
       #   name = "Noto Color Emoji";
       # };
       sizes = {
-        applications = 17;
+        applications = 19;
         terminal = 19;
         # Window titles, status bars, and other general elements of the desktop.
         desktop = 16;

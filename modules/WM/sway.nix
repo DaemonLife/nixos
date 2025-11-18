@@ -102,6 +102,8 @@
       # swaymsg -t get_tree - show window's app_id and class
       floating.criteria = [
         { title = "Steam - Update News"; }
+        # { title = "Media viewer"; } # telegram
+        # { title = "TelegramDesktop"; }
         { app_id = "rg.pulseaudio.pavucontrol"; }
         # {title = "pulsemixer";} # tailing bug
         { app_id = "floating_yazi"; }
