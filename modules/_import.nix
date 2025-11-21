@@ -1,10 +1,10 @@
-{...}: {
+{ ... }: {
   imports = [
     ./git.nix
     ./jrnl.nix
     ./rtorrent.nix
     ./gowall.nix
-    ./qt.nix
+    # ./qt.nix
     ./gtk.nix
     ./fzf.nix
     ./stylix.nix

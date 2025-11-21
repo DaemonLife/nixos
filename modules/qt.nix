@@ -1,15 +1,10 @@
-{ pkgs
-, lib
-, config
-, ...
-}: {
-  home.packages = with pkgs; [
-    # libsForQt5.qt5.qtwayland
-    # kdePackages.qtwayland
-    # kdePackages.qt6ct
-  ];
+{ pkgs, lib, config, ... }: {
+
+  home.packages = with pkgs; [ ];
+
+  # QT STUFF WORKS DON'T TOUCH IT
   qt = {
     enable = true;
-    # style.name = lib.mkForce "adwaita";
   };
+
 }

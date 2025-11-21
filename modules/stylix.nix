@@ -1,21 +1,14 @@
-{ pkgs
-, config
-, lib
-, ...
-}: {
+{ pkgs, config, lib, ... }: {
   stylix = {
     enable = true;
 
-    targets.qt.enable = lib.mkForce false;
-    targets.qt.platform = lib.mkForce "qtct";
+    image = ../images/medusa.jpg;
 
-    # my base
+    # based theme 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
 
-    # blue light free
+    # blue light free theme!
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
-
-    image = ../images/medusa.jpg;
 
     cursor = {
       package = pkgs.bibata-cursors;
@@ -28,24 +21,13 @@
         package = pkgs.unifont;
         name = "Unifont";
       };
-
       sansSerif = config.stylix.fonts.monospace;
       serif = config.stylix.fonts.monospace;
       emoji = config.stylix.fonts.monospace;
 
-      # sansSerif = {
-      #   package = config.stylix.fonts.monospace.package;
-      #   name = "${config.stylix.fonts.monospace.name}";
-      # };
-      # serif = {
-      #   package = config.stylix.fonts.monospace.package;
-      #   name = "${config.stylix.fonts.monospace.name}";
-      # };
-      # emoji = {
-      #   package = pkgs.noto-fonts-emoji;
-      #   name = "Noto Color Emoji";
-      # };
       sizes = {
+        # be careful when using certain values (for example 19)
+        # check fonts settings in qt6ct program for valid values (I hate it)
         applications = 18;
         terminal = 18;
         # Window titles, status bars, and other general elements of the desktop.
@@ -63,4 +45,8 @@
 
     polarity = "dark";
   };
+
+  # QT STUFF WORKS DON'T TOUCH IT
+  qt.enable = lib.mkForce true;
+  stylix.targets.qt.enable = lib.mkForce true;
 }

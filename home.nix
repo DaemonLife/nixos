@@ -11,17 +11,9 @@
     homeDirectory = "/home/${username}";
     sessionPath = [ "/home/${username}/.local/bin" ];
     sessionVariables =
-      # let
-      # EDITOR = "vi";
-      # in
       {
-        # EDITOR = "${EDITOR}";
-        # SYSTEMD_EDITOR = "${EDITOR}";
-        # VISUAL = "${EDITOR}";
         BROWSER = "qutebrowser";
         TERMINAL = "foot";
-        NIXOS_OZONE_WL = "1";
-        # QT_QPA_PLATFORM = "wayland";
       };
     stateVersion = "24.05";
 
