@@ -103,7 +103,7 @@
 
       scrolling = {
         bar = "always";
-        smooth = true;
+        smooth = false;
       };
 
       tabs = {
@@ -127,7 +127,7 @@
       hints.radius = 0;
       qt.highdpi = true; # f this setting, sometime you need true, sometime false
       zoom = {
-        default = "125%";
+        default = "100%";
         text_only = true;
         levels = [
           "25%"

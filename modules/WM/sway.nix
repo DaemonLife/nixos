@@ -32,7 +32,7 @@
     # package = pkgs.unstable.sway;
     checkConfig = false; # false because bug with icc profile
     xwayland = true;
-    wrapperFeatures.gtk = true; # gtk apps support
+    # wrapperFeatures.gtk = true; # gtk apps support
 
     extraConfig = ''
       popup_during_fullscreen smart
@@ -308,10 +308,11 @@
       export GDK_DPI_SCALE=1
       export GDK_SCALE=1
       export QT_SCALE_FACTOR=1
-      export QT_AUTO_SCREEN_SCALE_FACTOR=0
+      export QT_AUTO_SCREEN_SCALE_FACTOR=1
       export MOZ_USE_XINPUT2=1
       export NIXOS_OZONE_WL=1
     '';
     # export _JAVA_AWT_WM_NONREPARENTING=1
   };
+
 }

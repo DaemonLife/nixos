@@ -6,8 +6,8 @@
   stylix = {
     enable = true;
 
-    # targets.qt.enable = true;
-    # targets.qt.platform = lib.mkForce "gnome";
+    targets.qt.enable = lib.mkForce false;
+    targets.qt.platform = lib.mkForce "qtct";
 
     # my base
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
@@ -46,8 +46,8 @@
       #   name = "Noto Color Emoji";
       # };
       sizes = {
-        applications = 19;
-        terminal = 19;
+        applications = 18;
+        terminal = 18;
         # Window titles, status bars, and other general elements of the desktop.
         desktop = 16;
         popups = config.stylix.fonts.sizes.desktop;

@@ -20,6 +20,8 @@
         # VISUAL = "${EDITOR}";
         BROWSER = "qutebrowser";
         TERMINAL = "foot";
+        NIXOS_OZONE_WL = "1";
+        # QT_QPA_PLATFORM = "wayland";
       };
     stateVersion = "24.05";
 

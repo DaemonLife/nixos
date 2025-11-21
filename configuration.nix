@@ -169,7 +169,7 @@
     ntfs3g # ntfs support
     exfatprogs # exfat gparted support
     clinfo # opencl info
-    mesa # video driver
+    # mesa # video driver
     jdk # java
     iwd # wifi cli, don't delete!
     bluez
@@ -185,7 +185,13 @@
     # fonts
     # font-awesome
     # cantarell-fonts
+
+
+    kdePackages.qtwayland
+    kdePackages.qt6ct
+
   ];
+
 
   # --------------------------------
   # SYSTEM PROGRAMS

@@ -33,9 +33,10 @@
             nil_ls = {
               # nix language server
               enable = true;
-              settings.formatting.command = [
-                "nixpkgs-fmt" # autoformat
-              ];
+              settings = {
+                nix.flake.autoArchive = true;
+                formatting.command = [ "nixpkgs-fmt" ]; # autoformat
+              };
             };
           };
         };
