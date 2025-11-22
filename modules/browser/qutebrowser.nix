@@ -166,8 +166,8 @@
             minimum_logical = font_size;
           };
           default_family = lib.mkForce config.stylix.fonts.monospace.name;
-          default_size = lib.mkForce "${toString (font_size)}pt";
           web.family.fixed = lib.mkForce config.stylix.fonts.monospace.name;
+          default_size = lib.mkForce "${toString (font_size)}pt";
         };
 
       fileselect = {

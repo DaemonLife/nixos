@@ -1,9 +1,4 @@
-{ config
-, pkgs
-, lib
-, username
-, ...
-}: {
+{ config, pkgs, lib, username, ... }: {
   imports = [ ./modules/_import.nix ];
 
   home = {
@@ -58,8 +53,8 @@
       grc
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
       ## Fonts
-      unifont_upper
-      unifont-csur
+      # unifont_upper
+      # unifont-csur
 
       # Utils
       dconf-editor

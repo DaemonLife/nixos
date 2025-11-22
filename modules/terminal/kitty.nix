@@ -1,16 +1,15 @@
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }: {
   programs.kitty = with config.lib.stylix.colors; {
     enable = true;
     # shellIntegration.enableZshIntegration = true;
     shellIntegration.enableFishIntegration = true;
 
-    font = {
-      name = "Unifont";
-    };
+    # font = {
+    #   name = "Unifont";
+    # };
 
     keybindings = {
       "ctrl+shift+c" = "copy_or_interrupt";

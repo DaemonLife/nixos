@@ -11,11 +11,11 @@
         dpi-aware = lib.mkForce "yes";
         pad = "5x5";
         resize-by-cells = "no";
-        font = lib.mkForce [
-          "Unifont:append:size=${toString config.stylix.fonts.sizes.terminal}"
-          "Unifont Upper:prepend:size=${toString config.stylix.fonts.sizes.terminal}"
-          "Unifont CSUR:prepend:size=${toString config.stylix.fonts.sizes.terminal}"
-        ];
+        # font = lib.mkForce [
+        # "Unifont:append:size=${toString config.stylix.fonts.sizes.terminal}"
+        # "Unifont Upper:prepend:size=${toString config.stylix.fonts.sizes.terminal}"
+        # "Unifont CSUR:prepend:size=${toString config.stylix.fonts.sizes.terminal}"
+        # ];
       };
       key-bindings = {
         scrollback-up-line = "Control+Shift+k";
