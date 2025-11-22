@@ -94,4 +94,5 @@ in
     enable = true;
     iconTheme.name = "Vimix";
   };
+
 }

@@ -1,4 +1,9 @@
-{ ... }: {
+{ pkgs, ... }: {
+
+  home.packages = with pkgs; [
+    eartag # music tag editor
+  ];
+
   programs.cmus = {
     enable = true;
 
@@ -93,25 +98,29 @@
         set continue=true
         set ignore_duplicates=true
         set format_title=%a - %l - %t (%y) - cmus
+        set confirm_run=false
+        set status_display_program=~/nix/modules/player/cmus_notify.sh
 
         # select follow played track, toggle with f key
         set follow=true
 
         # --- BINDS ---
-
         # binds. -f means overwrite conflicts.
+
         bind -f common n player-next
         bind -f common N player-prev
         bind -f common p player-prev
         bind -f common c toggle continue
         bind -f common space player-pause
         bind -f common q quit
+        bind -f common t win-toggle
+
+        # edit selected file (or all album files) tags
+        bind -f common e run eartag
 
         # remove selected file
         bind -f common D run sh -c 'trash-put "$@" && cmus-remote -C update &' sh {}
 
-        # remove played file
-        # bind -f common D shell sh -c 'f="$(cmus-remote -Q | sed -n "s/^file //p")"; [ -n "$f" ] && trash-put "$f" && cmus-remote -C update'
       '';
   };
 }
