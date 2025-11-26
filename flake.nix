@@ -89,16 +89,16 @@
               home-manager.sharedModules = [ nixvim.homeModules.nixvim ];
             }
             # unstable pkgs
-            # {
-            # nixpkgs.overlays = [
-            #   (final: prev: {
-            #     unstable = import nixpkgs-unstable {
-            #       inherit system;
-            #       config.allowUnfree = true;
-            #     };
-            #   })
-            # ];
-            # }
+            {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  unstable = import nixpkgs-unstable {
+                    inherit system;
+                    config.allowUnfree = true;
+                  };
+                })
+              ];
+            }
           ]
           # Add device module from flake hardware
           (

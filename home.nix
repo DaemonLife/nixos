@@ -83,7 +83,7 @@
       portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
-      mindustry-wayland
+      unstable.mindustry-wayland
       # dwarf-fortress-packages.dwarf-fortress-full
     ];
   };

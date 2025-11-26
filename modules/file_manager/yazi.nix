@@ -16,7 +16,7 @@
   ];
 
   programs.yazi = with config.lib.stylix.colors; {
-    # package = pkgs.unstable.yazi;
+    package = pkgs.unstable.yazi;
     enable = true;
     enableFishIntegration = true;
 

@@ -1,8 +1,4 @@
-{ config
-, lib
-, pkgs
-, ...
-}:
+{ config, lib, pkgs, ... }:
 with config.lib.stylix.colors; let
   telegram_experimental_options = ''
     {
@@ -576,6 +572,7 @@ in
 {
   home.packages = with pkgs; [
     telegram-desktop
+    ayugram-desktop
   ];
 
   home.activation.telegram_style = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

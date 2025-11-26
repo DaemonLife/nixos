@@ -4,7 +4,7 @@
 }:
 let
   conf = ''
-    fallback = '?'
+    fallback = '*'
     separator = '-'
 
     [matching]
@@ -23,9 +23,10 @@ let
     '/^nvim$/' = 'vi'
     '/^y .*$/' = 'y'
     '/^rtorrent.*$/' = 'rtorrent'
+    '/^.*Firefox$/' = 'firefox'
 
     # by app id
-    'librewolf' = 'browser'
+    'librewolf' = 'librewolf'
     'Upscayl' = 'upscayl'
     'darktable' = 'darktable'
     'foot' = '$'

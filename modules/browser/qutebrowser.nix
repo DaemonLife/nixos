@@ -6,18 +6,21 @@
     quickmarks = { };
 
     searchEngines = {
-      w = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
-      wt = "https://ru.wiktionary.org/wiki/{}";
-      g = "https://www.google.com/search?hl=en&q={}";
-      gi = "https://www.google.com/search?q={}&udm=2";
-      gt = "https://translate.google.com/?sl=en&tl=ru&text={}&op=translate";
-      yt = "https://www.youtube.com/results?search_query={}";
-      yi = "https://ya.ru/images/search?from=tabbar&text={}";
-      nixp = "https://search.nixos.org/packages?&from=0&size=50&sort=relevance&type=packages&query={}";
-      nixo = "https://search.nixos.org/options?size=50&sort=relevance&type=packages&query={}";
-      nixg = "https://github.com/search?q={}+language%3Anix&type=code";
-      git = "https://github.com/search?q={}&type=repositories";
-      wttr = "https://wttr.in/{}?FMm"; # Weather. Type ":help" for helping
+      "!w" = "https://en.wikipedia.org/wiki/Special:Search?search={}&go=Go&ns0=1";
+      "!wt" = "https://ru.wiktionary.org/wiki/{}";
+      "!g" = "https://www.google.com/search?hl=en&q={}";
+      "!gi" = "https://www.google.com/search?q={}&udm=2";
+      "!gt" = "https://translate.google.com/?sl=en&tl=ru&text={}&op=translate";
+      "!y" = "https://www.youtube.com/results?search_query={}";
+      "!yai" = "https://ya.ru/images/search?from=tabbar&text={}";
+      "!nixp" = "https://search.nixos.org/packages?&from=0&size=50&sort=relevance&type=packages&query={}";
+      "!nixo" = "https://search.nixos.org/options?size=50&sort=relevance&type=packages&query={}";
+      "!nixs" = "https://searchix.ovh/?query={}";
+      "!git" = "https://github.com/search?q={}&type=repositories";
+      "!gitn" = "https://github.com/search?q={}+language%3Anix&type=code";
+      "!wttr" = "https://wttr.in/{}?FMm"; # Weather. Type ":help" for helping
+      "!mapo" = "https://www.openstreetmap.org/search?query={}";
+      "!mapg" = "https://www.google.com/maps/search/{}";
     };
 
     aliases = {

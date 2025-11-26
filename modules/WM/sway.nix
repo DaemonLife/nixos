@@ -1,8 +1,4 @@
-{ pkgs
-, config
-, lib
-, ...
-}: {
+{ pkgs, config, lib, ... }: {
   imports = [
     (import ./waybar.nix {
       inherit config lib;
@@ -112,7 +108,7 @@
 
       colors =
         let
-          default_color = "#${base02}"; # no focus
+          default_color = "#${base01}"; # no focus
           focused_color = "#${base0E}";
           indicator_color = "#${base08}";
           attenction_color = "#${base0D}";
