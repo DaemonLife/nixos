@@ -15,6 +15,7 @@ let
     '/^.* - cmus$/' = 'cmus'
     '/^man .*$/' = 'man'
     'org.telegram.desktop' = 'tg'
+    'com.ayugram.desktop' = 'tg'
     'org.qutebrowser.qutebrowser' = 'qb'
     'org.qbittorrent.qBittorrent' = 'torrent'
     '/^.*[Ss]team.*$/' = 'steam'

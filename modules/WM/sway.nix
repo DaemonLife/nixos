@@ -80,10 +80,14 @@
             criteria.app_id = "kitty";
             command = "title_format \"kitty: %title\"";
           }
-          {
-            criteria.app_id = "org.telegram.desktop";
-            command = "move container to workspace number 1";
-          }
+          # {
+          #   criteria.app_id = "org.telegram.desktop";
+          #   command = "move container to workspace number 1";
+          # }
+          # {
+          #   criteria.app_id = "com.ayugram.desktop";
+          #   command = "move container to workspace number 1";
+          # }
           {
             criteria.class = "^[Ss]team.*$";
             command = "move container to workspace number 9";
@@ -187,7 +191,7 @@
         "${modifier}+b" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER";
         "${modifier}+Shift+B" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 qutebrowser --desktop-file-name vpn_qutebrowser --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
-        "${modifier}+t" = "exec telegram-desktop || exec Telegram"; # telegram
+        "${modifier}+t" = "exec ayugram-desktop || telegram-desktop || exec Telegram"; # telegram
         "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker
 
         # ---------------
@@ -296,11 +300,12 @@
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
       export QT_QPA_PLATFORMTHEME="qt6ct";
       export SDL_VIDEODRIVER=wayland
-      export XDG_CURRENT_DESKTOP=sway
       export MOZ_ENABLE_WAYLAND=1
       export EDITOR=vi
       export TERMINAL=foot
       export XDG_SESSION_TYPE=wayland
+      export XDG_CURRENT_DESKTOP=sway
+      export XDG_SESSION_DESKTOP=sway
       export CLUTTER_BACKEND=wayland
       export GDK_BACKEND=wayland,x11,*
       export GDK_DPI_SCALE=1

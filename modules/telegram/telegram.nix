@@ -2,7 +2,7 @@
 with config.lib.stylix.colors; let
   telegram_experimental_options = ''
     {
-        "fractional-scaling-enabled": true,
+        "fractional-scaling-enabled": false,
         "send-large-photos": true
     }
   '';

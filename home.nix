@@ -32,6 +32,7 @@
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
+      deltachat-desktop
 
       # Media
       gimp3-with-plugins
@@ -45,6 +46,7 @@
       kodi-wayland
       obs-studio
       upscayl
+      yt-dlp
 
       # Theming
       vimix-icon-theme # cursor icon

@@ -19,7 +19,16 @@
 
     shellAbbrs = {
       jrnl = " jrnl"; # symbold ' ' for hide from shell history
-      jrnl-tags = " jrnl -on year --format json | jq -r '.entries[] | \"\\(.date) \\(.tags | join(\", \"))\"'";
+      # jrnl-tags = " jrnl -on year --format json | jq -r '.entries[] | \"\\(.date) \\(.tags | join(\", \"))\"'";
+      jrnl-tags = ''
+         set tag "боль"
+        jrnl --format json | jq -r --arg tag "@$tag" '
+          .entries[]
+          | select((.tags // []) | map(startswith($tag)) | any)
+          | "\(.date) \((.tags // [] | map(select(startswith($tag))) | join(" ")))"
+        '
+      '';
+      yt-dlp-best = ''yt-dlp -f "bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]"''; # add URL
     };
 
     plugins = [

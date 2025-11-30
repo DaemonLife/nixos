@@ -11,6 +11,7 @@
     ./GIMP.nix
     ./nomacs.nix
     ./chess/cli-chess.nix
+    ./xdg.nix
 
     ./shell/_import.nix
     ./terminal/_import.nix
