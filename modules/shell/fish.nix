@@ -59,9 +59,19 @@
     # git status for my promt, check:
     # https://fishshell.com/docs/current/cmds/fish_git_prompt.html
     shellInit = ''
-      set -g fish_key_bindings fish_vi_key_bindings # vim mode
-
       set __fish_git_prompt_show_informative_status 1
+      set ___fish_git_prompt_char_cleanstate ✓
+      set ___fish_git_prompt_char_dirtystate ⁕
+      set ___fish_git_prompt_char_invalidstate ✕
+      set ___fish_git_prompt_char_stagedstate ⸱
+      set ___fish_git_prompt_char_stashstate ⚑
+      set ___fish_git_prompt_char_stateseparator '|'
+      set ___fish_git_prompt_char_untrackedfiles …
+      set ___fish_git_prompt_char_upstream_ahead ⇡
+      set ___fish_git_prompt_char_upstream_behind ⇣
+      set ___fish_git_prompt_char_upstream_diverged '<>'
+
+      set -g fish_key_bindings fish_vi_key_bindings # vim mode
       set fish_cursor_insert line blink # for vi mode
       # bind -s --preset -M visual -m default space-y "fish_clipboard_copy; commandline -f end-selection repaint-mode"
 

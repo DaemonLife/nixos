@@ -240,9 +240,9 @@
   # for flatpak
   xdg.portal = {
     enable = true;
-    # config.common.default = "gtk";
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal ];
+    config.common.default = "gtk";
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid

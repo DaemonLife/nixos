@@ -46,7 +46,10 @@
             rewrite = { };
           };
 
-          tray.spacing = 12;
+          tray = {
+            spacing = 12;
+            icon-size = config.stylix.fonts.sizes.terminal;
+          };
 
           # Modules
           idle_inhibitor = {
@@ -218,7 +221,11 @@
               color: @gray;
             }
 
-            #language {
+            #tray {
+              padding: 0 5px;
+            }
+
+              #language {
               background-color: #${base00};
             }
             #network {

@@ -73,7 +73,7 @@
       };
 
       window = {
-        border = lib.mkForce 4;
+        border = lib.mkForce 3;
         titlebar = false;
         commands = [
           {
@@ -296,7 +296,7 @@
     extraSessionCommands = ''
       export QT_QPA_PLATFORM=wayland
       export QT_SCALE_FACTOR=1
-      export QT_AUTO_SCREEN_SCALE_FACTOR=1
+      export QT_AUTO_SCREEN_SCALE_FACTOR=0
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
       export QT_QPA_PLATFORMTHEME="qt6ct";
       export SDL_VIDEODRIVER=wayland
@@ -312,7 +312,7 @@
       export GDK_SCALE=1
       export MOZ_USE_XINPUT2=1
       export NIXOS_OZONE_WL=1
-      # export WLR_RENDERER=vulkan
+      export WLR_RENDERER=vulkan
     '';
     # export _JAVA_AWT_WM_NONREPARENTING=1
   };

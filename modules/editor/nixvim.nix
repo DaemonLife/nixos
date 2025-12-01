@@ -79,7 +79,7 @@
 
         indent-blankline = {
           enable = true;
-          settings = { indent.char = "┆"; };
+          settings = { indent.char = "⁚"; };
         };
 
         lightline = {
