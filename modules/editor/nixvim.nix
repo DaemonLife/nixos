@@ -313,6 +313,17 @@
           key = "л";
         }
         # --- soft string jumping ---
+
+        # -- delete back word for rus ---
+        {
+          action = "<C-w>";
+          key = "<C-ц>";
+          mode = "i";
+          options = {
+            remap = true;
+          };
+        }
+        # -- delete back word for rus ---
       ];
 
       # extra plugin and ru keymap support
