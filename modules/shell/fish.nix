@@ -60,9 +60,9 @@
     # https://fishshell.com/docs/current/cmds/fish_git_prompt.html
     shellInit = ''
       set __fish_git_prompt_show_informative_status 1
-      set ___fish_git_prompt_char_cleanstate 🗸
+      set ___fish_git_prompt_char_cleanstate v
       set ___fish_git_prompt_char_dirtystate ⁕
-      set ___fish_git_prompt_char_invalidstate 🗴
+      set ___fish_git_prompt_char_invalidstate x
       set ___fish_git_prompt_char_stagedstate ⸱
       set ___fish_git_prompt_char_stashstate 🏴
       set ___fish_git_prompt_char_stateseparator '|'
