@@ -20,7 +20,7 @@
     cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Modern-Ice";
-      size = 26;
+      size = 16;
     };
 
     fonts = {
@@ -42,10 +42,10 @@
       sizes = {
         # be careful when using certain values (for example 19)
         # check fonts settings in qt6ct program for valid values (I hate it)
-        applications = 22;
-        terminal = 20;
+        applications = 10;
+        terminal = 12;
         # Window titles, status bars, and other general elements of the desktop.
-        desktop = 18;
+        desktop = 10;
         popups = config.stylix.fonts.sizes.desktop;
       };
     };

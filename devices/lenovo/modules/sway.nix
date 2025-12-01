@@ -9,47 +9,47 @@
       output =
         let
           msk = {
-            w = "2560";
-            h = "1440";
-            scale = "1";
-            position_w = "0";
-            position_h = "0";
+            w = 2560;
+            h = 1440;
+            scale = 2;
+            position_w = 0;
+            position_h = 0;
           };
 
           gg = {
-            w = "2560";
-            h = "1440";
-            scale = "1";
+            w = 2560;
+            h = 1440;
+            scale = 1;
           };
 
           lenovo = {
-            w = "2240";
-            h = "1400";
-            scale = "2";
+            w = 2240;
+            h = 1400;
+            scale = 2;
             position_w = msk.w;
-            position_h = "300";
+            position_h = (300 / msk.scale);
             # position_h = toString (builtins.fromJSON msk.h - 700); # builtins.fromJSON makes int from str
           };
         in
         {
           # monitor msk
           "Shenzhen KTC Technology Group H27S17 0x00000001" = {
-            mode = "${msk.w}x${msk.h}@164.998Hz";
-            scale = "${msk.scale}";
+            mode = "${toString msk.w}x${toString msk.h}@164.998Hz";
+            scale = "${toString msk.scale}";
             scale_filter = "smart";
             adaptive_sync = "true"; # always off at monitor (but there is too...?)
             render_bit_depth = "10"; # 6, 8, 10. Maybe flickings bc of 10 and 165Hz
-            position = "${msk.position_w} ${msk.position_h}"; # left position
+            position = "${toString msk.position_w} ${toString msk.position_h}"; # left position
             color_profile = "icc /home/user/nix/devices/screens/H27S17_2024-06-16.icm";
           };
 
           # lenovo laptop
           "BOE 0x0931 Unknown" = {
-            mode = "${lenovo.w}x${lenovo.h}@60.002Hz";
-            scale = "${lenovo.scale}"; # 2240 -> 1400
+            mode = "${toString lenovo.w}x${toString lenovo.h}@60.002Hz";
+            scale = "${toString lenovo.scale}"; # 2240 -> 1400
             adaptive_sync = "true";
             render_bit_depth = "10"; # 6, 8, 10
-            position = "${lenovo.position_w} ${lenovo.position_h}"; # laptop position for msk
+            position = "${toString lenovo.position_w} ${toString lenovo.position_h}"; # laptop position for msk
             color_profile = "icc /home/user/nix/devices/screens/LEN140WUXGA+_2023-03-29.icm";
           };
 

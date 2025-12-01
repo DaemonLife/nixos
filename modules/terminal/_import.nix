@@ -1,7 +1,8 @@
-{...}: {
+{ ... }: {
   imports = [
     ./foot.nix
-    ./kitty.nix # bug with font render
+    # weztern is cool too maybe
+    # ./kitty.nix # bug with font render
     # ./alacrity.nix
   ];
 }

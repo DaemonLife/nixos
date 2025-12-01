@@ -7,9 +7,9 @@
     # shellIntegration.enableZshIntegration = true;
     shellIntegration.enableFishIntegration = true;
 
-    # font = {
-    #   name = "Unifont";
-    # };
+    font = lib.mkForce {
+      name = "UnifontExMono";
+    };
 
     keybindings = {
       "ctrl+shift+c" = "copy_or_interrupt";
@@ -39,6 +39,8 @@
     # it's important change colors only in extaConfig!
     extraConfig = ''
       visual_bell_color #${base01}
+      modify_font cell_width 100%
+      font_family monospace
     '';
   };
 }

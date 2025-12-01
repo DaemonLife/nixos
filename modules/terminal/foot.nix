@@ -8,7 +8,7 @@
     settings = {
       main = {
         selection-target = "both"; # copy to foot and system clipboard
-        dpi-aware = lib.mkForce "yes";
+        dpi-aware = lib.mkForce "no";
         pad = "5x5";
         resize-by-cells = "no";
         # font = lib.mkForce [
