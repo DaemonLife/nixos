@@ -13,8 +13,9 @@
     # ./modules/editor/nvf.nix
   ];
 
-  stylix.targets.grub.enable = false;
   stylix = {
+
+    targets.grub.enable = false;
 
     cursor = {
       package = pkgs.bibata-cursors;
@@ -41,10 +42,10 @@
       sizes = {
         # be careful when using certain values (for example 19)
         # check fonts settings in qt6ct program for valid values (I hate it)
-        applications = 18;
-        terminal = 18;
+        applications = 22;
+        terminal = 20;
         # Window titles, status bars, and other general elements of the desktop.
-        desktop = 16;
+        desktop = 18;
         popups = config.stylix.fonts.sizes.desktop;
       };
     };
