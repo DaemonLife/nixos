@@ -139,6 +139,9 @@
         \" enable title and setup
         set title
         set titlestring=nvim
+
+        \" transparent bg
+        autocmd VimEnter * highlight Normal guibg=NONE ctermbg=NONE
       ";
 
       autoCmd = [

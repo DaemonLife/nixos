@@ -66,14 +66,14 @@
       ];
 
       gaps = {
-        outer = 0;
-        inner = 0;
-        smartGaps = true;
+        outer = 4;
+        inner = 4;
+        smartGaps = false;
         smartBorders = "on";
       };
 
       window = {
-        border = lib.mkForce 3;
+        border = lib.mkForce 4;
         titlebar = false;
         commands = [
           {
@@ -112,7 +112,7 @@
 
       colors =
         let
-          default_color = "#${base01}"; # no focus
+          default_color = "#${base00}"; # no focus
           focused_color = "#${base0E}";
           indicator_color = "#${base08}";
           attenction_color = "#${base0D}";
@@ -159,7 +159,7 @@
         "type:keyboard" = {
           xkb_layout = "us,ru";
           xkb_options = "grp:win_space_toggle";
-          repeat_delay = "200";
+          repeat_delay = "250";
           repeat_rate = "45";
         };
         "type:touchpad" = {

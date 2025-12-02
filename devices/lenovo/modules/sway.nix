@@ -11,7 +11,7 @@
           msk = {
             w = 2560;
             h = 1440;
-            scale = 2;
+            scale = 1;
             position_w = 0;
             position_h = 0;
           };
@@ -26,8 +26,8 @@
             w = 2240;
             h = 1400;
             scale = 2;
-            position_w = msk.w;
-            position_h = (300 / msk.scale);
+            position_w = msk.w / msk.scale;
+            position_h = 300 / msk.scale;
             # position_h = toString (builtins.fromJSON msk.h - 700); # builtins.fromJSON makes int from str
           };
         in
