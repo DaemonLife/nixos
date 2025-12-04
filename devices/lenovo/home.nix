@@ -1,16 +1,14 @@
-{
-  pkgs,
-  lib,
-  config,
-  inputs,
-  ...
+{ pkgs
+, lib
+, config
+, inputs
+, ...
 }: {
-  imports = [./modules/_import.nix];
+  imports = [ ./modules/_import.nix ];
 
-  # pkgs only for lenovo
   home.packages = with pkgs; [
     # media
-    digikam
+    unstable.digikam
     # blender
     unstable.darktable
 
@@ -19,6 +17,15 @@
   ];
 
   dconf.settings = {
-    "org/gnome/desktop/peripherals/touchpad" = {speed = 0.8;};
+    "org/gnome/desktop/peripherals/touchpad" = { speed = 0.8; };
   };
+
+  # ==================
+  #   kdeconnect 
+  # ==================
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+  };
+
 }

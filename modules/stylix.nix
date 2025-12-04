@@ -57,5 +57,7 @@
 
   # QT STUFF WORKS DON'T TOUCH IT
   qt.enable = lib.mkForce true;
+  # qt.platformTheme = "gnome";
+  # qt.style = "adwaita-dark";
   stylix.targets.qt.enable = lib.mkForce true;
 }

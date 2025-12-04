@@ -105,6 +105,7 @@
         # { title = "Media viewer"; } # telegram
         # { title = "TelegramDesktop"; }
         { app_id = "rg.pulseaudio.pavucontrol"; }
+        { app_id = "org.kde.kdeconnect.sms"; }
         # {title = "pulsemixer";} # tailing bug
         { app_id = "floating_yazi"; }
         # {app_id = "floating_nmtui";} # too small window

@@ -17,7 +17,6 @@
   };
   boot.initrd.kernelModules = [ "amdgpu" ];
 
-
   environment.systemPackages = with pkgs; [
     ## Tools ##
     # glxinfo # OpenGL info
@@ -33,7 +32,6 @@
   ## LACT daemon ##
   systemd.packages = with pkgs; [ lact ];
   systemd.services.lactd.wantedBy = [ "multi-user.target" ];
-
 
   # --------------------------------
   # HIBERNATION
@@ -87,6 +85,15 @@
       };
     }; # tlp
   }; # services
+
+  # -------------
+  #   FIREWALL
+  # -------------
+  networking.firewall = rec {
+    # kdeconnect
+    allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
 
   system.stateVersion = "24.11";
 }
