@@ -1,55 +1,15 @@
-{ config
-, pkgs
-, lib
-, username
-, ...
-}: {
-  # --------------------------------
-  # SYSTEM THEME
-  # --------------------------------
+{ config, pkgs, lib, username, ... }: {
 
   imports = [
     ./modules/stylix.nix
     # ./modules/editor/nvf.nix
   ];
 
-  stylix = {
+  # --------------------------------
+  # SYSTEM THEME
+  # --------------------------------
 
-    targets.grub.enable = false;
-
-    # cursor = {
-    #   package = pkgs.bibata-cursors;
-    #   name = "Bibata-Modern-Ice";
-    #   size = 26;
-    # };
-    #
-    # fonts = {
-    #   monospace = {
-    #     # package = pkgs.nerd-fonts.iosevka-term;
-    #     # package = pkgs.nerd-fonts.lilex;
-    #     # package = pkgs.nerd-fonts.im-writing;
-    #
-    #     # font list: fc-list
-    #     name = "UnifontExMono"; # my local font
-    #     # name = "IosevkaTerm Nerd Font Mono";
-    #     # name = "Lilex Nerd Font Mono";
-    #     # also check this: Cozette, Fairfax, Fixedsys (with Ligatures?)
-    #
-    #   };
-    #   sansSerif = config.stylix.fonts.monospace;
-    #   serif = config.stylix.fonts.monospace;
-    #   emoji = config.stylix.fonts.monospace;
-    #   sizes = {
-    #     # be careful when using certain values (for example 19)
-    #     # check fonts settings in qt6ct program for valid values (I hate it)
-    #     applications = 26;
-    #     terminal = 24;
-    #     # Window titles, status bars, and other general elements of the desktop.
-    #     desktop = 20;
-    #     popups = config.stylix.fonts.sizes.desktop;
-    #   };
-    # };
-  };
+  # stylix.targets.grub.enable = false;
 
   # TTYI colors
   console = with config.lib.stylix.colors; {
@@ -221,6 +181,7 @@
     # fonts
     # font-awesome
     # cantarell-fonts
+    appimage-run
 
 
     kdePackages.qtwayland
@@ -323,6 +284,10 @@
       capSysNice = true;
     };
     # ------ Steam ------
+
+    # enable appimage support
+    appimage.enable = true;
+    appimage.binfmt = true;
 
     dconf.enable = true;
     foot.enable = true;

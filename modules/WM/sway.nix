@@ -66,8 +66,8 @@
       ];
 
       gaps = {
-        outer = 4;
-        inner = 4;
+        outer = 0;
+        inner = 0;
         smartGaps = false;
         smartBorders = "on";
       };
@@ -113,7 +113,7 @@
 
       colors =
         let
-          default_color = "#${base00}"; # no focus
+          default_color = "#${base02}"; # no focus
           focused_color = "#${base0E}";
           indicator_color = "#${base08}";
           attenction_color = "#${base0D}";
@@ -192,7 +192,7 @@
         "${modifier}+b" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER";
         "${modifier}+Shift+B" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 qutebrowser --desktop-file-name vpn_qutebrowser --set window.title_format \"[VPN] {perc}{current_title}{title_sep}qutebrowser\"";
 
-        "${modifier}+t" = "exec ayugram-desktop || telegram-desktop || exec Telegram"; # telegram
+        "${modifier}+t" = "exec AyuGram || exec Telegram"; # telegram
         "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker
 
         # ---------------

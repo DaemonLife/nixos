@@ -44,6 +44,7 @@
       alsa-utils # audio volume control (?)
       pulsemixer # cli pulse adudio control
       nomacs-qt6 # image viewer
+      kdePackages.gwenview
       kodi-wayland
       obs-studio
       upscayl
@@ -51,13 +52,15 @@
 
       # Theming
       vimix-icon-theme # cursor icon
-      gnome-tweaks
+      # gnome-tweaks
       gowall # Tool to convert a Wallpaper's color scheme
       grc
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
       ## Fonts
       # unifont_upper
       # unifont-csur
+      libsForQt5.qt5ct
+      kdePackages.qt6ct
 
       # Utils
       dconf-editor

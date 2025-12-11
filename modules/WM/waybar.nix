@@ -126,9 +126,9 @@
               critical = 20;
             };
             # interval = 30;
-            format = "bat_{capacity}-";
-            format-plugged = "bat_{capacity}";
-            format-charging = "bat_{capacity}+";
+            format = "bat-{capacity}-";
+            format-plugged = "bat-{capacity}";
+            format-charging = "bat-{capacity}+";
             on-click = "gnome-power-statistics";
           };
 
@@ -146,11 +146,11 @@
 
           pulseaudio = {
             # format = "{icon}{format_source}";
-            format = "{icon}_{volume}{format_source}";
-            format-bluetooth = "{icon}_{volume}{format_source}";
-            format-bluetooth-muted = "{icon}_{volume}{format_source}";
+            format = "{icon}-{volume}{format_source}";
+            format-bluetooth = "{icon}-{volume}{format_source}";
+            format-bluetooth-muted = "{icon}-{volume}{format_source}";
             format-muted = "mut";
-            format-source = "_mic";
+            format-source = "-mic";
             format-source-muted = "";
             format-icons = {
               hands-free = "vol-head";
