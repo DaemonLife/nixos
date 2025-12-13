@@ -11,6 +11,7 @@
     unstable.digikam
     # blender
     unstable.darktable
+    unstable.kdePackages.kdenlive
 
     # games
     bottles

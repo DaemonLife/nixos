@@ -9,7 +9,7 @@
   # SYSTEM THEME
   # --------------------------------
 
-  # stylix.targets.grub.enable = false;
+  stylix.targets.grub.enable = false;
 
   # TTYI colors
   console = with config.lib.stylix.colors; {
@@ -378,7 +378,7 @@
   # --------------------------------
   # BOOT OPTIONS
   # --------------------------------
-
+  boot.supportedFilesystems = [ "ntfs" ];
   boot.loader = {
     grub = {
       enable = true;

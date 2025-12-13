@@ -56,10 +56,10 @@
           # monitor gg
           "Acer Technologies Acer A231H LQT0W0084320" = {
             mode = "1920x1080@60Hz";
-            # scale = "1";
-            scale_filter = "linear";
+            scale = "1";
+            # scale_filter = "linear";
             # adaptive_sync = "enable";
-            render_bit_depth = "10"; # 6, 8, 10
+            # render_bit_depth = "10"; # 6, 8, 10
             position = "3840 0";
           };
         };
