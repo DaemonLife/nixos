@@ -32,10 +32,11 @@ in
 
     # if main tracker not works
     dht.mode.set = auto
-    dht.port.set = 6881
+    dht.override_port.set = 6881
+    protocol.pex.set = yes
 
-    port_range = 50000-50010
-    port_random = yes
+    port_range = 50000-50000
+    port_random = no
     encoding.add = UTF-8
     pieces.hash.on_completion.set = yes
     view.sort_current = seeding, greater=d.ratio=
@@ -43,7 +44,5 @@ in
     trackers.use_udp.set = yes
 
     protocol.encryption.set = allow_incoming,try_outgoing,enable_retry
-
-    # bind y start_tied
   '';
 }

@@ -200,12 +200,10 @@
 
   qt.enable = true;
 
-  # for flatpak
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    config.common.default = "gtk";
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "wlr"; # wlr for wayland wm, gnome for gnome
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid

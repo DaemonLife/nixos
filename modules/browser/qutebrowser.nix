@@ -1,4 +1,9 @@
 { pkgs, config, lib, ... }: {
+
+  home.packages = with pkgs; [
+    python313Packages.adblock
+  ];
+
   programs.qutebrowser = with config.lib.stylix.colors; {
     enable = true;
     loadAutoconfig = true;
@@ -44,10 +49,119 @@
     };
 
     greasemonkey = [
-      (pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/afreakk/greasemonkeyscripts/1d1be041a65c251692ee082eda64d2637edf6444/youtube_sponsorblock.js";
-        sha256 = "sha256-e3QgDPa3AOpPyzwvVjPQyEsSUC9goisjBUDMxLwg8ZE=";
-      })
+      # https://github.com/afreakk/greasemonkeyscripts
+
+      (pkgs.writeText "shorts_block_youtube.js" ''
+        // ==UserScript==
+        // @name         YouTube Shorts Blocker
+        // @namespace    http://tampermonkey.net/
+        // @version      0.1.2
+        // @description  Blocks the YouTube shorts from appearing.
+        // @author       Aiden Charles
+        // @license      MIT
+        // @match        https://www.youtube.com/*
+        // @grant        none
+        // ==/UserScript==
+
+        (function () {
+            setInterval(function () {
+                document
+                    .querySelectorAll('ytd-reel-shelf-renderer')
+                    .forEach((x) => x.remove());
+                document
+                    .querySelectorAll('ytd-rich-shelf-renderer')
+                    .forEach((x) => x.remove());
+                document
+                    .querySelectorAll("a[title='Shorts']")
+                    .forEach((x) => x.remove());
+            }, 1000);
+        })();
+      '')
+
+      (pkgs.writeText "sponsorblock_youtube.js" ''
+        // ==UserScript==
+        // @name         Sponsorblock
+        // @version      1.1.0
+        // @description  Skip sponsor segments automatically
+        // @author       afreakk
+        // @author          vongaisberg
+        // @match        *://*.youtube.com/*
+        // @exclude      *://*.youtube.com/subscribe_embed?*
+        // ==/UserScript==
+        const delay = 1000;
+
+        const tryFetchSkipSegments = (videoID) =>
+
+            fetch(`https://sponsor.ajay.app/api/skipSegments?videoID=$\{videoID}`)
+                .then((r) => r.json())
+                .then((rJson) =>
+                    rJson.filter((a) => a.actionType === 'skip').map((a) => a.segment)
+                )
+                .catch(
+                    (e) =>
+                        console.log(
+                            `Sponsorblock: failed fetching skipSegments for $\{videoID}, reason: $\{e}`
+                        ) || []
+                );
+
+        const skipSegments = async () => {
+            const videoID = new URL(document.location).searchParams.get('v');
+            if (!videoID) {
+                return;
+            }
+            const key = `segmentsToSkip-$\{videoID}`;
+            window[key] = window[key] || (await tryFetchSkipSegments(videoID));
+            for (const v of document.querySelectorAll('video')) {
+                if (Number.isNaN(v.duration)) continue;
+                for (const [start, end] of window[key]) {
+                    if (v.currentTime < end && v.currentTime >= start) {
+                        console.log(`Sponsorblock: skipped video @$\{v.currentTime} from $\{start} to $\{end}`);
+                        v.currentTime = end;
+                        return
+                    }
+                    const timeToSponsor = (start - v.currentTime) / v.playbackRate;
+                    if (v.currentTime < start && timeToSponsor < (delay / 1000)) {
+                        console.log(`Sponsorblock: Almost at sponsor segment, sleep for $\{timeToSponsor * 1000}ms`);
+                        setTimeout(skipSegments, timeToSponsor * 1000);
+                    }
+                }
+            }
+        };
+        if (!window.skipSegmentsIntervalID) {
+            window.skipSegmentsIntervalID = setInterval(skipSegments, delay);
+        }
+      '')
+
+      (pkgs.writeText "skip_youtube_ads.js" ''
+        // ==UserScript==
+        // @name         Auto Skip YouTube Ads
+        // @version      1.1.0
+        // @description  Speed up and skip YouTube ads automatically
+        // @author       jso8910
+        // @match        *://*.youtube.com/*
+        // @exclude      *://*.youtube.com/subscribe_embed?*
+        // ==/UserScript==
+        setInterval(() => {
+            const btn = document.querySelector('.videoAdUiSkipButton,.ytp-ad-skip-button')
+            if (btn) {
+                btn.click()
+            }
+            const ad = [...document.querySelectorAll('.ad-showing')][0];
+            if (ad) {
+                const video = document.querySelector('video')
+                video.muted = true;
+                video.hidden = true;
+
+                // This is not necessarily available right at the start
+                if(video.duration != NaN) {
+                    video.currentTime = video.duration;
+                }
+
+                // 16 seems to be the highest rate that works, mostly this isn't needed
+                video.playbackRate = 16;
+            }
+        }, 50)
+      '')
     ];
 
     settings = {
@@ -65,20 +179,28 @@
         pdfjs = true;
 
         blocking = {
-          method = "both";
+          method = "adblock";
           whitelist = [ ];
           adblock.lists = [
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2020.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2021.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2022.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2023.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2024.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/legacy.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2020.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2021.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2022.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2023.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/filters-2024.txt"
             "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/filters-2025.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/badware.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/privacy.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/quick-fixes.txt"
-            "https://github.com/uBlockOrigin/uAssets/raw/refs/heads/master/filters/unbreak.txt"
-            "https://raw.githubusercontent.com/uBlockOrigin/uAssets/refs/heads/master/filters/annoyances-cookies.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badware.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/privacy.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances-cookies.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/annoyances-others.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/badlists.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/quick-fixes.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/resource-abuse.txt"
+            "https://github.com/uBlockOrigin/uAssets/raw/master/filters/unbreak.txt"
+
             "https://easylist.to/easylist/easylist.txt"
             "https://easylist.to/easylist/easyprivacy.txt"
             "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
@@ -191,6 +313,7 @@
 
     # --- EXTRA OPTIONS ---
     extraConfig = ''
+      c.content.blocking.enabled = True
       # cool setting for fix exit from insert mode - no cursor and active form!
       config.bind('<Escape>', 'mode-leave ;; jseval -q document.activeElement.blur()', mode='insert')
 
