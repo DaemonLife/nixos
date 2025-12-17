@@ -163,6 +163,7 @@
     gparted
     os-prober
     ntfs3g # ntfs support
+    sshfs # ssh mount as directory
     exfatprogs # exfat gparted support
     clinfo # opencl info
     # mesa # video driver
@@ -176,16 +177,17 @@
     # rocmPackages.clr.icd
     nautilus
     # zapret
+    net-tools # for netstat
 
     mangohud # Steam performance GUI
     # fonts
     # font-awesome
     # cantarell-fonts
-    appimage-run
+    # appimage-run
 
 
-    kdePackages.qtwayland
-    kdePackages.qt6ct
+    # kdePackages.qtwayland
+    # kdePackages.qt6ct
     # unifont
     # fontconfig
 

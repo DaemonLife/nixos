@@ -11,23 +11,25 @@
           msk = {
             w = 2560;
             h = 1440;
-            scale = 1;
+            scale = 1.6; # 1, 1.6 or 2 is optimal
             position_w = 0;
             position_h = 0;
           };
 
           gg = {
-            w = 2560;
-            h = 1440;
+            w = 1920;
+            h = 1080;
             scale = 1;
+            position_w = 2720;
+            position_h = 312;
           };
 
           lenovo = {
             w = 2240;
             h = 1400;
             scale = 2;
-            position_w = msk.w / msk.scale;
-            position_h = 300 / msk.scale;
+            position_w = 1600;
+            position_h = 500;
             # position_h = toString (builtins.fromJSON msk.h - 700); # builtins.fromJSON makes int from str
           };
         in
@@ -46,7 +48,7 @@
           # lenovo laptop
           "BOE 0x0931 Unknown" = {
             mode = "${toString lenovo.w}x${toString lenovo.h}@60.002Hz";
-            scale = "${toString lenovo.scale}"; # 2240 -> 1400
+            scale = "${toString lenovo.scale}";
             adaptive_sync = "true";
             render_bit_depth = "10"; # 6, 8, 10
             position = "${toString lenovo.position_w} ${toString lenovo.position_h}"; # laptop position for msk
@@ -55,12 +57,12 @@
 
           # monitor gg
           "Acer Technologies Acer A231H LQT0W0084320" = {
-            mode = "1920x1080@60Hz";
-            scale = "1";
+            mode = "${toString gg.w}x${toString gg.h}@60Hz";
+            scale = "${toString gg.scale}";
+            position = "${toString gg.position_w} ${toString gg.position_h}"; # left position
             # scale_filter = "linear";
             # adaptive_sync = "enable";
             # render_bit_depth = "10"; # 6, 8, 10
-            position = "3840 0";
           };
         };
 

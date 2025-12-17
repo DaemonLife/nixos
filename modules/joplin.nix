@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    joplin
-    # joplin-desktop
+    joplin-cli
+    joplin-desktop
   ];
 
   # evil keymap for joplin-cli

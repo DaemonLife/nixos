@@ -37,10 +37,10 @@
       sizes = {
         # be careful when using certain values (for example 19)
         # check fonts settings in qt6ct program for valid values (I hate it)
-        applications = 22;
-        terminal = 24;
+        applications = 20;
+        terminal = 20;
         # Window titles, status bars, and other general elements of the desktop.
-        desktop = 20;
+        desktop = 18;
         popups = config.stylix.fonts.sizes.desktop;
       };
     };

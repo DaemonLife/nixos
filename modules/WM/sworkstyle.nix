@@ -33,6 +33,7 @@ let
     'foot' = '$'
     'mpv' = 'mpv'
     'Mindustry' = 'mindustry'
+    'org.kde.kdenlive' = 'kdenlive'
   '';
 in
 {
