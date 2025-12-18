@@ -103,17 +103,23 @@ with config.lib.stylix.colors; let
     titleButtonCloseFgActiveOverscrollBarBg: #${base05};
 
     // --- Scroll in CHATS ---
+    // bg
     scrollBg: #${base00};
-    scrollBgOver: #${base03};
+    scrollBgOver: #${base00};
+    // fg
+    scrollBarBg: #${base03};
+    scrollBarBgOver: #${base04};
 
     // --- Scroll in CHAT ---
     historyScrollBarBgOverhistoryScrollBg: #${base01};
-    historyScrollBg: #${base02};
-    historyScrollBgOver: #${base03};
     scrollBgOverhistoryScrollBarBg: #${base05}; 
     scrollBarBgOverscrollBg: #${base05};
+    // bg
+    historyScrollBg: #${base02};
+    historyScrollBgOver: #${base02};
+    // fg
     historyScrollBarBg: #${base00};
-    historyScrollBarBgOver: #${base06};
+    historyScrollBarBgOver: #${base04};
 
     // --- Media player ---
     windowBgActive: #${base0D}; // player progress line fg in chat and (NO WAY!!!...) sliders color, blue default
