@@ -48,7 +48,7 @@
       kodi-wayland
       obs-studio
       upscayl
-      yt-dlp
+      # yt-dlp
 
       # Theming
       vimix-icon-theme # cursor icon
@@ -59,8 +59,8 @@
       ## Fonts
       # unifont_upper
       # unifont-csur
-      libsForQt5.qt5ct
-      kdePackages.qt6ct
+      # libsForQt5.qt5ct
+      # kdePackages.qt6ct
 
       # Utils
       dconf-editor
@@ -135,16 +135,6 @@
       "org/gnome/desktop/wm/preferences" = {
         button-layout = ""; # disable top right buttons
       };
-      # "org/gnome/desktop/peripherals/touchpad" = {
-      #   tap-and-drag = false;
-      #   tap-and-drag-lock = false;
-      #   natural-scroll = false;
-      #   accel-profile = "adaptive";
-      # };
-      # "org/gnome/desktop/peripherals/mouse" = {
-      #   natural-scroll = false;
-      #   accel-profile = "adaptive";
-      # };
     };
   };
 }

@@ -24,10 +24,10 @@
       "middlemouse.paste" = false;
       "general.autoScroll" = false;
       "general.smoothScroll" = true;
-      "sidebar.revamp" = true;
-      "sidebar.verticalTabs" = true;
+      "sidebar.revamp" = false;
+      "sidebar.verticalTabs" = false;
       # "sidebar.main.tools" = "history";
-      # "browser.uidensity" = 0; # 0 - normal, 1 - compact, 2 - touch
+      "browser.uidensity" = 1; # 0 - normal, 1 - compact, 2 - touch
       # "browser.compactmode.show" = true;
       "browser.gesture.swipe.left" = "";
       "browser.gesture.swipe.right" = "";
@@ -72,7 +72,7 @@
       # ui change
       "browser.discovery.enabled" = false;
       "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
-      "browser.profiles.enabled" = true;
+      "browser.profiles.enabled" = false;
       "browser.urlbar.trending.featureGate" = false;
       "browser.newtabpage.activity-stream.default.sites" = "";
       "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
@@ -82,91 +82,91 @@
       "ui.systemUsesDarkTheme" = 1;
     };
 
-    profiles.user.extensions.force = true;
-    profiles.user.userChrome = lib.mkForce ''
-      /*
-      ========================================
-        DISABLED ELEMENTS
-      ========================================
-      */
-
-      /*
-      #context_reopenInContainer,
-      #tracking-protection-icon-container,
-      #pageActionButton,
-      #pageActionSeparator,
-      */
-
-      #image.autoplay-media-icon,
-      #context_moveTabOptions,
-      #context_sendTabToDevice,
-      #context_selectAllTabs,
-      #context_closeTabOptions,
-      #wrapper-firefox-view-button,
-      #fxa-toolbar-menu-button,
-      #reader-mode-button,
-      #new-tab-button, .tab-secondary-label {
-        display: none !important;
-      }
-
-      /*
-      ========================================
-      📏 SIZE & SPACING
-      ========================================
-      */
-
-      .bookmark-item > .toolbarbutton-icon {
-        width: ${toString config.stylix.fonts.sizes.applications}px !important;
-        height: ${toString config.stylix.fonts.sizes.applications}px !important;
-      }
-
-      /*
-      ========================================
-        COLORS & FORMS
-      ========================================
-      */
-
-      #sidebar-main {
-        background-color: #${base00} !important;
-      }
-
-      .tabbrowser-tab .tab-background {
-        border: none !important;
-        border-radius: 8px !important;
-        background-color: #${base01} !important;
-      }
-
-      .tabbrowser-tab {
-        margin: 0px !important;
-        padding: 4px 0px 0px 0px !important;
-      }
-
-      /* Активная вкладка */
-      .tabbrowser-tab[selected="true"] .tab-background {
-        background-color: #${base0D} !important;
-      }
-
-      .tabbrowser-tab[selected="true"] {
-        border: 0px !important;
-        border-color: #${base0E} !important;
-        color: #${base00} !important;
-      }
-
-      /* Неактивные вкладки */
-      .tabbrowser-tab:not([selected="true"]) .tab-background {
-        background-color: #${base01} !important;
-        color: #${base03} !important;
-      }
-
-      /* Подсвет при наведении */
-      .tabbrowser-tab:hover .tab-background {
-        filter: brightness(1.15) !important;
-      }
-
-      /* No white flash on new tab opening in dark theme */
-      #browser vbox#appcontent tabbrowser, #content, #tabbrowser-tabpanels, browser[type=content-primary], browser[type=content] > html { background: #${base00} !important; }
-
-    '';
+    # profiles.user.extensions.force = true;
+    # profiles.user.userChrome = lib.mkForce ''
+    #   /*
+    #   ========================================
+    #     DISABLED ELEMENTS
+    #   ========================================
+    #   */
+    #
+    #   /*
+    #   #context_reopenInContainer,
+    #   #tracking-protection-icon-container,
+    #   #pageActionButton,
+    #   #pageActionSeparator,
+    #   */
+    #
+    #   #image.autoplay-media-icon,
+    #   #context_moveTabOptions,
+    #   #context_sendTabToDevice,
+    #   #context_selectAllTabs,
+    #   #context_closeTabOptions,
+    #   #wrapper-firefox-view-button,
+    #   #fxa-toolbar-menu-button,
+    #   #reader-mode-button,
+    #   #new-tab-button, .tab-secondary-label {
+    #     display: none !important;
+    #   }
+    #
+    #   /*
+    #   ========================================
+    #   📏 SIZE & SPACING
+    #   ========================================
+    #   */
+    #
+    #   .bookmark-item > .toolbarbutton-icon {
+    #     width: ${toString config.stylix.fonts.sizes.applications}px !important;
+    #     height: ${toString config.stylix.fonts.sizes.applications}px !important;
+    #   }
+    #
+    #   /*
+    #   ========================================
+    #     COLORS & FORMS
+    #   ========================================
+    #   */
+    #
+    #   #sidebar-main {
+    #     background-color: #${base00} !important;
+    #   }
+    #
+    #   .tabbrowser-tab .tab-background {
+    #     border: none !important;
+    #     border-radius: 8px !important;
+    #     background-color: #${base01} !important;
+    #   }
+    #
+    #   .tabbrowser-tab {
+    #     margin: 0px !important;
+    #     padding: 4px 0px 0px 0px !important;
+    #   }
+    #
+    #   /* Активная вкладка */
+    #   .tabbrowser-tab[selected="true"] .tab-background {
+    #     background-color: #${base0D} !important;
+    #   }
+    #
+    #   .tabbrowser-tab[selected="true"] {
+    #     border: 0px !important;
+    #     border-color: #${base0E} !important;
+    #     color: #${base00} !important;
+    #   }
+    #
+    #   /* Неактивные вкладки */
+    #   .tabbrowser-tab:not([selected="true"]) .tab-background {
+    #     background-color: #${base01} !important;
+    #     color: #${base03} !important;
+    #   }
+    #
+    #   /* Подсвет при наведении */
+    #   .tabbrowser-tab:hover .tab-background {
+    #     filter: brightness(1.15) !important;
+    #   }
+    #
+    #   /* No white flash on new tab opening in dark theme */
+    #   #browser vbox#appcontent tabbrowser, #content, #tabbrowser-tabpanels, browser[type=content-primary], browser[type=content] > html { background: #${base00} !important; }
+    #
+    # '';
     # profiles.user.userChrome = lib.mkForce ''
     #
     #   /* Кнопки навигации – слегка приглушить */

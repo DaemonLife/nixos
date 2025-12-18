@@ -198,7 +198,7 @@
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  qt.enable = true;
+  # qt.enable = true;
 
   xdg.portal = {
     enable = true;
@@ -286,8 +286,8 @@
     # ------ Steam ------
 
     # enable appimage support
-    appimage.enable = true;
-    appimage.binfmt = true;
+    # appimage.enable = true;
+    # appimage.binfmt = true;
 
     dconf.enable = true;
     foot.enable = true;
@@ -336,7 +336,7 @@
     openssh.enable = true;
     flatpak.enable = true;
     gvfs.enable = true; # Mount, trash, and other functionalities
-    tumbler.enable = true; # Thunar thumbnail support for images
+    # tumbler.enable = true; # Thunar thumbnail support for images
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
   }; # close services
@@ -388,7 +388,7 @@
       default = "saved";
       splashImage = lib.mkForce null;
       theme = lib.mkForce null;
-      fontSize = lib.mkForce 40;
+      fontSize = lib.mkForce 60;
       extraConfig = lib.mkForce ''
         GRUB_CMDLINE_LINUX_DEFAULT="loglevel=1"
       '';

@@ -14,6 +14,8 @@ let
     # by title
     '/^.* - cmus$/' = 'cmus'
     '/^man .*$/' = 'man'
+    '/^btop .*$/' = 'btop'
+    '/^htop .*$/' = 'htop'
     'org.telegram.desktop' = 'tg'
     'com.ayugram.desktop' = 'tg'
     'org.qutebrowser.qutebrowser' = 'qb'
