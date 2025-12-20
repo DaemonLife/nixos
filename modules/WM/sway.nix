@@ -196,6 +196,13 @@
         "F10" = "exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock"; # screen locker
 
         # ---------------
+        # cmus control
+        # ---------------
+        "F1" = "exec cmus-remote -r"; # play pRev
+        "F2" = "exec cmus-remote -u"; # pause/play
+        "F3" = "exec cmus-remote -n"; # play next
+
+        # ---------------
         # Window control
         # ---------------
 
