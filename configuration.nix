@@ -380,6 +380,10 @@
   # --------------------------------
   boot.supportedFilesystems = [ "ntfs" ];
   boot.loader = {
+    # refind = {
+    # enable = true;
+    # efiInstallAsRemovable = true;
+    # };
     grub = {
       enable = true;
       device = "nodev";
