@@ -2,20 +2,26 @@
 { pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
+  # services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  # systemd.tmpfiles.rules = [
+  # "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  # ];
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
   hardware = {
+    cpu.amd.updateMicrocode = true;
     graphics = {
       enable = true;
+      enable32Bit = true;
       extraPackages = with pkgs; [
-        rocmPackages.clr.icd # opencl
+        mesa
       ];
     };
     amdgpu = {
       opencl.enable = true; # OpenCL support using ROCM
-      initrd.enable = true;
     };
-
   };
-  boot.initrd.kernelModules = [ "amdgpu" ];
 
   environment.systemPackages = with pkgs; [
     ## Tools ##
@@ -28,10 +34,6 @@
     amdgpu_top # Tool to display AMDGPU usage
     nvtopPackages.amd # (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
   ];
-
-  ## LACT daemon ##
-  systemd.packages = with pkgs; [ lact ];
-  systemd.services.lactd.wantedBy = [ "multi-user.target" ];
 
   # --------------------------------
   # HIBERNATION
@@ -89,6 +91,7 @@
   # -------------
   #   FIREWALL
   # -------------
+
   networking.firewall = rec {
     # kdeconnect
     allowedTCPPortRanges = [{ from = 1714; to = 1764; }];

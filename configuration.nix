@@ -159,51 +159,32 @@
   # SYSTEM PACKAGES
   # --------------------------------
 
-  environment.systemPackages = with pkgs; [
-    gparted
-    os-prober
-    ntfs3g # ntfs support
-    sshfs # ssh mount as directory
-    exfatprogs # exfat gparted support
-    clinfo # opencl info
-    # mesa # video driver
-    jdk # java
-    iwd # wifi cli, don't delete!
-    bluez
-    udiskie # auto disks mount
-    # nufraw-thumbnailer # RAW preview for thunar
-    xdg-desktop-portal-termfilechooser # make yazi default file chooser
-    # adwaita-icon-theme
-    # rocmPackages.clr.icd
-    nautilus
-    # zapret
-    net-tools # for netstat
-
-    mangohud # Steam performance GUI
-    # fonts
-    # font-awesome
-    # cantarell-fonts
-    # appimage-run
-
-
-    # kdePackages.qtwayland
-    # kdePackages.qt6ct
-    # unifont
-    # fontconfig
-
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      gparted
+      os-prober
+      ntfs3g # ntfs support
+      sshfs # ssh mount as directory
+      exfatprogs # exfat gparted support
+      mesa # video driver
+      jdk # java
+      iwd # wifi cli, don't delete!
+      bluez
+      udiskie # auto disks mount
+      nautilus
+      net-tools # for netstat
+      mangohud # Steam performance GUI
+    ];
 
 
   # --------------------------------
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  # qt.enable = true;
-
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    config.common.default = "wlr"; # wlr for wayland wm, gnome for gnome
+    config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid
@@ -238,24 +219,24 @@
     # xfconf.enable = true;
     # --- thunar ---
 
-    proxychains = {
-      # just default settings ...
-      enable = true;
-      proxyDNS = true;
-      chain.type = "strict";
-      localnet = "127.0.0.0/255.0.0.0";
-      tcpReadTimeOut = 15000;
-      tcpConnectTimeOut = 8000;
-      remoteDNSSubnet = 224;
-      proxies = {
-        myproxy = {
-          type = "socks5";
-          host = "127.0.0.1";
-          port = 10808; # ... and only my port
-          enable = true;
-        };
-      };
-    };
+    # proxychains = {
+    #   # just default settings ...
+    #   enable = true;
+    #   proxyDNS = true;
+    #   chain.type = "strict";
+    #   localnet = "127.0.0.0/255.0.0.0";
+    #   tcpReadTimeOut = 15000;
+    #   tcpConnectTimeOut = 8000;
+    #   remoteDNSSubnet = 224;
+    #   proxies = {
+    #     myproxy = {
+    #       type = "socks5";
+    #       host = "127.0.0.1";
+    #       port = 10808; # ... and only my port
+    #       enable = true;
+    #     };
+    #   };
+    # };
 
     # ------ Steam ------
     steam = {
@@ -285,10 +266,6 @@
     };
     # ------ Steam ------
 
-    # enable appimage support
-    # appimage.enable = true;
-    # appimage.binfmt = true;
-
     dconf.enable = true;
     foot.enable = true;
     htop.enable = true;
@@ -302,10 +279,10 @@
   # --------------------------------
 
   services = {
-    xray = {
-      enable = false;
-      settingsFile = "/etc/xray/config.json";
-    };
+    # xray = {
+    #   enable = true;
+    #   settingsFile = "/etc/xray/config.json";
+    # };
 
     # zapret = {
     #   enable = true;
@@ -336,7 +313,6 @@
     openssh.enable = true;
     flatpak.enable = true;
     gvfs.enable = true; # Mount, trash, and other functionalities
-    # tumbler.enable = true; # Thunar thumbnail support for images
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
   }; # close services
@@ -378,12 +354,9 @@
   # --------------------------------
   # BOOT OPTIONS
   # --------------------------------
-  boot.supportedFilesystems = [ "ntfs" ];
+
+  # boot.supportedFilesystems = [ "ntfs" ];
   boot.loader = {
-    # refind = {
-    # enable = true;
-    # efiInstallAsRemovable = true;
-    # };
     grub = {
       enable = true;
       device = "nodev";

@@ -2,7 +2,7 @@
   stylix = {
     enable = true;
 
-    image = ../images/medusa.jpg;
+    image = ../images/space8.jpg;
 
     # based theme 
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
@@ -37,10 +37,10 @@
       sizes = {
         # be careful when using certain values (for example 19)
         # check fonts settings in qt6ct program for valid values (I hate it)
-        applications = 20;
-        terminal = 20;
+        applications = 18;
+        terminal = 18;
         # Window titles, status bars, and other general elements of the desktop.
-        desktop = 18;
+        desktop = 16;
         popups = config.stylix.fonts.sizes.desktop;
       };
     };

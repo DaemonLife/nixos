@@ -1,9 +1,4 @@
-{ pkgs
-, lib
-, config
-, inputs
-, ...
-}: {
+{ pkgs, lib, config, inputs, ... }: {
   imports = [ ./modules/_import.nix ];
 
   home.packages = with pkgs; [
@@ -12,6 +7,7 @@
     # blender
     unstable.darktable
     unstable.kdePackages.kdenlive
+    unstable.siril
 
     # games
     bottles
@@ -24,6 +20,7 @@
   # ==================
   #   kdeconnect 
   # ==================
+
   services.kdeconnect = {
     enable = true;
     indicator = true;

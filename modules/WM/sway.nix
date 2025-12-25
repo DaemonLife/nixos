@@ -306,7 +306,7 @@
       export QT_SCALE_FACTOR=1
       export QT_AUTO_SCREEN_SCALE_FACTOR=0
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-      export QT_QPA_PLATFORMTHEME="qt6ct";
+      # export QT_QPA_PLATFORMTHEME="qt6ct";
       export SDL_VIDEODRIVER=wayland
       export MOZ_ENABLE_WAYLAND=1
       export EDITOR=vi
@@ -320,7 +320,7 @@
       export GDK_SCALE=1
       export MOZ_USE_XINPUT2=1
       export NIXOS_OZONE_WL=1
-      export WLR_RENDERER=vulkan
+      # export WLR_RENDERER=vulkan
     '';
     # export _JAVA_AWT_WM_NONREPARENTING=1
   };

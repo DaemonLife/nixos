@@ -13,7 +13,7 @@
             h = 1440;
             scale = 1.6; # 1, 1.6 or 2 is optimal
             position_w = 0;
-            position_h = 0;
+            position_h = 400;
           };
 
           gg = {

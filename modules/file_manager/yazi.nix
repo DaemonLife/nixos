@@ -459,7 +459,7 @@
       mgr.prepend_keymap = [
         # copy to system clipboard
         {
-          on = "<C-y>";
+          on = "Y";
           run = [
             ''
               shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
@@ -467,7 +467,7 @@
           ];
         }
         {
-          on = "<C-н>";
+          on = "Н";
           run = [
             ''
               shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
@@ -489,12 +489,12 @@
         }
         # plugin mount
         {
-          on = "<C-m>";
+          on = "M";
           run = "plugin mount";
           desc = "Mount partitions";
         }
         {
-          on = "<C-ь>";
+          on = "Ь";
           run = "plugin mount";
           desc = "Mount partitions";
         }
