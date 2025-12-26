@@ -1,16 +1,5 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  # disable gaps for gpd
-  # and gpd output
-
+{ pkgs, config, lib, ... }: {
   wayland.windowManager.sway = {
-    extraConfig = ''
-      output * color_profile icc /home/user/nix/test2.icm
-    '';
     config = rec {
       output = {
         # gpd laptop

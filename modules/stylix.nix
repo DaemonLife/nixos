@@ -40,7 +40,7 @@
         applications = 18;
         terminal = 18;
         # Window titles, status bars, and other general elements of the desktop.
-        desktop = 16;
+        desktop = 15;
         popups = config.stylix.fonts.sizes.desktop;
       };
     };

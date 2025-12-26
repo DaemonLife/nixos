@@ -1,8 +1,4 @@
-{ config
-, lib
-, MY_DE
-, ...
-}: {
+{ config, lib, MY_DE, ... }: {
   programs.waybar = with config.lib.stylix.colors;
     lib.mkForce {
       enable = true;
