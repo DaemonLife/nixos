@@ -77,6 +77,14 @@
     # kdeconnect
     allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
     allowedUDPPortRanges = allowedTCPPortRanges;
+
+    # retroarch
+    allowedTCPPorts = [
+      55435
+    ];
+    allowedUDPPorts = [
+      55435
+    ];
   };
 
   system.stateVersion = "24.11";
