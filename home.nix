@@ -38,6 +38,7 @@ in {
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
+      vivaldi
 
       # Media
       gimp3-with-plugins
