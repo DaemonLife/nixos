@@ -114,7 +114,7 @@
       colors =
         let
           # default_color = "#${base02}"; # no focus
-          default_color = "#${base00}"; # no focus
+          default_color = "#${base01}"; # no focus
           focused_color = "#${base0D}";
           indicator_color = "#${base09}";
           attenction_color = "#${base0D}";
