@@ -55,13 +55,11 @@
   # HARDWARE SETTINGS
   # --------------------------------
 
-  # hardware.graphics.enable = true; # gparhic drivers
   powerManagement.enable = true; # NixOS power management tool
 
   # Network
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
-  # defaultGateway = "192.168.1.1";
   networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   # };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -162,14 +160,14 @@
   environment.systemPackages = with pkgs;
     [
       gparted
-      os-prober
-      ntfs3g # ntfs support
-      sshfs # ssh mount as directory
       exfatprogs # exfat gparted support
-      mesa # video driver
+      ntfs3g # ntfs support
+      os-prober
+      sshfs # ssh mount as directory
+      # mesa # video driver
       jdk # java
       iwd # wifi cli, don't delete!
-      bluez
+      bluez # official Linux Bluetooth protocol stack
       udiskie # auto disks mount
       nautilus
       net-tools # for netstat

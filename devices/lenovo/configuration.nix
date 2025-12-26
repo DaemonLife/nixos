@@ -2,54 +2,38 @@
 { pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
-  # services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  # systemd.tmpfiles.rules = [
-  # "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
-  # ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  # --------------------------------
+  # iGPU
+  # --------------------------------
 
   hardware = {
     cpu.amd.updateMicrocode = true;
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
-        mesa
-      ];
+      extraPackages = with pkgs; [ mesa.opencl ]; # OpenCL support using rusticl
     };
-    amdgpu = {
-      opencl.enable = true; # OpenCL support using ROCM
-    };
+    # amdgpu.opencl.enable = true; # OpenCL support using ROCM (bugs!)
   };
 
   environment.systemPackages = with pkgs; [
-    ## Tools ##
-    # glxinfo # OpenGL info
-    vulkan-tools # Khronos official Vulkan Tools and Utilities
-    clinfo # Print information about available OpenCL platforms and devices
-    libva-utils # Collection of utilities and examples for VA-API
-    ## Monitor ##
-    lact # Linux GPU Configuration Tool for AMD and NVIDIA
     amdgpu_top # Tool to display AMDGPU usage
-    nvtopPackages.amd # (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
+    nvtopPackages.amd # (h)top like task monitor for gpu
+    clinfo # Print information about available OpenCL platforms and devices
   ];
+
+  # GPU configuration and charts tool
+  # services.lact.enable = true;
 
   # --------------------------------
   # HIBERNATION
   # --------------------------------
 
-  # swap file
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 16 * 1024; # 16GB
-    }
-  ];
-  # hibernation (swap file is necessary)
-  boot.initrd.systemd.enable = true;
-  # Specifies what to do when the laptop lid is closed
-  # services.logind.lidSwitch = "suspend-then-hibernate";
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
+  boot.initrd.systemd.enable = true; # enable systemd
 
   # --------------------------------
   # OTHER SERVICES
@@ -81,15 +65,12 @@
 
         CONSERVATION_MODE = 1;
         TLP_DEFAULT_MODE = "conservation";
-
-        # improve disk IO
-        # DISK_IOSCHED = "";
       };
-    }; # tlp
-  }; # services
+    };
+  };
 
   # -------------
-  #   FIREWALL
+  # FIREWALL
   # -------------
 
   networking.firewall = rec {

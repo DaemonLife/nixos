@@ -1,8 +1,4 @@
-{ pkgs
-, config
-, lib
-, ...
-}: {
+{ pkgs, config, lib, ... }: {
   # lenovo output, command: swaymsg -t get_outputs
   wayland.windowManager.sway = {
     config = rec {
@@ -79,11 +75,11 @@
       workspaceOutputAssign = [
         {
           workspace = "1";
-          output = "eDP-1";
+          output = "eDP-1"; # lenovo screen
         }
         {
           workspace = "2";
-          output = [ "DP-1" "DP-2" "HDMI-A-1" ];
+          output = "eDP-1"; # lenovo screen
         }
         {
           workspace = "3";
@@ -97,7 +93,32 @@
           workspace = "5";
           output = [ "DP-1" "DP-2" "HDMI-A-1" ];
         }
+        {
+          workspace = "6";
+          output = [ "DP-1" "DP-2" "HDMI-A-1" ];
+        }
+        {
+          workspace = "7";
+          output = [ "DP-1" "DP-2" "HDMI-A-1" ];
+        }
+        {
+          workspace = "8";
+          output = [ "DP-1" "DP-2" "HDMI-A-1" ];
+        }
+        {
+          workspace = "9";
+          output = [ "DP-1" "DP-2" "HDMI-A-1" ];
+        }
+        {
+          workspace = "10";
+          output = [ "DP-1" "DP-2" "HDMI-A-1" ];
+        }
       ];
-    }; # config
+    }; # config 
+
+    # darktable rusticl support
+    extraSessionCommands = ''
+      export RUSTICL_ENABLE=radeonsi
+    '';
   };
 }
