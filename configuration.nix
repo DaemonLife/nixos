@@ -2,13 +2,19 @@
   config,
   pkgs,
   lib,
+  username,
   ...
 }: {
+  imports = [
+    ./modules/stylix.nix
+    # ./modules/editor/nvf.nix
+  ];
+
   # --------------------------------
   # SYSTEM THEME
   # --------------------------------
 
-  imports = [./modules/stylix.nix];
+  stylix.targets.grub.enable = false;
 
   # TTYI colors
   console = with config.lib.stylix.colors; {
@@ -52,12 +58,13 @@
   # HARDWARE SETTINGS
   # --------------------------------
 
-  hardware.graphics.enable = true; # gparhic drivers
   powerManagement.enable = true; # NixOS power management tool
 
   # Network
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
+  networking.nameservers = ["1.1.1.1" "1.0.0.1"];
+  # };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Bluetooth
@@ -115,7 +122,7 @@
   # USER SETTINGS
   # --------------------------------
 
-  users.users.user = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "user";
     shell = pkgs.fish;
@@ -155,38 +162,28 @@
 
   environment.systemPackages = with pkgs; [
     gparted
-    os-prober
-    ntfs3g # ntfs support
     exfatprogs # exfat gparted support
-    clinfo # opencl info
-    mesa # video driver
+    ntfs3g # ntfs support
+    os-prober
+    sshfs # ssh mount as directory
+    # mesa # video driver
     jdk # java
-    impala # wifi tui
     iwd # wifi cli, don't delete!
-    bluez
-    kitty
+    bluez # official Linux Bluetooth protocol stack
     udiskie # auto disks mount
-    nufraw-thumbnailer # RAW preview for thunar
-    xdg-desktop-portal-termfilechooser # make yazi default file chooser
-    adwaita-icon-theme
-    rocmPackages.clr.icd
-
-    protonup-qt
-    # vulkan-validation-layers
+    nautilus
+    net-tools # for netstat
+    mangohud # Steam performance GUI
   ];
 
   # --------------------------------
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  qt.enable = true;
-
-  # for flatpak
   xdg.portal = {
     enable = true;
-    config.common.default = "gtk";
     wlr.enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid
@@ -206,38 +203,39 @@
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 7d --keep 5";
-      flake = "/home/$USER/nix";
+      clean.dates = "weekly";
+      flake = "/home/${username}/nix";
     };
 
     # --- thunar ---
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-archive-plugin
-        thunar-media-tags-plugin
-      ];
-    };
-    xfconf.enable = true;
+    # thunar = {
+    #   enable = true;
+    #   plugins = with pkgs.xfce; [
+    #     thunar-archive-plugin
+    #     thunar-media-tags-plugin
+    #   ];
+    # };
+    # xfconf.enable = true;
     # --- thunar ---
 
-    proxychains = {
-      # just default settings ...
-      enable = true;
-      proxyDNS = true;
-      chain.type = "strict";
-      localnet = "127.0.0.0/255.0.0.0";
-      tcpReadTimeOut = 15000;
-      tcpConnectTimeOut = 8000;
-      remoteDNSSubnet = 224;
-      proxies = {
-        myproxy = {
-          type = "socks5";
-          host = "127.0.0.1";
-          port = 10808; # ... and only my port
-          enable = true;
-        };
-      };
-    };
+    # proxychains = {
+    #   # just default settings ...
+    #   enable = true;
+    #   proxyDNS = true;
+    #   chain.type = "strict";
+    #   localnet = "127.0.0.0/255.0.0.0";
+    #   tcpReadTimeOut = 15000;
+    #   tcpConnectTimeOut = 8000;
+    #   remoteDNSSubnet = 224;
+    #   proxies = {
+    #     myproxy = {
+    #       type = "socks5";
+    #       host = "127.0.0.1";
+    #       port = 10808; # ... and only my port
+    #       enable = true;
+    #     };
+    #   };
+    # };
 
     # ------ Steam ------
     steam = {
@@ -252,10 +250,23 @@
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    gamemode.enable = true; # micro compositor
+    gamemode = {
+      enable = true; # Set run game parameters in Steam: gamemoderun %command%
+      settings = {
+        custom = {
+          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+        };
+      };
+    };
+    gamescope = {
+      enable = true; # Using: gamescope
+      capSysNice = true;
+    };
     # ------ Steam ------
 
     dconf.enable = true;
+    foot.enable = true;
     htop.enable = true;
     git.enable = true;
     fish.enable = true;
@@ -267,21 +278,42 @@
   # --------------------------------
 
   services = {
-    xray = {
-      enable = true;
-      settingsFile = "/etc/xray/config.json";
+    # xray = {
+    #   enable = true;
+    #   settingsFile = "/etc/xray/config.json";
+    # };
+
+    # zapret = {
+    #   enable = true;
+    #   params =
+    #     [
+    #       # "--methodeol"
+    #       "--dpi-desync=multisplit --dpi-desync-split-pos=method+2"
+    #     ];
+    #   whitelist =
+    #     [
+    #       "youtube.com"
+    #       "googlevideo.com"
+    #       "ytimg.com"
+    #       "youtu.be"
+    #
+    #       "search.nixos.org"
+    #       "nixos.org"
+    #     ];
+    # };
+
+    # auto username in tty
+    getty = {
+      loginOptions = "-- \\u";
+      autologinUser = "${username}";
+      autologinOnce = true; # only first login after boot
     };
 
     openssh.enable = true;
     flatpak.enable = true;
     gvfs.enable = true; # Mount, trash, and other functionalities
-    tumbler.enable = true; # Thunar thumbnail support for images
-    gnome.gnome-keyring.enable = true; # for sway
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
-    # xserver.displayManager.gdm.enable = true;
-    # xserver.displayManager.startx.enable = true;
-    # xserver.desktopManager.gnome.enable = true;
   }; # close services
 
   systemd = {
@@ -322,6 +354,7 @@
   # BOOT OPTIONS
   # --------------------------------
 
+  # boot.supportedFilesystems = [ "ntfs" ];
   boot.loader = {
     grub = {
       enable = true;
@@ -331,7 +364,7 @@
       default = "saved";
       splashImage = lib.mkForce null;
       theme = lib.mkForce null;
-      fontSize = lib.mkForce 30;
+      fontSize = lib.mkForce 60;
       extraConfig = lib.mkForce ''
         GRUB_CMDLINE_LINUX_DEFAULT="loglevel=1"
       '';
@@ -346,8 +379,13 @@
   # --------------------------------
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      6567 # mindusty server
+    ];
+    allowedUDPPorts = [
+      6567 # mindusty server
+    ];
+  };
 }

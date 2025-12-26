@@ -12,16 +12,11 @@
       output * color_profile icc /home/user/nix/test2.icm
     '';
     config = rec {
-      gaps = {
-        outer = lib.mkForce 0;
-        inner = lib.mkForce 0;
-      };
-
       output = {
         # gpd laptop
         "DSI-1" = {
           mode = "1200x1920@60.000Hz";
-          scale = "1.6"; # 1920 -> 1200px
+          scale = "2"; # 1920 -> 960px
           adaptive_sync = "on";
           # render_bit_depth = "10"; # 6, 8, 10
           position = "0 0"; # main
@@ -34,7 +29,7 @@
           scale = "1";
           adaptive_sync = "on";
           render_bit_depth = "10"; # 6, 8, 10
-          position = "1200 0"; # to right from gpd
+          position = "960 0"; # to right from gpd
         };
       };
 

@@ -1,62 +1,47 @@
-{ pkgs, ... }:
-{
-
+{ pkgs, config, lib, ... }: {
   stylix = {
     enable = true;
 
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
+    image = ../images/space8.jpg;
 
-    image = ../images/Saints_3840x2160.jpg;
+    # based theme 
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
 
-    # override = {
-    # author = "DaemonLife";
-    #   # one tone gradient
-    #   base00 = "232a2d"; # BACKGROUND (BLACK)
-    #   base01 = "e57474"; # bright green
-    #   base02 = "8ccf7e"; # bright yellow
-    #   base03 = "e5c76b"; # bright black
-    #   base04 = "67b0e8"; # bright blue
-    #   base05 = "c47fd5"; # FOREGROUND (WHITE)
-    #   base06 = "6cbfbf"; # bright magenta
-    #   base07 = "b3b9b8"; # bright white
+    # blue light free theme!
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
 
-    #   # colors
-    #   base08 = "2d3437"; # RED
-    #   base09 = "ef7e7e"; # bright red
-    #   base0A = "96d988"; # YELLOW
-    #   base0B = "f4d67a"; # GREEN
-    #   base0C = "71baf2"; # CYAN
-    #   base0D = "ce89df"; # BLUE
-    #   base0E = "67cbe7"; # MAGENTA
-    # base0F = "c38cd2"; # bright cyan # no. fixed dumb everforest color
-    # };
-
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Ice";
-    cursor.size = 26;
+    cursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+    };
 
     fonts = {
       monospace = {
-        package = pkgs.nerd-fonts.geist-mono;
-        name = "GeistMono Nerd Font Mono";
+        package = pkgs.unifont;
+        name = "UnifontExMono"; # my local font
       };
       sansSerif = {
-        # package = pkgs.nerd-fonts.mononoki;
-        name = "Cantarell Regular";
+        package = pkgs.unifont;
+        name = "UnifontExMono"; # my local font
       };
       serif = {
-        # package = pkgs.nerd-fonts.mononoki;
-        name = "Cantarell Regular";
+        package = pkgs.unifont;
+        name = "UnifontExMono"; # my local font
       };
       emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
+        package = pkgs.unifont;
+        name = "UnifontExMono"; # my local font
       };
+
       sizes = {
-        applications = 22;
-        terminal = 20;
-        desktop = 20;
-        popups = 18;
+        # be careful when using certain values (for example 19)
+        # check fonts settings in qt6ct program for valid values (I hate it)
+        applications = 18;
+        terminal = 18;
+        # Window titles, status bars, and other general elements of the desktop.
+        desktop = 16;
+        popups = config.stylix.fonts.sizes.desktop;
       };
     };
 
@@ -69,4 +54,10 @@
 
     polarity = "dark";
   };
+
+  # QT STUFF WORKS DON'T TOUCH IT
+  # qt.enable = lib.mkForce true;
+  # qt.platformTheme = "gnome";
+  # qt.style = "adwaita-dark";
+  stylix.targets.qt.enable = true;
 }

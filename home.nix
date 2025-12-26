@@ -1,16 +1,20 @@
 {
+  config,
   pkgs,
   lib,
+  username,
   ...
-}: let
-  username = "user";
-in {
+}: {
   imports = [./modules/_import.nix];
 
   home = {
     username = username;
     homeDirectory = "/home/${username}";
-    sessionPath = ["$HOME/.local/bin"];
+    sessionPath = ["/home/${username}/.local/bin"];
+    sessionVariables = {
+      BROWSER = "qutebrowser";
+      TERMINAL = "foot";
+    };
     stateVersion = "24.05";
 
     # --------------------------------
@@ -18,84 +22,80 @@ in {
     # --------------------------------
 
     packages = with pkgs; [
-      wl-clipboard
-      unzip
       python3
-      nodejs # for run javascript
       pipx
       exiftool
       imagemagick
       zip
+      unzip
       fzy
       dua # disk usage TUI tool. Run: dua i
 
       # Network
       overskride # bluetooth gui
       bluetui # bluetooth tui
-      telegram-desktop
-      tg
-      unstable.nchat
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
-      vivaldi
+      ungoogled-chromium
+      deltachat-desktop
 
       # Media
       gimp3-with-plugins
       helvum # A GTK patchbay for pipewire
-      digikam
-      blender
-      unstable.darktable
       imagemagick
       ffmpegthumbnailer
-      ffmpeg_6-full
-      mlt
       pavucontrol # audio gui control
       alsa-utils # audio volume control (?)
       pulsemixer # cli pulse adudio control
       nomacs-qt6 # image viewer
+      kdePackages.gwenview
+      kodi-wayland
+      obs-studio
+      upscayl
+      # yt-dlp
 
       # Theming
-      vimix-icon-theme # for icons
-      gnome-tweaks
+      vimix-icon-theme # cursor icon
+      # gnome-tweaks
       gowall # Tool to convert a Wallpaper's color scheme
-      dconf-editor
       grc
-
-      # Fonts
-      font-awesome
-      cantarell-fonts
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
+      ## Fonts
+      # unifont_upper
+      # unifont-csur
+      # libsForQt5.qt5ct
+      # kdePackages.qt6ct
 
       # Utils
+      dconf-editor
       cool-retro-term
-      bottles
       veracrypt
       cmatrix # matrix in terminal
       wev # key events in wayland
-      ansible
+      nwg-displays # gui for display setup
+      gucharmap # character map
+      # https://github.com/ChrisBuilds/terminaltexteffects
 
       # Docs
       onlyoffice-desktopeditors
-      jrnl
-      joplin
       stellarium # astro map
       astroterm # astro map ASCII
       epy # cli book reader
       tldr # community documentation
       russ # rss tui reader
       gnome-feeds # gui rss reader
+      # libreoffice
+      hunspell # spellcheck
+      hunspellDicts.ru_RU # spellcheck
+      hunspellDicts.en_US # spellcheck
 
       # Gaming
       portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
+      unstable.mindustry-wayland
       # dwarf-fortress-packages.dwarf-fortress-full
-
-      # libreoffice
-      # hunspell # spellcheck for LibreOffice
-      # hunspellDicts.ru_RU # spellcheck for LibreOffice
-      # hunspellDicts.en_US # spellcheck for LibreOffice
     ];
   };
 
@@ -139,15 +139,6 @@ in {
     settings = {
       "org/gnome/desktop/wm/preferences" = {
         button-layout = ""; # disable top right buttons
-      };
-      "org/gnome/desktop/peripherals/touchpad" = {
-        tap-and-drag = false;
-        natural-scroll = false;
-        accel-profile = "adaptive";
-      };
-      "org/gnome/desktop/peripherals/mouse" = {
-        natural-scroll = false;
-        accel-profile = "adaptive";
       };
     };
   };

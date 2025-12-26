@@ -1,36 +1,39 @@
 # Configuration for Lenovo
-{pkgs, ...}: {
-  # Imports
-  imports = [./hardware-configuration.nix];
+{ pkgs, ... }: {
+  imports = [ ./hardware-configuration.nix ];
 
-  # Enable AMD video driver
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [rocmPackages.clr.icd amdvlk];
+  # --------------------------------
+  # iGPU
+  # --------------------------------
+
+  hardware = {
+    cpu.amd.updateMicrocode = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [ mesa.opencl ]; # OpenCL support using rusticl
+    };
+    # amdgpu.opencl.enable = true; # OpenCL support using ROCM (bugs!)
   };
-  hardware.amdgpu.opencl.enable = true;
-  boot.initrd.kernelModules = ["amdgpu"];
-  services.xserver.videoDrivers = ["amdgpu"];
 
-  # enable HIP
-  systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
+  environment.systemPackages = with pkgs; [
+    amdgpu_top # Tool to display AMDGPU usage
+    nvtopPackages.amd # (h)top like task monitor for gpu
+    clinfo # Print information about available OpenCL platforms and devices
+  ];
+
+  # GPU configuration and charts tool
+  # services.lact.enable = true;
 
   # --------------------------------
   # HIBERNATION
   # --------------------------------
 
-  # swap file
-  swapDevices = [
-    {
-      device = "/var/lib/swapfile";
-      size = 16 * 1024; # 16GB
-    }
-  ];
-  # hibernation (swap file is necessary)
-  boot.initrd.systemd.enable = true;
-  # Specifies what to do when the laptop lid is closed
-  # services.logind.lidSwitch = "suspend-then-hibernate";
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 16 * 1024; # 16GB
+  }];
+  boot.initrd.systemd.enable = true; # enable systemd
 
   # --------------------------------
   # OTHER SERVICES
@@ -62,12 +65,19 @@
 
         CONSERVATION_MODE = 1;
         TLP_DEFAULT_MODE = "conservation";
-
-        # improve disk IO
-        # DISK_IOSCHED = "";
       };
-    }; # tlp
-  }; # services
+    };
+  };
+
+  # -------------
+  # FIREWALL
+  # -------------
+
+  networking.firewall = rec {
+    # kdeconnect
+    allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
 
   system.stateVersion = "24.11";
 }

@@ -1,13 +1,10 @@
 {
   config,
   lib,
-  pkgs,
   ...
-}:
-
-let
-  gimp_css =
-    with config.lib.stylix.colors; # css
+}: let
+  gimp_css = with config.lib.stylix.colors; # css
+  
     ''
       /* GIMP theme css file */
 
@@ -557,8 +554,8 @@ let
 
             background-color: @canva;
 
-        
-        } 
+
+        }
 
 
         /* Ruler */
@@ -566,7 +563,7 @@ let
         GimpRuler {
 
           color: @fg2-color;
-         
+
          }
 
 
@@ -1000,7 +997,7 @@ let
       spinbutton entry {
         border-top-right-radius:    4px;
         border-bottom-right-radius: 4px;
-      } 
+      }
 
       /* Buttons, - +, overrides */
       spinbutton        button.up,
@@ -1096,9 +1093,8 @@ let
         border-radius:     0px 2px 2px 0px;
       }
     '';
-in
-{
-  home.activation.gimp_style = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+in {
+  home.activation.gimp_style = lib.hm.dag.entryAfter ["writeBoundary"] ''
     run mkdir -p $HOME/.config/GIMP/3.0/themes/base_16/; \
       echo "${gimp_css}" > $HOME/.config/GIMP/3.0/themes/base_16/gimp.css
   '';

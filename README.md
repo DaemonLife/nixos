@@ -1,6 +1,6 @@
 # Description
 
-My Niri (and Sway, Hyprland) setup on NixOS.
+My Sway (and Hyprland, Niri) setup on NixOS.
 
 ## Preparing
 

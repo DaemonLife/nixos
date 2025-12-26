@@ -1,39 +1,27 @@
-{...}: {
+{ ... }: {
   imports = [
-    ./firefox.nix
-    ./mpv.nix
-    ./telegram-theme.nix
     ./git.nix
-    ./cmus.nix
     ./jrnl.nix
-    ./fish.nix
     ./rtorrent.nix
-    ./qutebrowser.nix
     ./gowall.nix
-    ./qt.nix
-    ./kitty.nix
     ./gtk.nix
     ./fzf.nix
-    ./yazi.nix
     ./stylix.nix
-    ./joplin-cli.nix
+    ./joplin.nix
     ./GIMP.nix
-    ./nchat.nix
     ./nomacs.nix
+    ./chess/cli-chess.nix
+    ./xdg.nix
 
-    ./nvf.nix
-    # ./nixvim.nix
-    # ./helix.nix
+    ./shell/_import.nix
+    ./terminal/_import.nix
+    ./editor/_import.nix
+    ./file_manager/_import.nix
+    ./WM/_import.nix
 
-    ./sway.nix
-    # ./hyprland.nix
-    # ./niri.nix
-
-    # ./foot.nix
-    # ./alacritty.nix
-    # ./eww/eww.nix
-    # ./lf/lf.nix
-    # ./zsh.nix
-    # ./ranger.nix
+    ./player/_import.nix
+    ./telegram/_import.nix
+    ./browser/_import.nix
+    ./type/_import.nix
   ];
 }
