@@ -1,10 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  username,
-  ...
-}: {
+{ config, pkgs, lib, username, ... }: {
+
   imports = [
     ./modules/stylix.nix
     # ./modules/editor/nvf.nix
