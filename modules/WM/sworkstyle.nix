@@ -27,6 +27,7 @@ let
     '/^y .*$/' = 'y'
     '/^rtorrent.*$/' = 'rtorrent'
     '/^.*Firefox$/' = 'firefox'
+    '/^AmneziaVPN$/' = 'vpn'
 
     # by app id
     'librewolf' = 'librewolf'
@@ -36,6 +37,8 @@ let
     'mpv' = 'mpv'
     'Mindustry' = 'mindustry'
     'org.kde.kdenlive' = 'kdenlive'
+    'siril' = 'siril'
+    'gimp' = 'gimp'
   '';
 in
 {

@@ -2,12 +2,10 @@
   imports = [ ./modules/_import.nix ];
 
   home.packages = with pkgs; [
-    # media
     unstable.digikam
-    # blender
     unstable.darktable
     unstable.kdePackages.kdenlive
-    unstable.siril
+    siril
 
     # games
     bottles

@@ -7,7 +7,7 @@
     dragon-drop
     bat
     eza
-    glow
+    # glow
     ouch
     mediainfo
     imagemagick
@@ -16,8 +16,8 @@
   ];
 
   programs.yazi = with config.lib.stylix.colors; {
-    package = pkgs.unstable.yazi;
     enable = true;
+    # package = pkgs.yazi-unwrapped;
     enableFishIntegration = true;
 
     initLua = ''
@@ -25,36 +25,35 @@
       	sync_yanked = true,
       }
 
-      require("git"):setup()
-      require("recycle-bin"):setup()
-
       require("smart-enter"):setup {
         open_multi = true,
       }
+
+      require("recycle-bin"):setup()
+
+      th.git = th.git or {}
+      th.git.modified_sign = "M"
+      th.git.deleted_sign = "D"
+      th.git.added_sign = "A"
+      th.git.untracked_sign = "*"
+      th.git.ignored_sign = "I"
+      th.git.updated_sign = "U"
+      require("git"):setup()
     '';
 
     plugins = with pkgs.yaziPlugins; {
-      # name = nix_pkg_name
-
-      mount = mount; # mount control
-      # Key Action
-      # q   Quit the plugin
-      # k	Move up
-      # j   Move down
-      # l   Enter the mount point
-      # m   Mount the partition
-      # u   Unmount the partition
-      # e   Eject the disk
-
+      # nix_pkg_name = nix_pkg_name; :/
+      mount = mount; # shorts: m-ount u-mount e-ject
       smart-enter = smart-enter; # enter to directories
       smart-filter = smart-filter; # cool search+filter
       git = git; # files git status
       piper = piper; # preview with shell commands
-      relative-motions = relative-motions; # vim keys
+      # relative-motions = relative-motions; # vim keys
       ouch = ouch; # archive preview and compress
       recycle-bin = recycle-bin; # system trash bin support
       mediainfo = mediainfo;
-
+      wl-clipboard = wl-clipboard;
+      toggle-pane = toggle-pane;
       # mime-ext = mime-ext; # fast mime-type by file extancions
     };
 
@@ -180,8 +179,8 @@
       };
 
       preview = {
-        # image_filter = "nearest"; # super fast
-        image_filter = "triangle"; # fast
+        image_filter = "nearest"; # super fast
+        # image_filter = "triangle"; # fast
         image_quality = 60;
         max_width = 800;
         max_height = 800;
@@ -194,62 +193,46 @@
       };
 
       opener = {
-        "video" = [
-          {
-            run = ''mpv "$@" >/dev/null 2>&1 &'';
-            desc = "Play video";
-            block = true;
-            orphan = true;
-          }
-        ];
-        "edit" = [
-          {
-            run = ''$EDITOR "$@"'';
-            desc = "Edit";
-            block = true;
-          }
-        ];
-        "open" = [
-          {
-            run = ''xdg-open "$@"'';
-            desc = "Open";
-          }
-        ];
-        "image" = [
-          {
-            run = ''nomacs "$@"'';
-            desc = "Open in nomacs";
-            orphan = true;
-          }
-        ];
-        "librewolf" = [
-          {
-            run = ''librewolf "$@"'';
-            desc = "Open in Librewolf";
-            orphan = true;
-          }
-        ];
-        "qutebrowser" = [
-          {
-            run = ''qutebrowser "$@"'';
-            desc = "Open in qutebrowser";
-            orphan = true;
-          }
-        ];
-        "qbittorrent" = [
-          {
-            run = ''qbittorrent "$@"'';
-            desc = "Open in qBittorrent";
-            orphan = true;
-          }
-        ];
-        "rtorrent" = [
-          {
-            run = ''cp "$@" $HOME/Downloads/rtorrent/watch && kitty --hold sh -c "rtorrent"'';
-            desc = "Open in rtorrent";
-            orphan = true;
-          }
-        ];
+        "video" = [{
+          run = ''mpv "$@" >/dev/null 2>&1 &'';
+          desc = "Play video";
+          block = true;
+          orphan = true;
+        }];
+        "edit" = [{
+          run = ''$EDITOR "$@"'';
+          desc = "Edit";
+          block = true;
+        }];
+        "open" = [{
+          run = ''xdg-open "$@"'';
+          desc = "Open";
+        }];
+        "image" = [{
+          run = ''nomacs "$@"'';
+          desc = "Open in nomacs";
+          orphan = true;
+        }];
+        "librewolf" = [{
+          run = ''librewolf "$@"'';
+          desc = "Open in Librewolf";
+          orphan = true;
+        }];
+        "qutebrowser" = [{
+          run = ''qutebrowser "$@"'';
+          desc = "Open in qutebrowser";
+          orphan = true;
+        }];
+        "qbittorrent" = [{
+          run = ''qbittorrent "$@"'';
+          desc = "Open in qBittorrent";
+          orphan = true;
+        }];
+        "rtorrent" = [{
+          run = ''cp "$@" $HOME/Downloads/rtorrent/watch && kitty --hold sh -c "rtorrent"'';
+          desc = "Open in rtorrent";
+          orphan = true;
+        }];
       };
 
       # check file mime type: xdg-mime query filetype [FILE]
@@ -457,24 +440,29 @@
 
     keymap = {
       mgr.prepend_keymap = [
-        # copy to system clipboard
+        # plugin system clipboard support
         {
           on = "Y";
-          run = [
-            ''
-              shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
-            ''
-          ];
+          run = [ "plugin wl-clipboard" ];
+          desc = "Copy to system clipboard";
         }
         {
-          on = "Н";
-          run = [
-            ''
-              shell --interactive 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list'
-            ''
-          ];
+          on = "Н"; # ru
+          run = [ "plugin wl-clipboard" ];
+          desc = "Copy to system clipboard";
         }
-        # drag and drop
+        # plugin toggle pane
+        {
+          on = "T";
+          run = [ "plugin toggle-pane min-preview" ];
+          desc = "Show or hide the preview pane";
+        }
+        {
+          on = "Е"; # ru
+          run = [ "plugin toggle-pane min-preview" ];
+          desc = "Show or hide the preview pane";
+        }
+        # plugin drag and drop
         {
           on = "<C-g>";
           run = ''
@@ -482,7 +470,7 @@
           '';
         }
         {
-          on = "<C-п>";
+          on = "<C-п>"; # ru
           run = ''
             shell --interactive '${pkgs.dragon-drop}/bin/dragon-drop -x -i -T "$1"'
           '';
@@ -494,7 +482,7 @@
           desc = "Mount partitions";
         }
         {
-          on = "Ь";
+          on = "Ь"; # ru
           run = "plugin mount";
           desc = "Mount partitions";
         }
@@ -505,7 +493,7 @@
           desc = "Enter the child directory, or open the file";
         }
         {
-          on = "д";
+          on = "д"; # ru
           run = "plugin smart-enter";
           desc = "Enter the child directory, or open the file";
         }
@@ -526,7 +514,11 @@
           run = "plugin ouch";
           desc = "Compress with ouch";
         }
-
+        {
+          on = [ "С" ]; # ru
+          run = "plugin ouch";
+          desc = "Compress with ouch";
+        }
         # plugin recycle-bin
         {
           on = [ "b" "o" ];
@@ -565,7 +557,6 @@
           run = "forward";
           desc = "Forward to next directory";
         }
-
         {
           on = "р";
           run = "leave";
