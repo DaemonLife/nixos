@@ -13,7 +13,7 @@
 
     scripts = with pkgs; [
       mpvScripts.sponsorblock
-      mpvScripts.dynamic-crop # press 'C'
+      # mpvScripts.dynamic-crop # press 'C'
       # mpvScripts.crop # press 'C'
       mpvScripts.mpris # for using standard media keys
       mpvScripts.autosubsync-mpv # press 'n' to sync subtitles
@@ -45,8 +45,10 @@
       # performance and quality
       hwdec = "auto";
       cache = "yes";
-      demuxer-max-back-bytes = "200000KiB";
-      demuxer-max-bytes = "200000KiB";
+      # cache-default = 4000000;
+      demuxer-readahead-secs = 20;
+      demuxer-max-bytes = "256MiB";
+      demuxer-max-back-bytes = "256MiB";
       # interpolation = true;
       # video-sync = "display-resample";
 
@@ -55,6 +57,7 @@
 
       # Screenshot
       screenshot-format = "png";
+      screenshot-template = "%F-%P";
       screenshot-sw = "no"; # use software rendering
       screenshot-png-compression = 7; # range 0-9, higher values may lag
       screenshot-high-bit-depth = "yes";
