@@ -11,7 +11,8 @@
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [ mesa.opencl ]; # OpenCL support using rusticl
+      extraPackages = with pkgs; [ unstable.mesa.opencl ]; # OpenCL support using rusticl
+      # extraPackages = with pkgs; [ mesa.opencl ]; # OpenCL support using rusticl
     };
     # amdgpu.opencl.enable = true; # OpenCL support using ROCM (bugs!)
   };
@@ -34,6 +35,7 @@
     size = 16 * 1024; # 16GB
   }];
   boot.initrd.systemd.enable = true; # enable systemd
+  boot.kernelPackages = pkgs.linuxPackages_lqx; # gaming kernel
 
   # --------------------------------
   # OTHER SERVICES

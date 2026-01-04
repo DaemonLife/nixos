@@ -42,7 +42,7 @@
           };
 
           # lenovo laptop
-          "BOE 0x0931 Unknown" = {
+          "eDP-1" = {
             mode = "${toString lenovo.w}x${toString lenovo.h}@60.002Hz";
             scale = "${toString lenovo.scale}";
             adaptive_sync = "true";
