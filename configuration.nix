@@ -38,14 +38,16 @@
   # --------------------------------
 
   environment = {
-    variables = let
-      EDITOR = "vi";
-    in {
-      EDITOR = "${EDITOR}";
-      SYSTEMD_EDITOR = "${EDITOR}";
-      VISUAL = "${EDITOR}";
-      BROWSER = "qutebrowser";
-    };
+    variables =
+      let
+        EDITOR = "vi";
+      in
+      {
+        EDITOR = "${EDITOR}";
+        SYSTEMD_EDITOR = "${EDITOR}";
+        VISUAL = "${EDITOR}";
+        BROWSER = "qutebrowser";
+      };
     sessionVariables.NIXOS_OZONE_WL = "1"; # Run Electron apps without XWayland
   };
 
@@ -58,7 +60,7 @@
   # Network
   networking.hostName = "nixos"; # Define your hostname.
   networking.networkmanager.enable = true;
-  networking.nameservers = ["1.1.1.1" "1.0.0.1"];
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
   # };
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -82,8 +84,8 @@
     # foomatic-db-ppds-withNonfreeDb
   ];
   hardware.sane.enable = true; # enables support for scanners
-  hardware.sane.extraBackends = [pkgs.sane-airscan];
-  services.udev.packages = [pkgs.sane-airscan]; # device manager for the Linux kernel
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+  services.udev.packages = [ pkgs.sane-airscan ]; # device manager for the Linux kernel
 
   # Sound
   security.rtkit.enable = true; # rtkit is optional but recommended for pipewire
@@ -132,7 +134,7 @@
       "lp"
     ];
 
-    packages = with pkgs; [flatpak];
+    packages = with pkgs; [ flatpak ];
   };
 
   # --------------------------------
@@ -266,6 +268,7 @@
     git.enable = true;
     fish.enable = true;
     amnezia-vpn.enable = true;
+    ssh.startAgent = true; # agent for ssh keys
   };
 
   # --------------------------------
@@ -315,9 +318,9 @@
     # authentication for programs
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
-      wantedBy = ["graphical-session.target"];
-      wants = ["graphical-session.target"];
-      after = ["graphical-session.target"];
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
@@ -342,7 +345,7 @@
 
   security = {
     polkit.enable = true; # authentication support for sway
-    pam.services.swaylock = {}; # screen lock
+    pam.services.swaylock = { }; # screen lock
   };
 
   # --------------------------------

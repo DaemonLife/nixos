@@ -22,10 +22,8 @@
             "idle_inhibitor"
             "battery"
             "pulseaudio"
-            # "pulseaudio/slider"
             # "custom/sep"
-            "clock#date"
-            "clock#time"
+            "clock"
           ];
 
           "${MY_DE}/workspaces" = {
@@ -81,16 +79,10 @@
             tooltip = false;
           };
 
-          "clock#time" = {
-            format = "{:%H:%M}";
-            tooltip = false;
-            # exec = ../scripts/timezone.sh;
-          };
-          "clock#date" = {
-            # format = "{:%d-%b-%y}";
-            format = "{:%b-%d}";
+          "clock" = {
+            format = "{:%b-%d-%H:%M}";
             on-click = "exec gnome-calendar";
-            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.desktop)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
+            "tooltip-format" = "<span size='${toString (config.stylix.fonts.sizes.desktop - 3)}pt' font='${config.stylix.fonts.monospace.name}'>{calendar}</span>";
             "calendar" = {
               "mode" = "year";
               "mode-mon-col" = 3;
@@ -146,18 +138,18 @@
             format-bluetooth = "{icon}-{volume}{format_source}";
             format-bluetooth-muted = "{icon}-{volume}{format_source}";
             format-muted = "mut";
-            format-source = "-mic";
+            format-source = " mic";
             format-source-muted = "";
             format-icons = {
-              hands-free = "vol-head";
-              headset = "vol-head";
-              headphone = "vol-head";
-              phone = "vol-ph";
-              portable = "vol-port";
+              hands-free = "head";
+              headset = "head";
+              headphone = "head";
+              phone = "phone";
+              portable = "port";
               car = "vol-go-for-a-walk-man-or-buy-a-bicycle";
               speaker = "vol";
-              default = "vol-ext";
-              hdmi = "vol-hdmi";
+              default = "ext";
+              hdmi = "hdmi";
             };
             max-volume = 100;
             tooltip-format = "{desc}, {volume}%";
