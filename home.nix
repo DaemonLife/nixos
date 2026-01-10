@@ -1,16 +1,15 @@
-{
-  config,
-  pkgs,
-  lib,
-  username,
-  ...
+{ config
+, pkgs
+, lib
+, username
+, ...
 }: {
-  imports = [./modules/_import.nix];
+  imports = [ ./modules/_import.nix ];
 
   home = {
     username = username;
     homeDirectory = "/home/${username}";
-    sessionPath = ["/home/${username}/.local/bin"];
+    sessionPath = [ "/home/${username}/.local/bin" ];
     sessionVariables = {
       BROWSER = "qutebrowser";
       TERMINAL = "foot";
@@ -41,7 +40,7 @@
       deltachat-desktop
 
       # Media
-      gimp3-with-plugins
+      unstable.gimp
       helvum # A GTK patchbay for pipewire
       imagemagick
       ffmpegthumbnailer
@@ -91,7 +90,7 @@
       hunspellDicts.en_US # spellcheck
 
       # Gaming
-      portablemc # minecraft cli launcher
+      unstable.portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
       unstable.mindustry-wayland

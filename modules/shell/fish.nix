@@ -13,8 +13,9 @@
       # cdwin = "$HOME/nix/scripts/cdwin.sh && cd /mnt/windows/Users/user/$1";
       #
       # battery configuration will be restored at the next boot
-      tlp_full = "sudo tlp fullcharge bat1";
-      tlp_conserv = "sudo tlp setcharge bat1";
+      tlp-set-full-bat = "sudo tlp fullcharge bat1";
+      tlp-set-conserv-bat = "sudo tlp setcharge bat1";
+      cmus-connect-phone = "eval (ssh-agent -c) && ssh-add ~/.ssh/termux && sshfs -p 8022 u0_a183@192.168.0.190:/data/data/com.termux/files/home/storage/music/my ~/Music/termux_music/";
     };
 
     shellAbbrs = {
