@@ -21,7 +21,6 @@
     # --------------------------------
 
     packages = with pkgs; [
-      python3
       pipx
       exiftool
       imagemagick

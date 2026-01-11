@@ -170,6 +170,7 @@
     udiskie # auto disks mount
     nautilus
     net-tools # for netstat
+    wget
     mangohud # Steam performance GUI
   ];
 

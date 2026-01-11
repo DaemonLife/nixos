@@ -25,7 +25,12 @@ let
 in
 {
 
-  home.packages = with pkgs; [ jrnl ];
+  # home.packages = with pkgs; [ jrnl ];
+
+  home.packages = with pkgs; [
+    python312
+    (jrnl.override { python3 = python312; }) # bug with python > 312
+  ];
 
   home.activation.jrnl_config_deploy = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p $HOME/.config/jrnl 

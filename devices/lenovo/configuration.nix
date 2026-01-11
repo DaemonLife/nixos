@@ -1,6 +1,6 @@
 # Configuration for Lenovo
 { pkgs, ... }: {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ./modules-nixos/_import.nix ];
 
   # --------------------------------
   # iGPU
