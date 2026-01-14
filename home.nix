@@ -51,7 +51,7 @@
       kodi-wayland
       obs-studio
       upscayl
-      # yt-dlp
+      freefilesync
 
       # Theming
       vimix-icon-theme # cursor icon
