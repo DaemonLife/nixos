@@ -38,7 +38,7 @@
             adaptive_sync = "true"; # always off at monitor (but there is too...?)
             render_bit_depth = "10"; # 6, 8, 10. Maybe flickings bc of 10 and 165Hz
             position = "${toString msk.position_w} ${toString msk.position_h}"; # left position
-            color_profile = "icc /home/user/nix/devices/screens/H27S17_2024-06-16.icm";
+            color_profile = "icc /home/user/nix/devices/screens/msk_Monitor_1_#1_2026-01-20_20-49_2.2_F-S_XYZLUT+MTX.icc";
           };
 
           # lenovo laptop

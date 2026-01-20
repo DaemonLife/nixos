@@ -35,8 +35,8 @@
       bitwarden-cli
       qbittorrent # torrent client
       tor-browser
-      ungoogled-chromium
       deltachat-desktop
+      vivaldi
 
       # Media
       unstable.gimp

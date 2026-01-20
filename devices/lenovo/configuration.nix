@@ -21,6 +21,7 @@
     amdgpu_top # Tool to display AMDGPU usage
     nvtopPackages.amd # (h)top like task monitor for gpu
     clinfo # Print information about available OpenCL platforms and devices
+    displaycal
   ];
 
   # GPU configuration and charts tool
