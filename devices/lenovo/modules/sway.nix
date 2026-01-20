@@ -48,7 +48,7 @@
             adaptive_sync = "true";
             render_bit_depth = "10"; # 6, 8, 10
             position = "${toString lenovo.position_w} ${toString lenovo.position_h}"; # laptop position for msk
-            color_profile = "icc /home/user/nix/devices/screens/LEN140WUXGA+_2023-03-29.icm";
+            color_profile = "icc /home/user/nix/devices/screens/lenovo_2026-01-20_22-02_2.2_F-S_XYZLUT+MTX.icc";
           };
 
           # monitor gg
