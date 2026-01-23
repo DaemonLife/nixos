@@ -27,7 +27,7 @@
       zip
       unzip
       fzy
-      dua # disk usage TUI tool. Run: dua i
+      # dua # disk usage TUI tool. Run: dua i. REMOVED: ncdu is better
 
       # Network
       overskride # bluetooth gui
@@ -55,15 +55,9 @@
 
       # Theming
       vimix-icon-theme # cursor icon
-      # gnome-tweaks
       gowall # Tool to convert a Wallpaper's color scheme
       grc
       fontpreview # --preview-text "Привет, как дела, это просто тест шрифта!!! 1234567890?*# Just a test for my font."
-      ## Fonts
-      # unifont_upper
-      # unifont-csur
-      # libsForQt5.qt5ct
-      # kdePackages.qt6ct
 
       # Utils
       dconf-editor

@@ -1,6 +1,7 @@
 { config, pkgs, lib, username, ... }: {
 
   imports = [
+    # ./modules_configuration/gnome.nix
     ./modules/stylix.nix
     # ./modules/editor/nvf.nix
   ];
@@ -141,9 +142,7 @@
   # NIX SETTING
   # --------------------------------
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
+  nixpkgs.config.allowUnfree = true;
   nix = {
     settings.experimental-features = [
       "nix-command"
@@ -161,9 +160,8 @@
     gparted
     exfatprogs # exfat gparted support
     ntfs3g # ntfs support
-    os-prober
+    os-prober # to find systems in grub
     sshfs # ssh mount as directory
-    # mesa # video driver
     jdk # java
     iwd # wifi cli, don't delete!
     bluez # official Linux Bluetooth protocol stack
@@ -171,7 +169,9 @@
     nautilus
     net-tools # for netstat
     wget
+    ncdu # folder size tree
     mangohud # Steam performance GUI
+
   ];
 
   # --------------------------------
@@ -269,7 +269,7 @@
     git.enable = true;
     fish.enable = true;
     amnezia-vpn.enable = true;
-    ssh.startAgent = true; # agent for ssh keys
+    # ssh.startAgent = true; # agent for ssh keys
   };
 
   # --------------------------------
@@ -313,6 +313,7 @@
     gvfs.enable = true; # Mount, trash, and other functionalities
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
+    # colord.enable = true; # color manager
   }; # close services
 
   systemd = {
