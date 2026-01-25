@@ -1,7 +1,6 @@
 { config, pkgs, lib, username, ... }: {
 
   imports = [
-    # ./modules_configuration/gnome.nix
     ./modules/stylix.nix
     # ./modules/editor/nvf.nix
   ];

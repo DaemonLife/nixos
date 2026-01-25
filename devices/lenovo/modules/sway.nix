@@ -38,7 +38,7 @@
             adaptive_sync = "true"; # always off at monitor (but there is too...?)
             render_bit_depth = "10"; # 6, 8, 10. Maybe flickings bc of 10 and 165Hz
             position = "${toString msk.position_w} ${toString msk.position_h}"; # left position
-            color_profile = "icc /home/user/nix/devices/screens/msk_2026-01-21_18-46_120cdm2_D6500_sRGB_VF-S_1xCurve+MTX.icc";
+            color_profile = "icc /home/user/nix/devices/screens/msk_fast_2026-01-22_15-59_D6500_2.2_VF-S_1xCurve+MTX.icc";
           };
 
           # lenovo laptop
@@ -48,7 +48,7 @@
             adaptive_sync = "true";
             render_bit_depth = "10"; # 6, 8, 10
             position = "${toString lenovo.position_w} ${toString lenovo.position_h}"; # laptop position for msk
-            color_profile = "icc /home/user/nix/devices/screens/lenovo_2026-01-21_19-15_120cdm2_D6500_sRGB_VF-S_1xCurve+MTX.icc";
+            color_profile = "icc /home/user/nix/devices/screens/lenovo_slow_2026-01-23_22-18_D6500_2.2_F-S_XYZLUT+MTX.icc";
           };
 
           # monitor gg

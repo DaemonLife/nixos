@@ -52,6 +52,7 @@
       obs-studio
       upscayl
       freefilesync
+      foliate
 
       # Theming
       vimix-icon-theme # cursor icon
@@ -83,7 +84,7 @@
       hunspellDicts.en_US # spellcheck
 
       # Gaming
-      unstable.portablemc # minecraft cli launcher
+      # unstable.portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
       unstable.mindustry-wayland
