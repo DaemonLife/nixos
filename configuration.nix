@@ -2,6 +2,7 @@
 
   imports = [
     ./modules/stylix.nix
+    ./modules/WM/i3_configuration.nix
     # ./modules/editor/nvf.nix
   ];
 
@@ -171,6 +172,7 @@
     ncdu # folder size tree
     mangohud # Steam performance GUI
 
+    xdg-desktop-portal-gtk
   ];
 
   # --------------------------------
@@ -179,8 +181,10 @@
 
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
-    config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    xdgOpenUsePortal = true;
+    # wlr.enable = true;
+    # config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid
@@ -346,7 +350,7 @@
 
   security = {
     polkit.enable = true; # authentication support for sway
-    pam.services.swaylock = { }; # screen lock
+    # pam.services.swaylock = { }; # screen lock
   };
 
   # --------------------------------

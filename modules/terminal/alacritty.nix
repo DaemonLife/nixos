@@ -6,7 +6,7 @@
     settings = {
 
       window = {
-        decorations = "None";
+        # decorations = "None";
         title = "Terminal";
         padding.x = 4;
         padding.y = 0;
