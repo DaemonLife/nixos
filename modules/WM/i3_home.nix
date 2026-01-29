@@ -1,38 +1,122 @@
 # for home.nix
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+let
 
-  # home.packages = with pkgs; [
-  #   i3blocks-gaps
-  # ];
+  i3status_config = ''
+    general {
+        colors = true
+        interval = 10
+    }
 
-  programs.i3blocks = {
-    enable = true;
-    bars = {
-      top = {
-        # The title block
-        title = {
-          interval = "persist";
-          command = "xtitle -s";
-        };
-      };
-      bottom = {
-        time = {
-          command = "date +%r";
-          interval = 1;
-        };
-        # Make sure this block comes after the time block
-        date = lib.hm.dag.entryAfter [ "time" ] {
-          command = "date +%d";
-          interval = 5;
-        };
-        # And this block after the example block
-        example = lib.hm.dag.entryAfter [ "date" ] {
-          command = "echo hi $(date +%s)";
-          interval = 3;
-        };
-      };
-    };
-  };
+    order += "wireless _first_"
+    order += "ethernet _first_"
+    order += "disk /"
+    order += "memory"
+    order += "cpu_usage"
+    order += "battery all"
+    order += "volume master"
+    order += "tztime local"
+
+    wireless _first_ {
+            format_up = "wifi: (%quality at %essid) %ip"
+            format_down = "wifi: down"
+    }
+
+    ethernet _first_ {
+            format_up = "net: %ip (%speed)"
+            format_down = ""
+    }
+
+    battery all {
+            last_full_capacity = true
+            format = "bat: %percentage%status"
+            format_percentage = "%.00f%s"
+            format_down = ""
+            status_chr = "+"
+            status_bat = "-"
+            status_full = "v"
+            status_idle = "~"
+            status_unk = "?"
+            low_threshold = 10
+    }
+
+    volume master {
+            format = "vol (%devicename): %volume"
+            format_muted = "vol (%devicename): %volume muted"
+            device = "default"
+            mixer = "Master"
+            mixer_idx = 0
+    }
+
+    disk "/" {
+            format = "disk: %avail"
+    }
+
+    memory {
+            format = "mem: %used"
+            threshold_degraded = "1G"
+            format_degraded = "MEMORY < %available"
+    }
+
+    cpu_usage {
+            format = "cpu: %usage"
+            max_threshold = 75
+            degraded_threshold = 25
+    }
+
+    tztime local {
+            # format = "%H:%M %d-%m-%Y"
+            format = "%H:%M %Y-%m-%d"
+    }
+  '';
+in
+{
+
+  # home.activation.i3status_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   mkdir -p $HOME/.config/i3/; cd $HOME/.config/i3/
+  #   echo '${i3status_config}' > i3status.conf
+  # '';
+
+  # clipboard for x11
+  home.packages = with pkgs; [ clipit xtitle acpi xss-lock ];
+  programs.nixvim.clipboard.providers.xclip.enable = true;
+
+  # services.screen-locker = {
+  #   enable = true;
+  #   inactiveInterval = 1;
+  #   lockCmd = "\${pkgs.i3lock}/bin/i3lock -n -c 000000";
+  # };
+
+  # programs.i3blocks = {
+  #   enable = true;
+  #   bars = {
+  #     config = {
+  #
+  #       window = {
+  #         command = "xtitle -s";
+  #         interval = "persist";
+  #       };
+  #
+  #       layout = {
+  #         command = "bash $HOME/.config/i3blocks/layout.sh";
+  #         label = "Layout";
+  #         interval = 5;
+  #       };
+  #
+  #       battery = {
+  #         command = "bash $HOME/.config/i3blocks/battery.sh";
+  #         interval = 10;
+  #       };
+  #
+  #       time = {
+  #         command = "date +%T";
+  #         interval = 1;
+  #       };
+  #     };
+  #   };
+  # };
+
+
 
   xsession.windowManager.i3 = {
     enable = true;
@@ -49,8 +133,8 @@
       bars = [
         {
           position = "bottom";
-          # statusCommand = "i3status --config $HOME/.config/i3/i3status.conf";
-          statusCommand = "i3blocks";
+          statusCommand = "i3status --config $HOME/.config/i3/i3status.conf";
+          # statusCommand = "i3blocks";
           fonts = {
             names = [ "UnifontExMono" ];
             # style = "Bold Semi-Condensed";
@@ -81,12 +165,43 @@
         "${modifier}+Return" = "exec alacritty";
         "${modifier}+q" = "kill";
         "${modifier}+a" = "exec ${pkgs.dmenu}/bin/dmenu_run";
+        "${modifier}+Shift+l" = "exec --no-startup-id i3lock -c 000000";
+        "${modifier}+f" = "fullscreen";
+
+        "${modifier}+Shift+j" = "workspace next";
+        "${modifier}+Shift+k" = "workspace prev";
+
+        "${modifier}+1" = "workspace number 1";
+        "${modifier}+2" = "workspace number 2";
+        "${modifier}+3" = "workspace number 3";
+        "${modifier}+4" = "workspace number 4";
+        "${modifier}+5" = "workspace number 5";
+        "${modifier}+6" = "workspace number 6";
+        "${modifier}+7" = "workspace number 7";
+        "${modifier}+8" = "workspace number 8";
+        "${modifier}+9" = "workspace number 9";
+        "${modifier}+0" = "workspace number 10";
+
+        "${modifier}+Ctrl+1" = "move container to workspace number 1";
+        "${modifier}+Ctrl+2" = "move container to workspace number 2";
+        "${modifier}+Ctrl+3" = "move container to workspace number 3";
+        "${modifier}+Ctrl+4" = "move container to workspace number 4";
+        "${modifier}+Ctrl+5" = "move container to workspace number 5";
+        "${modifier}+Ctrl+6" = "move container to workspace number 6";
+        "${modifier}+Ctrl+7" = "move container to workspace number 7";
+        "${modifier}+Ctrl+8" = "move container to workspace number 8";
+        "${modifier}+Ctrl+9" = "move container to workspace number 9";
+        "${modifier}+Ctrl+0" = "move container to workspace number 10";
       };
 
       startup = [
         { command = "xiccd"; notification = true; }
+        { command = "clipit"; notification = true; }
         { command = "bluetooth off"; notification = true; }
         { command = "setxkbmap -layout us,ru -option grp:switch,grp:win_space_toggle"; notification = false; }
+
+        # screenlock
+        # { command = "xset s 5 && xset dpms 0 0 0 && xss-lock -- i3lock -c 000000"; notification = true; }
       ];
 
     };
@@ -117,26 +232,6 @@
       bindsym F10 exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock
       bindsym F2 exec cmus-remote -u
       bindsym F3 exec cmus-remote -n
-      # bindsym Mod4+0 workspace number 10
-      # bindsym Mod4+1 workspace number 1
-      # bindsym Mod4+2 workspace number 2
-      # bindsym Mod4+3 workspace number 3
-      # bindsym Mod4+4 workspace number 4
-      # bindsym Mod4+5 workspace number 5
-      # bindsym Mod4+6 workspace number 6
-      # bindsym Mod4+7 workspace number 7
-      # bindsym Mod4+8 workspace number 8
-      # bindsym Mod4+9 workspace number 9
-      # bindsym Mod4+Ctrl+0 move container to workspace number 10
-      # bindsym Mod4+Ctrl+1 move container to workspace number 1
-      # bindsym Mod4+Ctrl+2 move container to workspace number 2
-      # bindsym Mod4+Ctrl+3 move container to workspace number 3
-      # bindsym Mod4+Ctrl+4 move container to workspace number 4
-      # bindsym Mod4+Ctrl+5 move container to workspace number 5
-      # bindsym Mod4+Ctrl+6 move container to workspace number 6
-      # bindsym Mod4+Ctrl+7 move container to workspace number 7
-      # bindsym Mod4+Ctrl+8 move container to workspace number 8
-      # bindsym Mod4+Ctrl+9 move container to workspace number 9
       bindsym Mod4+Ctrl+h move left
       bindsym Mod4+Ctrl+j move down
       bindsym Mod4+Ctrl+k move up
@@ -144,8 +239,6 @@
 
       bindsym Mod4+Shift+B exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 qutebrowser --desktop-file-name vpn_qutebrowser --set window.title_format "[VPN] {perc}{current_title}{title_sep}qutebrowser"
       bindsym Mod4+Shift+f floating toggle
-      bindsym Mod4+Shift+j exec bash $HOME/nix/scripts/sway_workspace.sh next
-      bindsym Mod4+Shift+k exec bash $HOME/nix/scripts/sway_workspace.sh prev
       bindsym Mod4+Shift+s exec bash $HOME/nix/scripts/screenshot.sh region
       bindsym Mod4+b exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER
       bindsym Mod4+t exec AyuGram || exec Telegram
@@ -154,10 +247,8 @@
       gaps inner 0
       gaps outer 0
       smart_borders on
-      # exec bluetooth off
-      # exec setxkbmap -layout us,ru -option grp:switch,grp:win_space_toggle
-      # exec xiccd
-      # exec_always --no-startup-id $HOME/nix/devices/lenovo/scripts/launch_polybar.sh
+
+      exec xset s 600 && xset dpms 0 0 0 && xss-lock -- i3lock -c 000000
 
       workspace "1" output "eDP-1"
       workspace "2" output "eDP-1"
@@ -174,4 +265,6 @@
     '';
   };
 }
+
+
 

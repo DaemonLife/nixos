@@ -268,8 +268,10 @@
         "${modifier}+8" = "workspace number 8";
         "${modifier}+9" = "workspace number 9";
         "${modifier}+0" = "workspace number 10";
-        "${modifier}+Shift+j" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
-        "${modifier}+Shift+k" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
+        "${modifier}+Shift+j" = "workspace next";
+        "${modifier}+Shift+k" = "workspace prev";
+        # "${modifier}+Shift+j" = "exec bash $HOME/nix/scripts/sway_workspace.sh next";
+        # "${modifier}+Shift+k" = "exec bash $HOME/nix/scripts/sway_workspace.sh prev";
 
         # Move focused container to workspace
         "${modifier}+Ctrl+1" = "move container to workspace number 1";

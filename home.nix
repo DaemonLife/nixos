@@ -128,11 +128,11 @@
     };
   };
 
-  dconf = {
-    settings = {
-      "org/gnome/desktop/wm/preferences" = {
-        button-layout = ""; # disable top right buttons
-      };
-    };
-  };
+  # dconf = {
+  #   settings = {
+  #     "org/gnome/desktop/wm/preferences" = {
+  #       button-layout = ""; # disable top right buttons
+  #     };
+  #   };
+  # };
 }

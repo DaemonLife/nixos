@@ -2,7 +2,7 @@
 
   imports = [
     ./modules/stylix.nix
-    ./modules/WM/i3_configuration.nix
+    # ./modules/WM/i3_configuration.nix
     # ./modules/editor/nvf.nix
   ];
 
@@ -172,20 +172,20 @@
     ncdu # folder size tree
     mangohud # Steam performance GUI
 
-    xdg-desktop-portal-gtk
+    # xdg-desktop-portal-gtk
   ];
 
   # --------------------------------
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    xdgOpenUsePortal = true;
-    # wlr.enable = true;
-    # config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  #   # config.common.default = "*";
+  #   wlr.enable = true;
+  #   config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
+  # };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid
   # virtualisation.waydroid.enable = true;
@@ -316,7 +316,7 @@
     gvfs.enable = true; # Mount, trash, and other functionalities
     power-profiles-daemon.enable = false; # disable for tlp
     thermald.enable = true; # Thermald prevents overheating
-    # colord.enable = true; # color manager
+    colord.enable = true; # color manager
   }; # close services
 
   systemd = {
