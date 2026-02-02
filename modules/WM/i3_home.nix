@@ -105,8 +105,8 @@ in
         "${modifier}+Shift+r" = "reload";
         "${modifier}+Return" = "exec --no-startup-id alacritty";
         "${modifier}+q" = "kill";
-        "${modifier}+a" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -fn ' Unifont-20'";
-        "${modifier}+Shift+l" = "exec --no-startup-id i3lock -c 000000";
+        "${modifier}+a" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -i -fn ' Unifont-20'";
+        "${modifier}+Shift+l" = "exec --no-startup-id setxkbmap -layout us && i3lock -c 000000";
         "${modifier}+f" = "fullscreen";
         "${modifier}+e" = "layout toggle splith splitv tabbed";
         "${modifier}+r" = "mode resize";
@@ -146,6 +146,8 @@ in
         { command = "bluetooth off"; notification = true; }
         { command = "xrandr --output eDP-1 --auto --right-of DP-1"; notification = false; }
         { command = "feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
+        # darktable opencl
+        { command = "ROC_ENABLE_PRE_VEGA=1 RUSTICL_ENABLE=amdgpu,amdgpu-pro,radv,radeon,radeonsi DRI_PRIME=0 QT_QPA_PLATFORM=xcb"; notification = false; }
       ];
 
     };
@@ -188,7 +190,7 @@ in
       gaps outer 0
       smart_borders on
 
-      exec xset s 600 && xset dpms 0 0 0 && xss-lock -- i3lock -c 000000
+      exec xset s 600 && xset dpms 0 0 0 && setxkbmap -layout us && xss-lock -- i3lock -c 000000
 
       workspace "1" output "eDP-1"
       workspace "2" output "eDP-1"
