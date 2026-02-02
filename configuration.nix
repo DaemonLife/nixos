@@ -2,7 +2,7 @@
 
   imports = [
     ./modules/stylix.nix
-    # ./modules/WM/i3_configuration.nix
+    ./modules/WM/i3_configuration.nix
     # ./modules/editor/nvf.nix
   ];
 
@@ -171,21 +171,19 @@
     wget
     ncdu # folder size tree
     mangohud # Steam performance GUI
-
-    # xdg-desktop-portal-gtk
   ];
 
   # --------------------------------
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  # xdg.portal = {
-  #   enable = true;
-  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  #   # config.common.default = "*";
-  #   wlr.enable = true;
-  #   config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
-  # };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+    wlr.enable = true;
+    # config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
+  };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid
   # virtualisation.waydroid.enable = true;

@@ -1,124 +1,52 @@
 # for home.nix
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
 
-  i3status_config = ''
-    general {
-        colors = true
-        interval = 10
-    }
+  i3blocks_config = ''
+    [window]
+    command=xtitle -s
+    interval=persist
 
-    order += "wireless _first_"
-    order += "ethernet _first_"
-    order += "disk /"
-    order += "memory"
-    order += "cpu_usage"
-    order += "battery all"
-    order += "volume master"
-    order += "tztime local"
+    [layout]
+    command=bash $HOME/nix/scripts/i3blocks/layout.sh
+    interval=1
 
-    wireless _first_ {
-            format_up = "wifi: (%quality at %essid) %ip"
-            format_down = "wifi: down"
-    }
+    [volume-pipewire]
+    command=bash $HOME/nix/scripts/i3blocks/volume.sh
+    interval=1
+    signal=1
 
-    ethernet _first_ {
-            format_up = "net: %ip (%speed)"
-            format_down = ""
-    }
+    [battery]
+    command=bash $HOME/nix/scripts/i3blocks/battery.sh
+    interval=5
 
-    battery all {
-            last_full_capacity = true
-            format = "bat: %percentage%status"
-            format_percentage = "%.00f%s"
-            format_down = ""
-            status_chr = "+"
-            status_bat = "-"
-            status_full = "v"
-            status_idle = "~"
-            status_unk = "?"
-            low_threshold = 10
-    }
-
-    volume master {
-            format = "vol (%devicename): %volume"
-            format_muted = "vol (%devicename): %volume muted"
-            device = "default"
-            mixer = "Master"
-            mixer_idx = 0
-    }
-
-    disk "/" {
-            format = "disk: %avail"
-    }
-
-    memory {
-            format = "mem: %used"
-            threshold_degraded = "1G"
-            format_degraded = "MEMORY < %available"
-    }
-
-    cpu_usage {
-            format = "cpu: %usage"
-            max_threshold = 75
-            degraded_threshold = 25
-    }
-
-    tztime local {
-            # format = "%H:%M %d-%m-%Y"
-            format = "%H:%M %Y-%m-%d"
-    }
+    [time]
+    command=date "+%Y-%m-%d %H:%M"
+    interval=5
   '';
 in
 {
 
-  # home.activation.i3status_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-  #   mkdir -p $HOME/.config/i3/; cd $HOME/.config/i3/
-  #   echo '${i3status_config}' > i3status.conf
-  # '';
+  home.activation.i3blocks_config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p $HOME/.config/i3blocks/; cd $HOME/.config/i3blocks/
+    echo '${i3blocks_config}' > config
+  '';
 
   # clipboard for x11
-  home.packages = with pkgs; [ clipit xtitle acpi xss-lock ];
+  home.packages = with pkgs; [
+    brightnessctl
+    feh
+    envsubst
+    pulseaudio
+    i3blocks
+    clipit
+    xtitle
+    acpi
+    xss-lock
+  ];
   programs.nixvim.clipboard.providers.xclip.enable = true;
 
-  # services.screen-locker = {
-  #   enable = true;
-  #   inactiveInterval = 1;
-  #   lockCmd = "\${pkgs.i3lock}/bin/i3lock -n -c 000000";
-  # };
-
-  # programs.i3blocks = {
-  #   enable = true;
-  #   bars = {
-  #     config = {
-  #
-  #       window = {
-  #         command = "xtitle -s";
-  #         interval = "persist";
-  #       };
-  #
-  #       layout = {
-  #         command = "bash $HOME/.config/i3blocks/layout.sh";
-  #         label = "Layout";
-  #         interval = 5;
-  #       };
-  #
-  #       battery = {
-  #         command = "bash $HOME/.config/i3blocks/battery.sh";
-  #         interval = 10;
-  #       };
-  #
-  #       time = {
-  #         command = "date +%T";
-  #         interval = 1;
-  #       };
-  #     };
-  #   };
-  # };
-
-
-
-  xsession.windowManager.i3 = {
+  xsession.windowManager.i3 = with config.lib.stylix.colors; {
     enable = true;
     config = rec {
       modifier = "Mod4";
@@ -126,47 +54,59 @@ in
 
       fonts = {
         names = [ "UnifontExMono" ];
-        # style = "Bold Semi-Condensed";
-        size = 15.0;
+        size = lib.mkForce 20.0;
       };
 
-      bars = [
-        {
-          position = "bottom";
-          statusCommand = "i3status --config $HOME/.config/i3/i3status.conf";
-          # statusCommand = "i3blocks";
-          fonts = {
-            names = [ "UnifontExMono" ];
-            # style = "Bold Semi-Condensed";
-            size = 15.0;
+      bars = [{
+        position = "top";
+        statusCommand = "i3blocks";
+        fonts = {
+          names = [ "${config.stylix.fonts.monospace.name}" ];
+          size = lib.mkForce 20.0;
+        };
+        colors = {
+          background = "#${base00}";
+          statusline = "#${base06}";
+          separator = "#${base03}";
+
+          focusedWorkspace = {
+            text = "#${base00}";
+            background = "#${base0D}";
+            border = "#${base0D}";
           };
-          colors = {
-            background = "#000000";
-            statusline = "#ffffff";
-            separator = "#666666";
-            # focusedWorkspace = [ "#4c7899" "#285577" "#ffffff" ];
-            # activeWorkspace = [ "#333333" "#5f676a" "#ffffff" ];
-            # inactiveWorkspace = [ "#333333" "#222222" "#888888" ];
-            # urgentWorkspace = [ "#2f343a" "#900000" "#ffffff" ];
-            # binding_mode = ["#2f343a" "#900000" "#ffffff"];
+
+          activeWorkspace = {
+            text = "#${base00}";
+            background = "#${base04}";
+            border = "#${base04}";
           };
-          extraConfig = ''
-            separator_symbol |
-          '';
-        }
-      ];
+
+          urgentWorkspace = {
+            text = "#${base00}";
+            background = "#${base08}";
+            border = "#${base08}";
+          };
+        };
+        extraConfig = ''
+          separator_symbol |
+        '';
+      }];
 
       keybindings = {
+        "${modifier}+space" = "exec bash $HOME/nix/scripts/i3_layout_change.sh";
         "${modifier}+h" = "focus left";
         "${modifier}+j" = "focus down";
         "${modifier}+k" = "focus up";
         "${modifier}+l" = "focus right";
         "${modifier}+Shift+r" = "reload";
-        "${modifier}+Return" = "exec alacritty";
+        "${modifier}+Return" = "exec --no-startup-id alacritty";
         "${modifier}+q" = "kill";
-        "${modifier}+a" = "exec ${pkgs.dmenu}/bin/dmenu_run";
+        "${modifier}+a" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -fn ' Unifont-20'";
         "${modifier}+Shift+l" = "exec --no-startup-id i3lock -c 000000";
         "${modifier}+f" = "fullscreen";
+        "${modifier}+e" = "layout toggle splith splitv tabbed";
+        "${modifier}+r" = "mode resize";
+        "${modifier}+Shift+f" = "floating toggle";
 
         "${modifier}+Shift+j" = "workspace next";
         "${modifier}+Shift+k" = "workspace prev";
@@ -192,16 +132,16 @@ in
         "${modifier}+Ctrl+8" = "move container to workspace number 8";
         "${modifier}+Ctrl+9" = "move container to workspace number 9";
         "${modifier}+Ctrl+0" = "move container to workspace number 10";
+
+        "${modifier}+y" = "exec ${terminal} --hold -e $HOME/nix/scripts/y.fish";
       };
 
       startup = [
         { command = "xiccd"; notification = true; }
         { command = "clipit"; notification = true; }
         { command = "bluetooth off"; notification = true; }
-        { command = "setxkbmap -layout us,ru -option grp:switch,grp:win_space_toggle"; notification = false; }
-
-        # screenlock
-        # { command = "xset s 5 && xset dpms 0 0 0 && xss-lock -- i3lock -c 000000"; notification = true; }
+        { command = "xrandr --output eDP-1 --auto --right-of DP-1"; notification = false; }
+        { command = "feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
       ];
 
     };
@@ -229,7 +169,6 @@ in
       bindsym Ctrl+k exec bash $HOME/nix/scripts/volume.sh 5%-
       bindsym Ctrl+l exec brightnessctl set +5%
       bindsym F1 exec cmus-remote -r
-      bindsym F10 exec swaymsg input 'type:keyboard' xkb_switch_layout 0 && exec swaylock
       bindsym F2 exec cmus-remote -u
       bindsym F3 exec cmus-remote -n
       bindsym Mod4+Ctrl+h move left
@@ -237,12 +176,9 @@ in
       bindsym Mod4+Ctrl+k move up
       bindsym Mod4+Ctrl+l move right
 
-      bindsym Mod4+Shift+B exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec proxychains4 qutebrowser --desktop-file-name vpn_qutebrowser --set window.title_format "[VPN] {perc}{current_title}{title_sep}qutebrowser"
-      bindsym Mod4+Shift+f floating toggle
       bindsym Mod4+Shift+s exec bash $HOME/nix/scripts/screenshot.sh region
       bindsym Mod4+b exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER
       bindsym Mod4+t exec AyuGram || exec Telegram
-
 
       gaps inner 0
       gaps outer 0
