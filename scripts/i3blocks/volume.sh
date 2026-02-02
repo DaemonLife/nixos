@@ -74,6 +74,7 @@ mic_status() {
 # Format output
 format() {
     device="$(default_device)"
+    device="${device,,}" # lowercase
     mic="$(mic_status)"
 
     perl_filter='if (/.*\[(\d+%)\] (\[(-?\d+.\d+dB)\] )?\[(on|off)\]/)'
@@ -83,7 +84,7 @@ format() {
 
     output=$(perl -ne "$perl_filter")
 
-    echo "$LABEL$device $output$mic"
+    echo "$LABEL$device: $output$mic"
 }
 
 #--------------------------------------------------

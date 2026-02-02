@@ -11,6 +11,10 @@ let
     command=bash $HOME/nix/scripts/i3blocks/layout.sh
     interval=1
 
+    [wifi]
+    command=bash $HOME/nix/scripts/i3blocks/wifi.sh
+    interval=5
+
     [volume-pipewire]
     command=bash $HOME/nix/scripts/i3blocks/volume.sh
     interval=1
