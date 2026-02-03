@@ -44,10 +44,11 @@ in
     envsubst
     pulseaudio
     i3blocks
-    clipit
+    # clipit
     xtitle
     acpi
     xss-lock
+    xev # keycodes check
   ];
   programs.nixvim.clipboard.providers.xclip.enable = true;
 
@@ -96,25 +97,47 @@ in
           separator_symbol |
         '';
       }];
+      keycodebindings = {
+        "${modifier}+43" = "focus left"; # h
+        "${modifier}+44" = "focus down"; # j
+        "${modifier}+45" = "focus up"; # k
+        "${modifier}+46" = "focus right"; # l
+
+        "${modifier}+Shift+27" = "reload"; # r
+        "${modifier}+24" = "kill"; # q
+        "${modifier}+38" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -i -fn ' Unifont-20'"; # a
+        "${modifier}+Shift+46" = "exec --no-startup-id setxkbmap -layout us && i3lock -c 000000";
+        "${modifier}+41" = "fullscreen"; # f
+        "${modifier}+26" = "layout toggle splith splitv tabbed"; # e
+        "${modifier}+27" = "mode resize"; # r
+        "${modifier}+Shift+41" = "floating toggle"; # f
+
+        "${modifier}+Shift+44" = "workspace next"; # j
+        "${modifier}+Shift+45" = "workspace prev"; # k
+
+        "${modifier}+29" = "exec ${terminal} --hold -e $HOME/nix/scripts/y.fish"; # y
+
+        "${modifier}+Ctrl+43" = "move left"; # h
+        "${modifier}+Ctrl+44" = "move down"; # j
+        "${modifier}+Ctrl+45" = "move up"; # k
+        "${modifier}+Ctrl+46" = "move right"; # l
+
+        "Ctrl+43" = "exec brightnessctl set 5%-"; # h
+        "Ctrl+46" = "exec brightnessctl set +5%"; # l
+        "Ctrl+44" = "exec bash $HOME/nix/scripts/volume.sh 5%+"; # j
+        "Ctrl+45" = "exec bash $HOME/nix/scripts/volume.sh 5%-"; # k
+        # screenshot
+        "Print" = "exec scrot $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png";
+        "${modifier}+Print" = "exec scrot -u $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png";
+        "${modifier}+Shift+39" = "exec scrot -s $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png"; # s
+
+        "${modifier}+56" = "exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER"; # b
+        "${modifier}+28" = "exec AyuGram || exec Telegram"; # t
+      };
 
       keybindings = {
         "${modifier}+space" = "exec bash $HOME/nix/scripts/i3_layout_change.sh";
-        "${modifier}+h" = "focus left";
-        "${modifier}+j" = "focus down";
-        "${modifier}+k" = "focus up";
-        "${modifier}+l" = "focus right";
-        "${modifier}+Shift+r" = "reload";
         "${modifier}+Return" = "exec --no-startup-id alacritty";
-        "${modifier}+q" = "kill";
-        "${modifier}+a" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -i -fn ' Unifont-20'";
-        "${modifier}+Shift+l" = "exec --no-startup-id setxkbmap -layout us && i3lock -c 000000";
-        "${modifier}+f" = "fullscreen";
-        "${modifier}+e" = "layout toggle splith splitv tabbed";
-        "${modifier}+r" = "mode resize";
-        "${modifier}+Shift+f" = "floating toggle";
-
-        "${modifier}+Shift+j" = "workspace next";
-        "${modifier}+Shift+k" = "workspace prev";
 
         "${modifier}+1" = "workspace number 1";
         "${modifier}+2" = "workspace number 2";
@@ -137,16 +160,14 @@ in
         "${modifier}+Ctrl+8" = "move container to workspace number 8";
         "${modifier}+Ctrl+9" = "move container to workspace number 9";
         "${modifier}+Ctrl+0" = "move container to workspace number 10";
-
-        "${modifier}+y" = "exec ${terminal} --hold -e $HOME/nix/scripts/y.fish";
       };
 
       startup = [
-        { command = "xiccd"; notification = true; }
-        { command = "clipit"; notification = true; }
+        { command = "exec --no-startup-id xiccd"; notification = true; }
+        # { command = "exec --no-startup-id clipit -dn"; notification = true; }
         { command = "bluetooth off"; notification = true; }
-        { command = "xrandr --output eDP-1 --auto --right-of DP-1"; notification = false; }
-        { command = "feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
+        { command = "exec --no-startup-id xrandr --output eDP-1 --auto --right-of DP-1"; notification = false; }
+        { command = "exec --no-startup-id feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
         # darktable opencl
         { command = "ROC_ENABLE_PRE_VEGA=1 RUSTICL_ENABLE=amdgpu,amdgpu-pro,radv,radeon,radeonsi DRI_PRIME=0 QT_QPA_PLATFORM=xcb"; notification = false; }
       ];
@@ -171,24 +192,10 @@ in
       client.placeholder #202020 #202020 #ddc7a1 #202020 #202020
       client.background #ffffff
 
-      bindsym Print exec scrot $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png
-      bindsym Mod4+Print exec scrot -u $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png
-      bindsym Mod4+Shift+s exec scrot -s $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png
 
-      bindsym Ctrl+h exec brightnessctl set 5%-
-      bindsym Ctrl+j exec bash $HOME/nix/scripts/volume.sh 5%+
-      bindsym Ctrl+k exec bash $HOME/nix/scripts/volume.sh 5%-
-      bindsym Ctrl+l exec brightnessctl set +5%
       bindsym F1 exec cmus-remote -r
       bindsym F2 exec cmus-remote -u
       bindsym F3 exec cmus-remote -n
-      bindsym Mod4+Ctrl+h move left
-      bindsym Mod4+Ctrl+j move down
-      bindsym Mod4+Ctrl+k move up
-      bindsym Mod4+Ctrl+l move right
-
-      bindsym Mod4+b exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER
-      bindsym Mod4+t exec AyuGram || exec Telegram
 
       gaps inner 0
       gaps outer 0
