@@ -38,6 +38,7 @@ in
 
   # clipboard for x11
   home.packages = with pkgs; [
+    scrot # screenshot
     brightnessctl
     feh
     envsubst
@@ -170,6 +171,10 @@ in
       client.placeholder #202020 #202020 #ddc7a1 #202020 #202020
       client.background #ffffff
 
+      bindsym Print exec scrot $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png
+      bindsym Mod4+Print exec scrot -u $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png
+      bindsym Mod4+Shift+s exec scrot -s $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png
+
       bindsym Ctrl+h exec brightnessctl set 5%-
       bindsym Ctrl+j exec bash $HOME/nix/scripts/volume.sh 5%+
       bindsym Ctrl+k exec bash $HOME/nix/scripts/volume.sh 5%-
@@ -182,7 +187,6 @@ in
       bindsym Mod4+Ctrl+k move up
       bindsym Mod4+Ctrl+l move right
 
-      bindsym Mod4+Shift+s exec bash $HOME/nix/scripts/screenshot.sh region
       bindsym Mod4+b exec export QT_WAYLAND_DISABLE_WINDOWDECORATION=0 && exec $BROWSER
       bindsym Mod4+t exec AyuGram || exec Telegram
 
