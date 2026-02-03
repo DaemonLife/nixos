@@ -79,8 +79,8 @@
 
   networking.firewall = rec {
     # kdeconnect
-    allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
-    allowedUDPPortRanges = allowedTCPPortRanges;
+    # allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
+    # allowedUDPPortRanges = allowedTCPPortRanges;
   };
 
   system.stateVersion = "24.11";

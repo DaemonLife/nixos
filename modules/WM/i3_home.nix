@@ -190,7 +190,7 @@ in
       gaps outer 0
       smart_borders on
 
-      exec xset s 600 && xset dpms 0 0 0 && setxkbmap -layout us && xss-lock -- i3lock -c 000000
+      exec xset s 600 && xset dpms 0 0 0 && xss-lock -- sh -c 'setxkbmap us && i3lock -k -c 000000'
 
       workspace "1" output "eDP-1"
       workspace "2" output "eDP-1"
