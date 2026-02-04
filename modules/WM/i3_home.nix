@@ -163,11 +163,11 @@ in
       };
 
       startup = [
-        { command = "exec --no-startup-id xiccd"; notification = true; }
+        { command = "xiccd"; notification = true; }
         # { command = "exec --no-startup-id clipit -dn"; notification = true; }
         { command = "bluetooth off"; notification = true; }
-        { command = "exec --no-startup-id xrandr --output eDP-1 --auto --right-of DP-1"; notification = false; }
-        { command = "exec --no-startup-id feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
+        { command = "xrandr --output eDP-1 --auto --right-of DP-1"; notification = false; }
+        { command = "feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
         # darktable opencl
         { command = "ROC_ENABLE_PRE_VEGA=1 RUSTICL_ENABLE=amdgpu,amdgpu-pro,radv,radeon,radeonsi DRI_PRIME=0 QT_QPA_PLATFORM=xcb"; notification = false; }
       ];
