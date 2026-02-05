@@ -136,7 +136,7 @@ in
       };
 
       keybindings = {
-        "${modifier}+space" = "exec bash $HOME/nix/scripts/i3_layout_change.sh";
+        # "${modifier}+space" = "exec bash $HOME/nix/scripts/i3_layout_change.sh";
         "${modifier}+Return" = "exec --no-startup-id alacritty";
 
         "${modifier}+1" = "workspace number 1";
