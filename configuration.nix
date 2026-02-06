@@ -171,6 +171,7 @@
     wget
     ncdu # folder size tree
     mangohud # Steam performance GUI
+    gdb # gnu debugger for some applications
   ];
 
   # --------------------------------

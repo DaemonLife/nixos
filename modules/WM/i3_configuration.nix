@@ -2,9 +2,8 @@
 { pkgs, ... }: {
   services.xserver = {
     enable = true;
-    xkb.layout = "us,ru";
-    # xkbVariant = "workman,";
-    xkbOptions = "grp:win_space_toggle";
+    # xkb.layout = "us,ru";
+    # xkbOptions = "grp:win_space_toggle";
     windowManager.i3.enable = true;
   };
   services.displayManager.defaultSession = "none+i3";
