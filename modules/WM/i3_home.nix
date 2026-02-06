@@ -49,6 +49,7 @@ in
     acpi
     xss-lock
     xev # keycodes check
+    xkb-switch # print current layout
   ];
   programs.nixvim.clipboard.providers.xclip.enable = true;
 
@@ -106,7 +107,7 @@ in
         "${modifier}+Shift+27" = "reload"; # r
         "${modifier}+24" = "kill"; # q
         "${modifier}+38" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -i -fn ' Unifont-20'"; # a
-        "${modifier}+Shift+46" = "exec --no-startup-id setxkbmap -layout us && i3lock -c 000000";
+        "${modifier}+Shift+46" = "exec --no-startup-id setxkbmap -layout us,ru && i3lock -c 000000";
         "${modifier}+41" = "fullscreen"; # f
         "${modifier}+26" = "layout toggle splith splitv tabbed"; # e
         "${modifier}+27" = "mode resize"; # r

@@ -2,10 +2,10 @@
 
 current=$(setxkbmap -query | grep layout | awk '{print $2}')
 
-if [[ $current != "us" ]]; then
-    new="us"
+if [[ $current != "us,ru" ]]; then
+    new="us,ru"
 else
-    new="ru"
+    new="ru,us"
 fi
 
 setxkbmap -layout $new
