@@ -2,14 +2,13 @@
 { pkgs, ... }: {
   services.xserver = {
     enable = true;
-    # xkb.layout = "us,ru";
-    # xkbOptions = "grp:win_space_toggle";
     windowManager.i3.enable = true;
   };
   services.displayManager.defaultSession = "none+i3";
+
+  # x11 color manager
   services.colord.enable = true;
-  environment.systemPackages = with pkgs; [
-    xiccd
-  ];
+  environment.systemPackages = with pkgs; [ xiccd ];
+
 }
 

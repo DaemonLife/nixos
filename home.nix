@@ -46,8 +46,9 @@
       pavucontrol # audio gui control
       alsa-utils # audio volume control (?)
       pulsemixer # cli pulse adudio control
-      nomacs-qt6 # image viewer
-      kdePackages.gwenview
+      nomacs-qt6 # fast image viewer for RAW (no icc support)
+      unstable.kdePackages.gwenview # imave viewer with icc support
+      unstable.kdePackages.kimageformats # jxl and raw rendering
       kodi-wayland
       obs-studio
       upscayl
