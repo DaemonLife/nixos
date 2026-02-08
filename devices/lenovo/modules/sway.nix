@@ -47,7 +47,7 @@
             mode = "${toString lenovo.w}x${toString lenovo.h}@60.002Hz";
             scale = "${toString lenovo.scale}";
             adaptive_sync = "true";
-            render_bit_depth = "10"; # 6, 8, 10
+            render_bit_depth = "8"; # 6, 8, 10
             position = "${toString lenovo.position_w} ${toString lenovo.position_h}"; # laptop position for msk
             color_profile = "icc /home/user/nix/devices/screens/lenovo_slow.icc";
           };

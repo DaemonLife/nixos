@@ -1,5 +1,5 @@
 # for configuration.nix
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   services.xserver = {
     enable = true;
     windowManager.i3.enable = true;
@@ -10,5 +10,10 @@
   services.colord.enable = true;
   environment.systemPackages = with pkgs; [ xiccd ];
 
+  xdg.portal = lib.mkForce {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
+  };
 }
 

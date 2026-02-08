@@ -178,12 +178,11 @@
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  xdg.portal = {
+  xdg.portal = lib.mkDefault {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
     wlr.enable = true;
-    # config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
+    config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
   };
 
   # Android emulator. Read https://nixos.wiki/wiki/WayDroid

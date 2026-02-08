@@ -106,7 +106,7 @@ in
 
         "${modifier}+Shift+27" = "reload"; # r
         "${modifier}+24" = "kill"; # q
-        "${modifier}+38" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run -i -fn ' Unifont-20'"; # a
+        "${modifier}+38" = "exec ${pkgs.dmenu}/bin/dmenu_run -i -fn ' Unifont-20'"; # a
         "${modifier}+41" = "fullscreen"; # f
         "${modifier}+26" = "layout toggle splith splitv tabbed"; # e
         "${modifier}+27" = "mode resize"; # r
@@ -138,6 +138,7 @@ in
       keybindings = {
         "${modifier}+space" = "exec bash $HOME/nix/scripts/i3_layout_change.sh";
         "${modifier}+Return" = "exec --no-startup-id alacritty";
+        "${modifier}+n" = "exec nautilus";
 
         # "${modifier}+F10" = "exec bash $HOME/scripts/i3lock";
 
@@ -168,7 +169,7 @@ in
         { command = "bluetooth off"; notification = true; }
 
         # color manager
-        { command = "exec --no-startup-id xiccd"; notification = true; }
+        { command = "xiccd"; notification = true; }
         # primary monitor sets its icc color profile as default for programs!
         { command = "xrandr --output DP-1 --primary --output eDP-1 --right-of DP-1"; notification = false; }
 
@@ -177,6 +178,8 @@ in
 
         # background image
         { command = "feh --bg-scale $HOME/nix/images/image_good2.jpg"; notification = false; }
+
+        { command = "${pkgs.udiskie}/bin/udiskie -a"; }
       ];
 
     };

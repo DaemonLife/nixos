@@ -209,6 +209,11 @@
           desc = "Open";
         }];
         "image" = [{
+          run = ''gwenview "$@"'';
+          desc = "Open in gwenview";
+          orphan = true;
+        }];
+        "raw image" = [{
           run = ''nomacs "$@"'';
           desc = "Open in nomacs";
           orphan = true;
@@ -240,16 +245,16 @@
       open = {
         prepend_rules = [
           {
+            name = "*.ARW";
+            use = [ "raw image" ];
+          }
+          {
             mime = "image/*";
             use = [ "image" ];
           }
           {
             mime = "video/*";
             use = [ "video" ];
-          }
-          {
-            name = "*.ARW";
-            use = [ "image" ];
           }
           {
             name = "*.torrent";
