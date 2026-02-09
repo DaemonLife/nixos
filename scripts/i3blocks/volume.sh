@@ -91,8 +91,8 @@ format() {
 # Mouse actions (i3blocks)
 #--------------------------------------------------
 case $BLOCK_BUTTON in
-  1) pavucontrol & ;; # L
-  2) helvum & ;; # M
+  1) pavucontrol &>/dev/null & ;; # L
+  2) helvum &>/dev/null & ;; # M
   3) amixer $AMIXER_PARAMS -q -D $MIXER sset $SCONTROL $(capability) toggle ;; # R mute
   4) amixer $AMIXER_PARAMS -q -D $MIXER sset $SCONTROL $(capability) ${STEP}+ unmute ;; # up
   5) amixer $AMIXER_PARAMS -q -D $MIXER sset $SCONTROL $(capability) ${STEP}- unmute ;; # down
