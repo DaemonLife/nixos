@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./modules-nixos/_import.nix
+    ./modules-nixos/ollama.nix
   ];
 
   networking.hostName = lib.mkForce "pc";
@@ -34,7 +35,20 @@
     displaycal
     argyllcms # for displaycal
     # android-tools # adb, fastboot support
+
+    # clash-verge-rev # vpn
   ];
+
+  # --------------------------------
+  # VPN
+  # --------------------------------
+
+  programs.clash-verge = {
+    enable = true;
+    autoStart = true;
+    serviceMode = true;
+    tunMode = true;
+  };
 
   # --------------------------------
   # HIBERNATION

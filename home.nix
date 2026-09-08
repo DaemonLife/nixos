@@ -94,7 +94,7 @@
       hunspellDicts.en-us # spellcheck for LO
 
       # - Gaming
-      # unstable.portablemc # minecraft cli launcher
+      portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
       chess-tui

@@ -1,6 +1,6 @@
 {...}: {
   imports = [
     # ./docker.nix
-    # ./zerotier.nix
+    ./zerotier.nix
   ];
 }

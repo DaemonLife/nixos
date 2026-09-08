@@ -21,11 +21,31 @@
     nftables.enable = true; # disable old iptables
     firewall = {
       enable = true;
+      # allowedTCPPortRanges = [
+      #   {
+      #     from = 1;
+      #     to = 65535;
+      #   }
+      # ];
+      # allowedUDPPortRanges = [
+      #   {
+      #     from = 1;
+      #     to = 65535;
+      #   }
+      # ];
       allowedTCPPorts = [
         6567 # mindusty server
+        41597 # minecraft
+        # 25565
+        # 19132
+        # 19133
       ];
       allowedUDPPorts = [
         6567 # mindusty server
+        41597 # minecraft
+        # 25565
+        # 19132
+        # 19133
       ];
     };
   };
@@ -188,6 +208,7 @@
 
     # vpn
     proxychains = {
+      package = pkgs.proxychains-ng; # new pkg
       enable = true;
       proxyDNS = true;
       chain.type = "strict";
