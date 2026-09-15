@@ -151,6 +151,7 @@
     bluez # official Linux Bluetooth protocol stack
     # udiskie # auto disks mount
     nautilus
+    kdePackages.dolphin
     net-tools # for netstat
     sysstat # for iostat
     iotop

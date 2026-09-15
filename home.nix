@@ -61,7 +61,7 @@
 
       # - Utils
       cool-retro-term
-      veracrypt
+      # veracrypt
       cmatrix # matrix in terminal
       nwg-displays # gui for display setup
       sc-im # vim spreadsheet program for terminal
@@ -91,7 +91,7 @@
       hunspellDicts.en-us # spellcheck for LO
 
       # - Gaming
-      # unstable.portablemc # minecraft cli launcher
+      portablemc # minecraft cli launcher
       curseofwar # stategy cli game
       vitetris # tetris cli game
       chess-tui
