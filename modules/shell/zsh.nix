@@ -39,7 +39,7 @@
           return
         }
         export NNN_TMPFILE="${var2}"
-        command nnn -C "$@" # -C mean 8 bit color
+        command nnn -C -R "$@" # 8 bit color, disable rollover
         [ ! -f "$NNN_TMPFILE" ] || {
           . "$NNN_TMPFILE"
           rm -f -- "$NNN_TMPFILE" > /dev/null
@@ -73,6 +73,7 @@
       tt = "tt --notheme --highlight1 --blockcursor";
       ffmpeg-video-compress = "bash $HOME/nix/scripts/ffmpeg-video-compress.sh";
       lf = ''cd "`bash -c "lf -print-last-dir"`"'';
+      ncdu = "ncdu -t8"; # use 8 cores
 
       wifi-off = "nmcli r all off && nmcli r";
       wifi-on = "nmcli r all off && nmcli r";

@@ -21,11 +21,31 @@
     nftables.enable = true; # disable old iptables
     firewall = {
       enable = true;
+      # allowedTCPPortRanges = [
+      #   {
+      #     from = 1;
+      #     to = 65535;
+      #   }
+      # ];
+      # allowedUDPPortRanges = [
+      #   {
+      #     from = 1;
+      #     to = 65535;
+      #   }
+      # ];
       allowedTCPPorts = [
         6567 # mindusty server
+        41597 # minecraft
+        # 25565
+        # 19132
+        # 19133
       ];
       allowedUDPPorts = [
         6567 # mindusty server
+        41597 # minecraft
+        # 25565
+        # 19132
+        # 19133
       ];
     };
   };
@@ -169,17 +189,15 @@
   # SYSTEM PROGRAMS
   # --------------------------------
 
-  # xdg.portal = {
-  #   enable = true;
-  #   extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  #   wlr.enable = true;
-  #   config.common.default = "wlr"; # 'wlr' for wayland wm, 'gnome' for gnome
-  # };
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    wlr.enable = true;
+    config.common.default = "gnome"; # 'wlr' for wayland wm, 'gnome' for gnome
+  };
 
   programs = {
-    hyprland = {
-      enable = true;
-    };
+    hyprland.enable = true;
     # niri.enable = true;
     # sway.enable = true;
 
@@ -190,6 +208,7 @@
 
     # vpn
     proxychains = {
+      package = pkgs.proxychains-ng; # new pkg
       enable = true;
       proxyDNS = true;
       chain.type = "strict";
@@ -210,15 +229,6 @@
     # ------ Steam ------
     steam = {
       enable = true;
-      # package = pkgs.steam.override {
-      #   extraEnv = {
-      #     MANGOHUD = "1";
-      #     GAMEMODERUN = "1";
-      #   };
-      # };
-      # gamescopeSession.enable = true;
-      # protontricks.enable = true;
-      # extraCompatPackages = with pkgs; [proton-ge-bin];
       remotePlay.openFirewall = true;
       # dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
@@ -230,7 +240,7 @@
     gamemode.enable = true; # Set run game parameters in Steam: gamemoderun %command%
 
     nix-ld.enable = true; # run bin files
-    dconf.enable = true;
+    # dconf.enable = true;
     htop.enable = true;
     git.enable = true;
     zsh.enable = true;

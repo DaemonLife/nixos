@@ -84,19 +84,19 @@
         # };
         # illuminate.enable = true; # for same words under the cursor
       };
-      statusline.lualine = {
-        enable = true;
-        icons.enable = false;
-        globalStatus = false;
-        activeSection = {
-          a = ["'mode'"];
-          b = ["{'filename', symbols = {modified = '~', readonly = 'READONLY'}}"];
-          c = ["'branch'" "{'diff', symbols = {added = '+', modified = '~', removed = '-'}}"];
-          x = ["'diagnostics'" "'encoding'" "'fileformat'"];
-          y = ["'progress'"];
-          z = ["'location'"];
-        };
-      };
+      # statusline.lualine = {
+      #   enable = true;
+      #   icons.enable = false;
+      #   globalStatus = false;
+      #   activeSection = {
+      #     a = ["'mode'"];
+      #     b = ["{'filename', symbols = {modified = '~', readonly = 'READONLY'}}"];
+      #     c = ["'branch'" "{'diff', symbols = {added = '+', modified = '~', removed = '-'}}"];
+      #     x = ["'diagnostics'" "'encoding'" "'fileformat'"];
+      #     y = ["'progress'"];
+      #     z = ["'location'"];
+      #   };
+      # };
 
       notify.nvim-notify.enable = true;
       mini.comment.enable = true;
