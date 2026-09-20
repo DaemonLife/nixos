@@ -177,7 +177,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    # extraPortals = [pkgs.xdg-desktop-portal-gtk];
     # wlr.enable = true;
     config.common.default = "gtk"; # 'wlr' for wayland wm, 'gnome' for gnome
   };

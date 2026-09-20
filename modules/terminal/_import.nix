@@ -1,7 +1,7 @@
 {...}: {
   imports = [
     ./foot.nix
-    # weztern is cool too maybe
+    # ./wezterm.nix
     # ./kitty.nix
     # ./alacritty.nix
   ];

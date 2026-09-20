@@ -1,4 +1,8 @@
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  ...
+}: {
   programs.kitty = with config.lib.stylix.colors; {
     enable = true;
     shellIntegration.enableZshIntegration = true;
@@ -30,8 +34,12 @@
     # visual bell works only this way.
     # modify font for unifont fix
     extraConfig = ''
-      visual_bell_color #${base01} 
-      # modify_font cell_width 50% 
+      visual_bell_color #${base01}
+      # modify_font cell_width 50%
+
+      # allow_remote_control socket-only
+      # listen_on unix: /tmp/kitty
+      # enabled_layouts splits
     '';
   };
 }
