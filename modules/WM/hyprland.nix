@@ -10,13 +10,13 @@
       MY_DE = "hyprland";
     })
     ./mako.nix
+    ./fuzzel.nix
   ];
 
   home.packages = with pkgs; [
     brightnessctl
     grim # screenshot
     slurp # area for screenshot
-    fsel
     wl-clipboard # wayland clipboard
     wl-clip-persist # persist wayland clipboard
     xrandr # for setting x11 primary monitor
@@ -38,10 +38,11 @@
       terminal._var = "foot";
       browser._var = "librewolf";
       filemanager._var = "nautilus";
-      menu._var = ''foot bash -c "fsel -d"'';
+      menu._var = ''fuzzel'';
 
       # hyprctl monitors all
       monitor = [
+        # lenovo
         {
           output = "desc:Lenovo Group Limited 0x9121";
           mode = "highres";
@@ -49,6 +50,7 @@
           scale = 1.75;
           icc = "/home/user/nix/devices/screens/lenovo_slow.icc";
         }
+        # msk ktc
         {
           output = "desc:Shenzhen KTC Technology Group H27S17 0x00000001";
           mode = "highres";
@@ -59,6 +61,7 @@
           # supports_hdr = 0; # -1, 0 (auto, default), 1
           icc = "/home/user/nix/devices/screens/msk_fast.icc";
         }
+        # gg
         {
           output = "desc:Acer Technologies Acer A231H LQT0W0084320";
           mode = "highres";
@@ -72,6 +75,13 @@
           position = "auto-left";
           scale = 1.87500;
           transform = 3;
+        }
+        # msk acer
+        {
+          output = "desc:Acer Technologies VG270U X1 453918B274219";
+          mode = "2560x1440@143.91Hz";
+          position = "auto";
+          scale = 1.25;
         }
       ];
 
@@ -209,7 +219,7 @@
       -- -------------
 
       hl.bind(mainMod .. " + return", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot'))
-      hl.bind(mainMod .. " + a", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot bash -c "fsel -d"'))
+      hl.bind(mainMod .. " + a", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; fuzzel'))
       hl.bind(mainMod .. " + d", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot --hold zsh -c "n"'))
       hl.bind(mainMod .. " + t", hl.dsp.exec_cmd('org.telegram.desktop'))
       -- hl.bind(mainMod .. " + D", hl.dsp.exec_cmd('bash $HOME/nix/scripts/run_darktable.sh'))

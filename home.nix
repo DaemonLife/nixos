@@ -29,6 +29,7 @@
       # deltachat-desktop
       # fractal # matrix clietn
       vivaldi
+      ungoogled-chromium
       telegram-desktop
 
       # - Media

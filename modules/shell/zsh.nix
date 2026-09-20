@@ -27,7 +27,7 @@
       # bash $HOME/nix/scripts/print_art.sh
       export PATH="$HOME/.cargo/bin:$PATH"
       export PROXYCHAINS_SOCKS5_PORT=20170
-      eval "$(ssh-agent -s)" > /dev/null
+      # eval "$(ssh-agent -s)" > /dev/null
       ssh-add ~/.ssh/github 2> /dev/null
       ssh-add ~/.ssh/termux 2> /dev/null
 
@@ -50,6 +50,7 @@
     # shell indicator for nnn
     initContent = ''
       [ -n "$NNNLVL" ] && PS1="N$NNNLVL $PS1"
+      unalias rsync scp sftp 2>/dev/null
     '';
 
     loginExtra = ''

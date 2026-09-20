@@ -86,9 +86,9 @@
       };
       statusline.lualine = {
         enable = true;
-        icons.enable = false;
-        globalStatus = false;
-        activeSection = {
+        setupOpts.options.icons_enabled = false;
+        setupOpts.options.globalstatus = false;
+        setupOpts.sections = {
           a = ["'mode'"];
           b = ["{'filename', symbols = {modified = '~', readonly = 'READONLY'}}"];
           c = ["'branch'" "{'diff', symbols = {added = '+', modified = '~', removed = '-'}}"];
