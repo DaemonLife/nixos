@@ -148,6 +148,7 @@
     sshfs # ssh mount as directory
     jdk # java
     iwd # wifi cli, don't delete!
+    impala # wifi tui
     bluez # official Linux Bluetooth protocol stack
     # udiskie # auto disks mount
     nautilus

@@ -24,7 +24,6 @@
       # - Network
       overskride # bluetooth gui
       bluetui # bluetooth tui
-      impala # wifi tui
       qbittorrent # torrent client
       # deltachat-desktop
       # fractal # matrix clietn
