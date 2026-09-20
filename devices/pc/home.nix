@@ -1,9 +1,7 @@
 {pkgs, ...}: {
-  imports = [./modules/_import.nix];
-
   home.packages = with pkgs; [
     digikam
-    darktable # flatpak is faster
+    # darktable # flatpak is faster
     # kdePackages.kdenlive # flatpak
     hugin
     siril

@@ -34,7 +34,20 @@
     displaycal
     argyllcms # for displaycal
     # android-tools # adb, fastboot support
+
+    # clash-verge-rev # vpn
   ];
+
+  # --------------------------------
+  # VPN
+  # --------------------------------
+
+  programs.clash-verge = {
+    enable = true;
+    autoStart = true;
+    serviceMode = true;
+    tunMode = true;
+  };
 
   # --------------------------------
   # HIBERNATION

@@ -94,6 +94,8 @@ in {
   gtk = {
     enable = true;
     iconTheme.name = "Vimix";
+    cursorTheme.name = "Vimix";
+    colorScheme = "dark";
   };
   # gtk.gtk4.theme = null; # for unstable branch
   dconf.settings = {

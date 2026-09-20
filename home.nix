@@ -29,6 +29,7 @@
       # fractal # matrix clietn
       vivaldi
       telegram-desktop
+      unstable.amnezia-vpn # sudo AmneziaVPN-service
 
       # - Media
       crosspipe # A GTK patchbay for pipewire
@@ -48,6 +49,8 @@
       losslesscut-bin # ffmpeg gui for lossless cut videos
       ffmpeg
       kew
+      pcmanfm # file manager
+      thunar
 
       # - Theming
       vimix-icon-theme # cursor icon
@@ -93,7 +96,9 @@
       hunspellDicts.en-us # spellcheck for LO
 
       # - Gaming
-      # unstable.portablemc # minecraft cli launcher
+      portablemc # minecraft cli launcher
+      ferium # minecraft mods conf
+      pakku # minecraft mods conf
       curseofwar # stategy cli game
       vitetris # tetris cli game
       chess-tui

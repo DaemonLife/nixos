@@ -20,12 +20,14 @@
     hosts = {"192.168.1.150" = ["myphone"];}; # local DNS
     nftables.enable = true; # disable old iptables
     firewall = {
-      enable = true;
+      enable = false;
       allowedTCPPorts = [
         6567 # mindusty server
+        41597 # minecraft
       ];
       allowedUDPPorts = [
         6567 # mindusty server
+        41597 # minecraft
       ];
     };
   };
@@ -151,7 +153,9 @@
     impala # wifi tui
     bluez # official Linux Bluetooth protocol stack
     # udiskie # auto disks mount
+
     nautilus
+
     kdePackages.dolphin
     net-tools # for netstat
     sysstat # for iostat
@@ -165,6 +169,7 @@
     unzip
     nix-tree # nix pkgs tree
   ];
+  xdg.mime.defaultApplications."inode/directory" = "pcmanfm.desktop";
 
   # --------------------------------
   # SYSTEM PROGRAMS
@@ -173,8 +178,8 @@
   xdg.portal = {
     enable = true;
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
-    wlr.enable = true;
-    config.common.default = "gnome"; # 'wlr' for wayland wm, 'gnome' for gnome
+    # wlr.enable = true;
+    config.common.default = "gtk"; # 'wlr' for wayland wm, 'gnome' for gnome
   };
 
   programs = {
@@ -189,6 +194,7 @@
 
     # vpn
     proxychains = {
+      package = pkgs.proxychains-ng; # new pkg
       enable = true;
       proxyDNS = true;
       chain.type = "strict";
@@ -205,6 +211,8 @@
         };
       };
     };
+
+    thunar.enable = true;
 
     # ------ Steam ------
     steam = {
@@ -290,11 +298,12 @@
 
   # security.polkit.enable = true; # authentication support (backed)
 
-  # security.pam.services = {
-  # open gnome keyring by swaylock
-  # swaylock.enableGnomeKeyring = true;
-  # };
-  # services.gnome.gnome-keyring.enable = true; # secret portal for matrix
+  services.gnome.gnome-keyring.enable = true; # for any compose manager
+  security.pam.services = {
+    login.enableGnomeKeyring = true; # auto open keyring?
+    # open gnome keyring by swaylock
+    # swaylock.enableGnomeKeyring = true;
+  };
 
   # fix performance issues for sway maybe
   # security.pam.loginLimits = [
