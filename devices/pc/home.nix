@@ -1,6 +1,4 @@
 {pkgs, ...}: {
-  imports = [./modules/_import.nix];
-
   home.packages = with pkgs; [
     digikam
     # darktable # flatpak is faster

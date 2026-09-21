@@ -24,13 +24,13 @@
       # - Network
       overskride # bluetooth gui
       bluetui # bluetooth tui
-      impala # wifi tui
       qbittorrent # torrent client
       # deltachat-desktop
       # fractal # matrix clietn
       vivaldi
       ungoogled-chromium
       telegram-desktop
+      unstable.amnezia-vpn # sudo AmneziaVPN-service
 
       # - Media
       crosspipe # A GTK patchbay for pipewire
@@ -50,6 +50,8 @@
       losslesscut-bin # ffmpeg gui for lossless cut videos
       ffmpeg
       kew
+      pcmanfm # file manager
+      thunar
 
       # - Theming
       vimix-icon-theme # cursor icon
@@ -96,6 +98,8 @@
 
       # - Gaming
       portablemc # minecraft cli launcher
+      ferium # minecraft mods conf
+      pakku # minecraft mods conf
       curseofwar # stategy cli game
       vitetris # tetris cli game
       chess-tui

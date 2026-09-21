@@ -17,6 +17,7 @@
     brightnessctl
     grim # screenshot
     slurp # area for screenshot
+    # fsel
     wl-clipboard # wayland clipboard
     wl-clip-persist # persist wayland clipboard
     xrandr # for setting x11 primary monitor
@@ -38,6 +39,7 @@
       terminal._var = "foot";
       browser._var = "librewolf";
       filemanager._var = "nautilus";
+      # menu._var = ''foot bash -c "fsel -d"'';
       menu._var = ''fuzzel'';
 
       # hyprctl monitors all

@@ -39,12 +39,16 @@
           return
         }
         export NNN_TMPFILE="${var2}"
-        command nnn -C -R "$@" # 8 bit color, disable rollover
+        command nnn -CRa"$@" # 8 bit color, disable rollover and -a for preview
         [ ! -f "$NNN_TMPFILE" ] || {
           . "$NNN_TMPFILE"
           rm -f -- "$NNN_TMPFILE" > /dev/null
         }
       }
+
+      # nnn options
+      export NNN_PLUG='f:finder;o:fzopen;p:mocq;d:diffs;t:nmount;v:preview-tui'
+      export NNN_FIFO=/tmp/nnn.fifo
     '';
 
     # shell indicator for nnn

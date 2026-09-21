@@ -8,7 +8,6 @@
   imports = [
     ./hardware-configuration.nix
     ./modules-nixos/_import.nix
-    ./modules-nixos/ollama.nix
   ];
 
   networking.hostName = lib.mkForce "pc";

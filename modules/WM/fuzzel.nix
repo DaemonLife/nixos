@@ -9,8 +9,8 @@
       main = {
         # dpi-aware = "auto";
         icons-enabled = "no";
-        show-actions = "no";
-        horizontal-pad = 25;
+        show-actions = "yes";
+        horizontal-pad = 22;
         vertical-pad = 25;
         exit-on-keyboard-focus-loss = "yes";
         font = lib.mkForce "${config.stylix.fonts.monospace.name}:size=${toString config.stylix.fonts.sizes.terminal}";
@@ -26,7 +26,8 @@
         # border = "${base0D}ff";
       };
 
-      border.width = config.wayland.windowManager.sway.config.window.border;
+      # border.width = config.wayland.windowManager.sway.config.window.border;
+      border.width = config.wayland.windowManager.hyprland.settings.config.general.border_size;
       border.radius = 0;
     };
   };
