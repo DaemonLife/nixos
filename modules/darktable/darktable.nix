@@ -43,4 +43,9 @@ let
 
     /* --- Other --- */
   '';
-in {}
+in {
+  home.packages = with pkgs; [
+    darktable
+  ];
+  xdg.configFile."darktable/lua/my".source = ./lua;
+}

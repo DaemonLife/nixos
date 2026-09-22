@@ -35,7 +35,7 @@ in {
       };
 
       sizes = {
-        applications = 18;
+        applications = 16;
         terminal = 18;
         # Window titles, status bars, and other general elements of the desktop.
         desktop = 16;

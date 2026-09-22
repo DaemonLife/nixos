@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     digikam
-    # darktable # flatpak is faster
     # kdePackages.kdenlive # flatpak
     hugin
     siril

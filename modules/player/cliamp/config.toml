@@ -1,0 +1,14 @@
+theme = ""
+
+speed = 1.00
+eq_preset = "Flat"
+eq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+visualizer = "Butterfly"
+shuffle = true
+repeat = "Off"
+
+[radio]
+country = "none"
+
+[plugins]
+allowed_binaries = "trash-put"

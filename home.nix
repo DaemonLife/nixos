@@ -30,7 +30,7 @@
       vivaldi
       ungoogled-chromium
       telegram-desktop
-      unstable.amnezia-vpn # sudo AmneziaVPN-service
+      gnome-maps
 
       # - Media
       crosspipe # A GTK patchbay for pipewire
@@ -49,8 +49,6 @@
       video-downloader
       losslesscut-bin # ffmpeg gui for lossless cut videos
       ffmpeg
-      kew
-      pcmanfm # file manager
       thunar
 
       # - Theming

@@ -133,16 +133,17 @@
     optimise.automatic = true;
   };
 
-  # waitign for a bug fix https://nixpk.gs/pr-tracker.html?pr=534770
-  nixpkgs.overlays = [
-    (final: prev: {
-      openblas =
-        if prev.stdenv.hostPlatform.system == "i686-linux"
-        then prev.openblas.overrideAttrs (_: {doCheck = false;})
-        else prev.openblas;
-    })
-  ];
+  # i686 bug. Gpd? Waitign for a bug fix https://nixpk.gs/pr-tracker.html?pr=534770
+  # nixpkgs.overlays = [
+  #   (final: prev: {
+  #     openblas =
+  #       if prev.stdenv.hostPlatform.system == "i686-linux"
+  #       then prev.openblas.overrideAttrs (_: {doCheck = false;})
+  #       else prev.openblas;
+  #   })
+  # ];
 
+  # environment.systemPackages = with pkgs; [
   environment.systemPackages = with pkgs; [
     gparted
     exfatprogs # exfat gparted support
@@ -152,11 +153,7 @@
     iwd # wifi cli, don't delete!
     impala # wifi tui
     bluez # official Linux Bluetooth protocol stack
-    # udiskie # auto disks mount
-
     nautilus
-
-    kdePackages.dolphin
     net-tools # for netstat
     sysstat # for iostat
     iotop
@@ -169,7 +166,7 @@
     unzip
     nix-tree # nix pkgs tree
   ];
-  xdg.mime.defaultApplications."inode/directory" = "pcmanfm.desktop";
+  xdg.mime.defaultApplications."inode/directory" = "nautilus.desktop";
 
   # --------------------------------
   # SYSTEM PROGRAMS
@@ -183,16 +180,25 @@
   };
 
   programs = {
+    # --- DE ---
+
     hyprland.enable = true;
     # niri.enable = true;
     # sway.enable = true;
+    # mango.enable = true;
 
     appimage = {
       enable = true;
       binfmt = true;
     };
 
-    # vpn
+    # --- vpn ---
+
+    amnezia-vpn = {
+      package = pkgs.unstable.amnezia-vpn;
+      enable = true;
+    };
+
     proxychains = {
       package = pkgs.proxychains-ng; # new pkg
       enable = true;

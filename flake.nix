@@ -8,8 +8,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # --- stable branch (and support unstable pkgs) --- #
+    # mangowm = {
+    #   url = "github:mangowm/mango";
+    #   inputs.nixpkgs.follows = "nixpkgs-unstable";
+    # };
 
+    # --- stable branch (and support unstable pkgs) --- #
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     home-manager = {
@@ -21,8 +25,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # --- only unstable branch --- #
-
+    # --- unstable branch --- #
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # home-manager = {
     #   url = "github:nix-community/home-manager";
@@ -40,6 +43,7 @@
     home-manager,
     stylix,
     nvf,
+    # mangowm,
     ...
   }: let
     user = "user";
@@ -53,6 +57,7 @@
         [
           ./configuration.nix # main config
           ./devices/${device}/configuration.nix # device config
+          # mangowm.nixosModules.mango
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
           {
@@ -81,12 +86,6 @@
             ];
           }
         ]
-
-        # Add device module from flake hardware
-        # (if device == "gpd-pocket-3"
-        # then [ nixos-hardware.nixosModules.${device} ]
-        # If there is no hardware module
-        # else [ ])
       ];
     };
   in {

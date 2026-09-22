@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ./modules-nixos/_import.nix
+    ../../modules-system-wide/waydroid.nix
   ];
 
   networking.hostName = lib.mkForce "pc";

@@ -5,6 +5,6 @@
     # ./sway.nix # still bad color profile support and only with vulkan
     # ./niri.nix # no color profile support
     ./hyprland.nix # good color profile support
-    # mangooooo # no color profile support only hdr
+    # ./mango.nix
   ];
 }

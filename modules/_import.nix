@@ -13,6 +13,7 @@
     # ./chess/cli-chess.nix
     ./xdg.nix
     # ./unison.nix
+    ./darktable/darktable.nix
 
     ./shell/_import.nix
     ./terminal/_import.nix

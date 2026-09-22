@@ -26,8 +26,7 @@
         # border = "${base0D}ff";
       };
 
-      # border.width = config.wayland.windowManager.sway.config.window.border;
-      border.width = config.wayland.windowManager.hyprland.settings.config.general.border_size;
+      border.width = 4;
       border.radius = 0;
     };
   };
