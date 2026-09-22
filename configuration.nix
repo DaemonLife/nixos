@@ -15,7 +15,6 @@
 
   networking = {
     networkmanager.enable = true;
-    hostName = "nixos";
     nameservers = ["1.1.1.1" "1.0.0.1"]; # DNS provider
     hosts = {"192.168.1.150" = ["myphone"];}; # local DNS
     nftables.enable = true; # disable old iptables

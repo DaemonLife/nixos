@@ -11,7 +11,7 @@
     ../../modules-system-wide/waydroid.nix
   ];
 
-  networking.hostName = lib.mkForce "pc";
+  # networking.hostName = lib.mkForce "pc";
 
   hardware = {
     graphics = {

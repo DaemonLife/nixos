@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en" data-ui="black">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>base16 palette editor</title>
+<style>
+/* Interface themes are independent of the palette being edited, except
+   "scheme", which paints the editor itself with the current palette.
+   The palette (--b00..--b0F) is set from JS on :root. */
+:root[data-ui="black"]  { --bg: #000000; --panel: #0d0d0d; --line: #2e2e2e; --fg: #e8e8e8; --muted: #8a8a8a; --err: #ff7b72; --ok: #7ee787; --on-fg: #000000; }
+:root[data-ui="dark"]   { --bg: #161616; --panel: #1f1f1f; --line: #3a3a3a; --fg: #e6e6e6; --muted: #929292; --err: #ff7b72; --ok: #7ee787; --on-fg: #161616; }
+:root[data-ui="gray"]   { --bg: #6e6e6e; --panel: #7a7a7a; --line: #5a5a5a; --fg: #f4f4f4; --muted: #d2d2d2; --err: #ffc2bb; --ok: #c8f7cf; --on-fg: #2a2a2a; }
+:root[data-ui="light"]  { --bg: #f5f5f5; --panel: #ffffff; --line: #cfcfcf; --fg: #141414; --muted: #666666; --err: #b42318; --ok: #1a7f37; --on-fg: #f5f5f5; }
+:root[data-ui="scheme"] { --bg: var(--b00); --panel: var(--b01); --line: var(--b02); --fg: var(--b05); --muted: var(--b04); --err: var(--b08); --ok: var(--b0B); --on-fg: var(--b00); }
+
+/* Flat by rule: no rounding, no shadows, no motion anywhere. */
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  /* System monospace only. Firefox has no ui-monospace, so the named
+     fallbacks and the generic keyword carry it there. */
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+::selection { background: var(--fg); color: var(--on-fg); }
+
+input, textarea, button, pre { font: inherit; color: inherit; }
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 28px; border-bottom: 1px solid var(--line); font-size: 13px;
+}
+.topbar b { font-weight: 700; letter-spacing: .08em; }
+.topbar span { color: var(--muted); }
+.strip { display: grid; grid-template-columns: repeat(16, 1fr); height: 8px; }
+
+.wrap { max-width: 1680px; margin: 0 auto; padding: 0 28px; }
+
+/* ---------- Headings ---------- */
+h1, h2 { margin: 0; font-weight: 700; }
+h1 { font-size: 30px; line-height: 1.2; }
+h2 { font-size: 20px; line-height: 1.3; margin-bottom: 16px; }
+h2::before { content: "## "; color: var(--muted); font-weight: 400; }
+.sub { font-size: 13px; color: var(--muted); margin: 0 0 8px; font-weight: 400; }
+
+/* ---------- Controls ---------- */
+button {
+  background: var(--panel); border: 1px solid var(--line);
+  padding: 6px 14px; cursor: pointer; font-size: 13px; line-height: 1.5;
+}
+button:hover { border-color: var(--fg); }
+button.primary { background: var(--fg); color: var(--on-fg); border-color: var(--fg); }
+button:disabled { opacity: .45; cursor: default; }
+button:disabled:hover { border-color: var(--line); }
+:focus-visible { outline: 1px solid var(--fg); outline-offset: 2px; }
+
+input[type=text], textarea {
+  background: var(--panel); border: 1px solid var(--line); padding: 6px 10px;
+}
+input[type=text]:focus, textarea:focus { border-color: var(--fg); outline: none; }
+
+/* Segmented group: replaces <select>, looks the same in Firefox and Chromium. */
+.seg { display: inline-flex; flex-wrap: wrap; }
+.seg button { margin-left: -1px; position: relative; }
+.seg button:first-child { margin-left: 0; }
+.seg button:hover { z-index: 1; }
+.seg button[aria-pressed="true"] {
+  background: var(--fg); color: var(--on-fg); border-color: var(--fg); z-index: 2;
+}
+
+/* ---------- Header ---------- */
+header { padding: 34px 0 36px; }
+header h1 { margin-bottom: 26px; }
+header h1 span { color: var(--muted); font-weight: 400; }
+.form { display: grid; grid-template-columns: 11ch 1fr; gap: 12px 16px; align-items: center; max-width: 860px; }
+.form > label { color: var(--muted); font-size: 13px; }
+.form .pair { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
+.form .pair label { display: flex; gap: 12px; align-items: center; color: var(--muted); font-size: 13px; }
+.form input[type=text] { width: 26ch; color: var(--fg); }
+
+/* ---------- Main grid ---------- */
+main { display: grid; grid-template-columns: minmax(400px, 480px) minmax(0, 1fr); gap: 48px; }
+@media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+
+/* Palette table */
+.tbl-head, .row {
+  display: grid; grid-template-columns: 34px 56px 84px 36px 1fr;
+  column-gap: 12px; align-items: center;
+}
+.tbl-head {
+  padding-bottom: 6px; border-bottom: 1px solid var(--line);
+  font-size: 12px; color: var(--muted);
+}
+.row { padding: 5px 0; border-bottom: 1px solid var(--line); }
+.swatch { width: 34px; height: 28px; padding: 0; border: 1px solid var(--line); }
+.swatch:hover { border-color: var(--fg); }
+.key, .lum { font-size: 13px; color: var(--muted); }
+.row input.hex { width: 100%; padding: 3px 6px; font-size: 13px; }
+input.hex.bad { border-color: var(--err); color: var(--err); }
+.role { font-size: 12px; color: var(--muted); line-height: 1.35; }
+.group + .group { margin-top: 28px; }
+
+/* ---------- Preview panes (palette only) ---------- */
+.pane { background: var(--b00); color: var(--b05); border: 1px solid var(--line); overflow: hidden; }
+.pane + .sub { margin-top: 24px; }
+.scroll { overflow-x: auto; }
+
+.tabline { display: flex; background: var(--b01); color: var(--b03); }
+.tabline span { padding: 0 1ch; white-space: pre; }
+.tabline .sel { color: var(--b0B); }
+.vl { display: flex; white-space: pre; min-width: max-content; }
+.vl.cur { background: var(--b01); }
+.sign { width: 2ch; flex: none; background: var(--b01); text-align: center; }
+.sign.add { color: var(--b0B); } .sign.chg { color: var(--b0D); } .sign.del { color: var(--b08); }
+.ln { width: 4ch; padding-right: 1ch; box-sizing: content-box; flex: none; text-align: right;
+      background: var(--b01); color: var(--b03); margin-right: 1ch; }
+.cur .ln { color: var(--b04); }
+.fold { color: var(--b03); background: var(--b01); flex: 1; }
+.tilde { color: var(--b03); }
+.statusline { display: flex; background: var(--b02); color: var(--b04); white-space: pre; }
+.statusline span { padding: 0 1ch; }
+.statusline .end { margin-left: auto; }
+.cmdline { padding: 0 1ch; white-space: pre; }
+.modemsg { color: var(--b0B); font-weight: 700; }
+.search { background: var(--b0A); color: var(--b01); }
+.visual { background: var(--b02); }
+.cursor { background: var(--b05); color: var(--b00); }
+
+.c { color: var(--b03); font-style: italic; }
+.d { color: var(--b0F); }
+.k { color: var(--b0E); }
+.f { color: var(--b0D); }
+.s { color: var(--b0B); }
+.e { color: var(--b0C); }
+.n { color: var(--b09); }
+.v { color: var(--b08); }
+.t { color: var(--b0A); }
+
+.term { padding: 8px 12px; white-space: pre; }
+.a1 { color: var(--b08); } .a2 { color: var(--b0B); } .a3 { color: var(--b0A); }
+.a4 { color: var(--b0D); } .a5 { color: var(--b0E); } .a6 { color: var(--b0C); }
+.a15 { color: var(--b07); }
+.bold { font-weight: 700; }
+.ansi { display: inline-grid; grid-template-columns: repeat(8, 4ch); vertical-align: top; }
+.ansi span { text-align: center; color: var(--b00); }
+.ansi span:first-child { color: var(--b05); }
+
+/* ---------- Bottom: three equal boxes, actions underneath ---------- */
+.bottom {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px;
+  margin-top: 56px; padding: 40px 0 56px; border-top: 1px solid var(--line);
+}
+@media (max-width: 1100px) { .bottom { grid-template-columns: 1fr; } }
+.box { height: 380px; overflow: auto; background: var(--panel); border: 1px solid var(--line); }
+pre.box { margin: 0; padding: 10px 12px; font-size: 13px; }
+textarea.box { display: block; width: 100%; padding: 10px 12px; font-size: 13px; resize: none; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; min-height: 34px; }
+.msg { font-size: 13px; color: var(--ok); margin-left: auto; }
+.msg.err { color: var(--err); }
+
+/* Preset rows */
+.prow {
+  display: grid; grid-template-columns: 96px 1fr auto; gap: 12px; align-items: center;
+  width: 100%; padding: 8px 12px; border: 0; border-bottom: 1px solid var(--line);
+  background: transparent; text-align: left; font-size: 13px;
+}
+button.prow:hover { background: var(--bg); border-color: var(--line); }
+.prow.current { cursor: default; }
+.prow .meta { font-size: 12px; color: var(--muted); }
+.prow .meta.dirty { color: var(--ok); }
+.mini { display: grid; grid-template-columns: repeat(16, 1fr); height: 12px; }
+.lib { list-style: none; margin: 0; padding: 0; }
+.lib li { display: flex; align-items: stretch; }
+.lib li .prow { flex: 1; }
+.lib .del { border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--muted); padding: 0 12px; }
+.lib .del:hover { color: var(--err); }
+
+/* ---------- Color picker ---------- */
+.picker {
+  position: fixed; z-index: 10; width: 300px;
+  display: grid; grid-template-columns: 1fr 18px; gap: 10px;
+  padding: 14px; background: var(--panel); border: 1px solid var(--muted);
+}
+.picker[hidden] { display: none; }
+.picker-head { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+.picker-head b { color: var(--fg); }
+.sv, .hue { position: relative; cursor: crosshair; touch-action: none; }
+.sv { height: 180px; }
+.hue { background: linear-gradient(to bottom, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00); }
+/* Two-tone knobs (white border + black outline) stay visible on any color
+   without using shadows. */
+.knob { position: absolute; pointer-events: none; border: 2px solid #fff; outline: 1px solid #000; }
+.sv .knob { width: 12px; height: 12px; transform: translate(-50%, -50%); }
+.hue .knob { left: -3px; right: -3px; height: 6px; transform: translateY(-50%); }
+.picker-row { grid-column: 1 / -1; display: flex; gap: 8px; }
+.picker-row input.hex { flex: 1; min-width: 0; }
+.picker-row .ba { flex: none; }
+.picker-row .ba[aria-pressed="true"] { background: var(--fg); color: var(--on-fg); border-color: var(--fg); }
+.picker-foot { grid-column: 1 / -1; display: flex; gap: 8px; }
+.picker-foot button { flex: 1; }
+
+.slider { grid-column: 1 / -1; display: grid; gap: 4px; font-size: 13px; }
+.slider .top { display: flex; justify-content: space-between; color: var(--muted); }
+.slider output { color: var(--fg); }
+/* Range: the track gradient is set inline from JS on the element itself,
+   which both Firefox and Chromium paint behind their own track. */
+input[type=range] {
+  -webkit-appearance: none; appearance: none; display: block;
+  width: 100%; height: 16px; margin: 0; padding: 0;
+  border: 1px solid var(--line); background: transparent; cursor: pointer;
+}
+input[type=range]::-moz-range-track { background: transparent; height: 14px; border: 0; }
+input[type=range]::-moz-range-thumb {
+  width: 6px; height: 14px; background: #fff; border: 1px solid #000;
+}
+input[type=range]::-webkit-slider-runnable-track { background: transparent; height: 14px; }
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 6px; height: 14px; background: #fff; border: 1px solid #000;
+}
+
+footer { padding: 0 0 40px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="topbar"><b>BASE16</b><span>palette editor</span></div>
+<div class="strip" id="strip"></div>
+
+<div class="wrap">
+<header>
+  <h1>base16 <span>palette editor</span></h1>
+  <div class="form">
+    <label for="name">scheme</label>
+    <div class="pair">
+      <input type="text" id="name" autocomplete="off" spellcheck="false">
+      <label>author <input type="text" id="author" autocomplete="off" spellcheck="false"></label>
+    </div>
+
+    <label>variant</label>
+    <div class="seg" id="variant" role="group" aria-label="Variant">
+      <button type="button" data-v="auto">auto</button><button type="button" data-v="dark">dark</button><button type="button" data-v="light">light</button>
+    </div>
+
+    <label>interface</label>
+    <div class="seg" id="ui" role="group" aria-label="Interface theme">
+      <button type="button" data-ui="black">black</button><button type="button" data-ui="dark">dark</button><button type="button" data-ui="gray">gray</button><button type="button" data-ui="light">light</button><button type="button" data-ui="scheme" title="Paint the editor with the scheme you are making">my scheme</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section>
+    <h2>palette</h2>
+    <div class="group">
+      <div class="sub">shades · base00–base07</div>
+      <div class="tbl-head"><span></span><span>key</span><span>hex</span><span>L</span><span>role</span></div>
+      <div id="rows-mono"></div>
+    </div>
+    <div class="group">
+      <div class="sub">accents · base08–base0F</div>
+      <div class="tbl-head"><span></span><span>key</span><span>hex</span><span>L</span><span>role</span></div>
+      <div id="rows-accent"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>preview</h2>
+<div class="sub">vim · python</div>
+<div class="pane">
+<div class="tabline"><span class="sel"> main.py </span><span> scheme.yaml </span></div>
+<div class="scroll">
+<div class="vl"><span class="sign"> </span><span class="ln">1</span><span><span class="k">import</span> re</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">2</span><span><span class="k">from</span> dataclasses <span class="k">import</span> dataclass</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">3</span><span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">4</span><span><span class="search">HEX</span> = re.<span class="f">compile</span>(<span class="s">r&quot;^#?(</span><span class="e">[0-9a-f]{6}</span><span class="s">)$&quot;</span>, re.<span class="n">I</span>)</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">5</span><span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">6</span><span><span class="t">@</span><span class="f">dataclass</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">7</span><span><span class="k">class</span> <span class="t">Scheme</span>:</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">8</span><span>    <span class="s">&quot;&quot;&quot;A base16 color scheme.&quot;&quot;&quot;</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">9</span><span>    <span class="v">name</span>: <span class="e">str</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">10</span><span>    <span class="v">colors</span>: <span class="e">dict</span>[<span class="e">str</span>, <span class="e">str</span>]</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">11</span><span></span></div>
+<div class="vl"><span class="sign chg">~</span><span class="ln">12</span><span>    <span class="k">def</span> <span class="f">load</span>(<span class="v">self</span>, <span class="v">path</span>: <span class="e">str</span>, <span class="v">strict</span>: <span class="e">bool</span> = <span class="n">True</span>) -&gt; <span class="s">&quot;Scheme&quot;</span>:</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">13</span><span>        <span class="c"># parse &quot;key: value&quot; lines</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">14</span><span>        <span class="k">for</span> n, line <span class="k">in</span> <span class="e">enumerate</span>(<span class="e">open</span>(<span class="v">path</span>), <span class="n">1</span>):</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">15</span><span>            key, _, value = line.<span class="f">partition</span>(<span class="s">&quot;:&quot;</span>)</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">16</span><span>            <span class="k">if not</span> <span class="search">HEX</span>.<span class="f">match</span>(value.<span class="f">strip</span>()):</span></div>
+<div class="vl"><span class="sign add">+</span><span class="ln">17</span><span>                <span class="k">raise</span> <span class="e">ValueError</span>(<span class="s">f&quot;line {n}: bad color</span><span class="e">\n</span><span class="s">&quot;</span>)</span></div>
+<div class="vl cur"><span class="sign add">+</span><span class="ln">18</span><span>            <span class="v">self</span>.colors[key] = <span class="visual">value.<span class="f">strip</span>().<span class="f">lower</span>(</span><span class="cursor">)</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">19</span><span>        <span class="k">return</span> <span class="v">self</span> <span class="k">if</span> <span class="v">strict</span> <span class="k">else</span> <span class="n">None</span></span></div>
+<div class="vl"><span class="sign del">_</span><span class="ln">20</span><span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">21</span><span>    <span class="d">@deprecated(&quot;use load() instead&quot;)</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">22</span><span>    <span class="k">def</span> <span class="f">read</span>(<span class="v">self</span>, <span class="v">path</span>):</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">23</span><span class="fold">+--  2 lines: return self.load(path)·························</span></div>
+<div class="vl"><span class="tilde">~</span></div>
+<div class="vl"><span class="tilde">~</span></div>
+</div>
+<div class="statusline"><span>main.py [+]</span><span class="end">python  utf-8  18:39  78%</span></div>
+<div class="cmdline"><span class="modemsg">-- VISUAL --</span></div>
+</div>
+<div class="sub">bash</div>
+<div class="pane"><div class="term scroll"><span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ ls -F
+<span class="a2 bold">build.sh*</span>  <span class="a5 bold">cover.png</span>  gruvbox.yaml  <span class="a6 bold">latest@</span>  <span class="a4 bold">music/</span>  <span class="a1 bold">nord.tar.gz</span>  <span class="a6">track.flac</span>
+<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ grep -n --color base0D *.yaml
+<span class="a5">gruvbox.yaml</span><span class="a6">:</span><span class="a2">17</span><span class="a6">:</span>  <span class="a1 bold">base0D</span>: "#83a598"
+<span class="a5">nord.yaml</span><span class="a6">:</span><span class="a2">17</span><span class="a6">:</span>  <span class="a1 bold">base0D</span>: "#81a1c1"
+<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ git diff
+<span class="a15 bold">diff --git a/nord.yaml b/nord.yaml</span>
+<span class="a15 bold">--- a/nord.yaml</span>
+<span class="a15 bold">+++ b/nord.yaml</span>
+<span class="a6">@@ -9,3 +9,3 @@</span> palette:
+   base07: "#8fbcbb"
+<span class="a1">-  base08: "#bf616a"</span>
+<span class="a2">+  base08: "#d0707a"</span>
+<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ for i in {0..15}; do printf "\e[48;5;${i}m%3d " $i; done
+<span class="ansi"><span style="background:var(--b00)">0</span><span style="background:var(--b08)">1</span><span style="background:var(--b0B)">2</span><span style="background:var(--b0A)">3</span><span style="background:var(--b0D)">4</span><span style="background:var(--b0E)">5</span><span style="background:var(--b0C)">6</span><span style="background:var(--b05)">7</span></span>
+<span class="ansi"><span style="background:var(--b03)">8</span><span style="background:var(--b08)">9</span><span style="background:var(--b0B)">10</span><span style="background:var(--b0A)">11</span><span style="background:var(--b0D)">12</span><span style="background:var(--b0E)">13</span><span style="background:var(--b0C)">14</span><span style="background:var(--b07)">15</span></span>
+<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ sl
+bash: sl: command not found
+<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ <span class="cursor"> </span></div></div>
+
+  </section>
+</main>
+
+<div class="bottom">
+  <section>
+    <h2>yaml</h2>
+    <pre class="box" id="yaml"></pre>
+    <div class="actions">
+      <div class="seg" id="format" role="group" aria-label="YAML format">
+        <button type="button" data-f="new">tinted-theming</button><button type="button" data-f="old">legacy</button>
+      </div>
+      <button id="copy">copy</button>
+      <button id="download" class="primary">download</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>import</h2>
+    <textarea class="box" id="paste" placeholder="paste the YAML of any base16 scheme" spellcheck="false"></textarea>
+    <div class="actions">
+      <button id="apply" class="primary">apply</button>
+      <button id="open">open file</button>
+      <input type="file" id="file" accept=".yaml,.yml,text/yaml" hidden>
+      <span class="msg" id="msg" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>presets</h2>
+    <div class="box">
+      <div class="prow current" title="The scheme you are editing now">
+        <span class="mini" id="curStrip"></span>
+        <span id="curName"></span>
+        <span class="meta" id="curStatus"></span>
+      </div>
+      <ul class="lib" id="lib"></ul>
+    </div>
+    <div class="actions">
+      <button id="curSave" class="primary">save current</button>
+    </div>
+  </section>
+</div>
+
+<footer>everything stays in this file and your browser.</footer>
+</div>
+
+<div class="picker" id="picker" role="dialog" aria-label="Pick a color" hidden>
+  <div class="picker-head">editing <b id="pKey"></b></div>
+  <div class="sv" id="sv" tabindex="0" aria-label="Saturation and value (HSV)"><div class="knob" id="svKnob"></div></div>
+  <div class="hue" id="hue" tabindex="0" aria-label="Hue (HSV)"><div class="knob" id="hueKnob"></div></div>
+
+  <label class="slider">
+    <span class="top">lightness L <output id="oL"></output></span>
+    <input type="range" id="rL" min="0" max="100" step="0.1">
+  </label>
+  <label class="slider">
+    <span class="top">chroma C <output id="oC"></output></span>
+    <input type="range" id="rC" min="0" max="0.33" step="0.001">
+  </label>
+  <label class="slider">
+    <span class="top">hue H <output id="oH"></output></span>
+    <input type="range" id="rH" min="0" max="360" step="0.5">
+  </label>
+
+  <div class="picker-row">
+    <input class="hex" id="pHex" type="text" maxlength="7" spellcheck="false" aria-label="Hex">
+    <button type="button" class="ba" id="pCompare" aria-pressed="false"
+            title="Show the original color; press again to return to yours (\)">original</button>
+  </div>
+  <div class="picker-foot">
+    <button type="button" id="pCancel">cancel</button>
+    <button type="button" id="pOk" class="primary">done</button>
+  </div>
+</div>
+
+<script>
+
+
+// ---------- Data ----------
+
+const KEYS = Array.from({ length: 16 }, (_, i) => "base0" + i.toString(16).toUpperCase());
+
+// Roles, verbatim from the base16 styling guidelines (v0.2).
+const ROLES = {
+  base00: "Default Background",
+  base01: "Lighter Background (Used for status bars, line number and folding marks)",
+  base02: "Selection Background",
+  base03: "Comments, Invisibles, Line Highlighting",
+  base04: "Dark Foreground (Used for status bars)",
+  base05: "Default Foreground, Caret, Delimiters, Operators",
+  base06: "Light Foreground (Not often used)",
+  base07: "Light Background (Not often used)",
+  base08: "Variables, XML Tags, Markup Link Text, Markup Lists, Diff Deleted",
+  base09: "Integers, Boolean, Constants, XML Attributes, Markup Link Url",
+  base0A: "Classes, Markup Bold, Search Text Background",
+  base0B: "Strings, Inherited Class, Markup Code, Diff Inserted",
+  base0C: "Support, Regular Expressions, Escape Characters, Markup Quotes",
+  base0D: "Functions, Methods, Attribute IDs, Headings",
+  base0E: "Keywords, Storage, Selector, Markup Italic, Diff Changed",
+  base0F: "Deprecated, Opening/Closing Embedded Language Tags, e.g. <?php ?>",
+};
+
+// The guidelines word the shade roles for a dark scheme. In a light scheme
+// base00..base07 run from light to dark, so "lighter"/"darker" swap.
+const ROLES_LIGHT = {
+  base01: "Darker Background (Used for status bars, line number and folding marks)",
+  base04: "Light Foreground (Used for status bars)",
+  base06: "Dark Foreground (Not often used)",
+  base07: "Dark Background (Not often used)",
+};
+
+const roleFor = (key, variant) =>
+  (variant === "light" && ROLES_LIGHT[key]) || ROLES[key];
+
+const toColors = arr => Object.fromEntries(KEYS.map((k, i) => [k, arr[i].toLowerCase()]));
+const DEFAULT_ACCENTS = ["ab4642", "dc9656", "f7ca88", "a1b56c", "86c1b9", "7cafc2", "ba8baf", "a16946"];
+
+const PRESETS = [
+  { name: "Default Dark", author: "Chris Kempson",
+    colors: toColors(["181818", "282828", "383838", "585858", "b8b8b8", "d8d8d8", "e8e8e8", "f8f8f8", ...DEFAULT_ACCENTS]) },
+  { name: "Default Light", author: "Chris Kempson",
+    colors: toColors(["f8f8f8", "e8e8e8", "d8d8d8", "b8b8b8", "585858", "383838", "282828", "181818", ...DEFAULT_ACCENTS]) },
+  { name: "Gruvbox dark, medium", author: "Dawid Kurek, morhetz",
+    colors: toColors(["282828", "3c3836", "504945", "665c54", "bdae93", "d5c4a1", "ebdbb2", "fbf1c7",
+                      "fb4934", "fe8019", "fabd2f", "b8bb26", "8ec07c", "83a598", "d3869b", "d65d0e"]) },
+  { name: "Nord", author: "arcticicestudio",
+    colors: toColors(["2e3440", "3b4252", "434c5e", "4c566a", "d8dee9", "e5e9f0", "eceff4", "8fbcbb",
+                      "bf616a", "d08770", "ebcb8b", "a3be8c", "88c0d0", "81a1c1", "b48ead", "5e81ac"]) },
+];
+
+// ---------- Storage (guarded: may be unavailable) ----------
+
+const store = {
+  get(key, fallback) {
+    try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+    catch { return fallback; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  },
+};
+
+let state = store.get("b16-current", null) ||
+  { name: "My Scheme", author: "", variant: "auto", colors: { ...PRESETS[0].colors } };
+let library = store.get("b16-library", []);
+
+// Colors saved under the current name, if any -- used to tell "current" apart
+// from "saved as a preset" without re-saving on every keystroke.
+const sameColors = p => p && p.name === state.name && JSON.stringify(p.colors) === JSON.stringify(state.colors);
+const isDirty = () => !library.some(sameColors);
+const isBuiltin = () => PRESETS.some(sameColors);
+
+// ---------- Color math ----------
+
+// Accept "abc", "#abc", "aabbcc", "#aabbcc"; return lowercase 6-digit hex or null.
+function normHex(s) {
+  s = String(s).trim().replace(/^#/, "");
+  if (/^[0-9a-f]{3}$/i.test(s)) s = s.split("").map(c => c + c).join("");
+  return /^[0-9a-f]{6}$/i.test(s) ? s.toLowerCase() : null;
+}
+
+const hexToRgb = hex => [0, 2, 4].map(i => parseInt(hex.substr(i, 2), 16) / 255);
+const rgbToHex = rgb => rgb.map(x => Math.round(Math.min(1, Math.max(0, x)) * 255).toString(16).padStart(2, "0")).join("");
+const toLinear = c => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+const toGamma = c => (c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055);
+
+function luminance(hex) {
+  const [r, g, b] = hexToRgb(hex).map(toLinear);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+// HSV, used by the square + hue bar.
+function hexToHsv(hex) {
+  const [r, g, b] = hexToRgb(hex);
+  const max = Math.max(r, g, b), d = max - Math.min(r, g, b);
+  let h = 0;
+  if (d) {
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h = (h * 60 + 360) % 360;
+  }
+  return { h, s: max ? d / max : 0, v: max };
+}
+
+function hsvToHex({ h, s, v }) {
+  const f = n => { const k = (n + h / 60) % 6; return v - v * s * Math.max(0, Math.min(k, 4 - k, 1)); };
+  return rgbToHex([f(5), f(3), f(1)]);
+}
+
+// OKLCH (Björn Ottosson's OKLab in polar form). L = perceived lightness 0..1,
+// C = chroma (colorfulness), H = hue in degrees. Equal L looks equally bright,
+// which is what makes it handy for balancing accent colors.
+function hexToOklch(hex) {
+  const [r, g, b] = hexToRgb(hex).map(toLinear);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  const L = 0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s;
+  const A = 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s;
+  const B = 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s;
+  return { l: L, c: Math.hypot(A, B), h: (Math.atan2(B, A) * 180 / Math.PI + 360) % 360 };
+}
+
+// Returns linear sRGB, possibly outside 0..1 when the color isn't displayable.
+function oklchToLinear({ l, c, h }) {
+  const a = c * Math.cos(h * Math.PI / 180), b = c * Math.sin(h * Math.PI / 180);
+  const L = (l + 0.3963377774 * a + 0.2158037573 * b) ** 3;
+  const M = (l - 0.1055613458 * a - 0.0638541728 * b) ** 3;
+  const S = (l - 0.0894841775 * a - 1.2914855480 * b) ** 3;
+  return [
+     4.0767416621 * L - 3.3077115913 * M + 0.2309699292 * S,
+    -1.2684380046 * L + 2.6097574011 * M - 0.3413193965 * S,
+    -0.0041960863 * L - 0.7034186147 * M + 1.7076147010 * S,
+  ];
+}
+
+const inGamut = lin => lin.every(x => x >= -1e-4 && x <= 1 + 1e-4);
+
+// Not every L/C/H combination exists on screen. Keep L and H, and lower the
+// chroma to the most colorful displayable value (binary search).
+function oklchToHex(lch) {
+  let lin = oklchToLinear(lch);
+  if (!inGamut(lin)) {
+    let lo = 0, hi = lch.c;
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2;
+      if (inGamut(oklchToLinear({ ...lch, c: mid }))) lo = mid; else hi = mid;
+    }
+    lin = oklchToLinear({ ...lch, c: lo });
+  }
+  return rgbToHex(lin.map(x => toGamma(Math.min(1, Math.max(0, x)))));
+}
+
+// ---------- Misc helpers ----------
+
+// "auto" resolves to light when the background is brighter than the text.
+const resolvedVariant = () => state.variant !== "auto" ? state.variant
+  : luminance(state.colors.base00) > luminance(state.colors.base05) ? "light" : "dark";
+
+const q = s => '"' + String(s).replace(/\\/g, "\\\\").replace(/"/g, '\\"') + '"';
+
+function toYaml(format) {
+  if (format === "old") {
+    return [`scheme: ${q(state.name)}`, `author: ${q(state.author)}`,
+      ...KEYS.map(k => `${k}: "${state.colors[k]}"`)].join("\n") + "\n";
+  }
+  return [`system: "base16"`, `name: ${q(state.name)}`, `author: ${q(state.author)}`,
+    `variant: "${resolvedVariant()}"`, `palette:`,
+    ...KEYS.map(k => `  ${k}: "#${state.colors[k]}"`)].join("\n") + "\n";
+}
+
+// Minimal line-based parser: understands both the tinted-theming format
+// (name/variant/palette) and the old flat one (scheme/baseXX without "#").
+function parseYaml(text) {
+  const colors = {}, meta = {};
+  for (const line of text.split(/\r?\n/)) {
+    const c = line.match(/^\s*base0([0-9a-f])\s*:\s*["']?#?([0-9a-f]{6}|[0-9a-f]{3})\b["']?/i);
+    if (c) { colors["base0" + c[1].toUpperCase()] = normHex(c[2]); continue; }
+    const m = line.match(/^\s*(scheme|name|author|variant)\s*:\s*["']?(.*?)["']?\s*$/i);
+    if (m && !(m[1].toLowerCase() in meta)) meta[m[1].toLowerCase()] = m[2].replace(/\\"/g, '"');
+  }
+  const missing = KEYS.filter(k => !colors[k]);
+  if (missing.length) throw new Error("Missing colors: " + missing.join(", "));
+  const variant = ["dark", "light"].includes(meta.variant) ? meta.variant : "auto";
+  return { name: meta.name || meta.scheme || "Imported", author: meta.author || "", variant, colors };
+}
+
+let msgTimer;
+function say(text, isError = false) {
+  const el = document.getElementById("msg");
+  el.textContent = text;
+  el.classList.toggle("err", isError);
+  clearTimeout(msgTimer);
+  msgTimer = setTimeout(() => (el.textContent = ""), 5000);
+}
+
+const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+const stripCells = colors => KEYS.map(k => `<span style="background:#${colors[k]}"></span>`).join("");
+const miniStrip = colors => `<span class="mini">${stripCells(colors)}</span>`;
+
+// Segmented button groups stand in for <select>: identical in Firefox and Chromium.
+function segGroup(id, attr, onPick) {
+  const el = document.getElementById(id);
+  el.addEventListener("click", e => {
+    const b = e.target.closest("button");
+    if (b) onPick(b.dataset[attr]);
+  });
+  return el;
+}
+function markSeg(el, attr, value) {
+  for (const b of el.querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset[attr] === value));
+}
+
+// ---------- Interface theme ----------
+
+const uiSeg = segGroup("ui", "ui", v => setUi(v));
+function setUi(value) {
+  document.documentElement.dataset.ui = value;
+  markSeg(uiSeg, "ui", value);
+  store.set("b16-ui", value);
+}
+setUi(store.get("b16-ui", "black"));
+
+const variantSeg = segGroup("variant", "v", v => { state.variant = v; render(); });
+
+let fmt = store.get("b16-fmt", "new");
+const formatSeg = segGroup("format", "f", v => { fmt = v; store.set("b16-fmt", v); render(); });
+
+// ---------- Palette rows ----------
+
+const rowRefs = {};
+
+function buildRows() {
+  KEYS.forEach((key, i) => {
+    const row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = `
+      <button type="button" class="swatch" aria-label="Pick color ${key}"></button>
+      <span class="key mono">${key}</span>
+      <input class="hex" type="text" maxlength="7" spellcheck="false" aria-label="${key}, hex">
+      <span class="lum" title="Perceived lightness (OKLCH L)"></span>
+      <span class="role">${esc(ROLES[key])}</span>`;
+    document.getElementById(i < 8 ? "rows-mono" : "rows-accent").appendChild(row);
+
+    const swatch = row.querySelector(".swatch");
+    const text = row.querySelector("input.hex");
+    rowRefs[key] = { swatch, text, lum: row.querySelector(".lum"), role: row.querySelector(".role") };
+
+    swatch.addEventListener("click", () => openPicker(key, swatch));
+    text.addEventListener("input", () => {
+      const hex = normHex(text.value);
+      text.classList.toggle("bad", !hex);
+      if (hex) setColor(key, hex, text);
+    });
+    // Leaving the field restores the valid value if the input was garbage.
+    text.addEventListener("blur", () => { text.classList.remove("bad"); render(); });
+  });
+}
+
+function setColor(key, value, source) {
+  state.colors[key] = normHex(value);
+  render(source);
+}
+
+// ---------- Render ----------
+
+function render(skipInput) {
+  const root = document.documentElement.style;
+  const variant = resolvedVariant();
+  for (const k of KEYS) {
+    const hex = "#" + state.colors[k];
+    root.setProperty("--b" + k.slice(4), hex);
+    const r = rowRefs[k];
+    r.swatch.style.background = hex;
+    r.lum.textContent = "L" + Math.round(hexToOklch(state.colors[k]).l * 100);
+    if (r.text !== skipInput) r.text.value = hex;
+
+    // Role label follows the resolved variant; show the original wording on hover.
+    const role = roleFor(k, variant);
+    r.role.textContent = role;
+    r.role.title = role === ROLES[k] ? "" : "Guidelines wording (dark): " + ROLES[k];
+  }
+
+  document.getElementById("strip").innerHTML =
+    KEYS.map(k => `<span style="background:var(--b${k.slice(4)})"></span>`).join("");
+
+  const nameEl = document.getElementById("name");
+  const authorEl = document.getElementById("author");
+  if (document.activeElement !== nameEl) nameEl.value = state.name;
+  if (document.activeElement !== authorEl) authorEl.value = state.author;
+  markSeg(variantSeg, "v", state.variant);
+  variantSeg.querySelector('[data-v="auto"]').textContent = `auto (${variant})`;
+  markSeg(formatSeg, "f", fmt);
+
+  document.getElementById("yaml").textContent = toYaml(fmt);
+  document.title = `${state.name || "base16"} — palette editor`;
+  store.set("b16-current", state);
+  renderCurrent();
+}
+
+// The pinned card at the top of Presets: always mirrors `state` live, so
+// the theme being built is itself one of the choices on the page, not
+// just a hidden draft. "dirty" (unsaved) vs "saved" is judged against
+// whatever is stored in the library under the same name.
+function renderCurrent() {
+  document.getElementById("curName").textContent = "▸ " + (state.name || "untitled");
+  document.getElementById("curStrip").innerHTML = stripCells(state.colors);
+  const dirty = isDirty(), builtin = isBuiltin();
+  const st = document.getElementById("curStatus");
+  st.textContent = "current · " + (builtin ? "built-in" : dirty ? "unsaved" : "saved");
+  st.classList.toggle("dirty", dirty && !builtin);
+  document.getElementById("curSave").disabled = !dirty;
+}
+
+function renderPresets() {
+  const items = [
+    ...PRESETS.map(p => ({ ...p, builtin: true })),
+    ...library.map((p, i) => ({ ...p, index: i })),
+  ];
+  const lib = document.getElementById("lib");
+  lib.innerHTML = "";
+  for (const item of items) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <button class="prow load">${miniStrip(item.colors)}
+        <span>${esc(item.name)}</span>
+        <span class="meta">${item.builtin ? "built-in" : "saved"}</span>
+      </button>
+      ${item.builtin ? "" : `<button class="del" aria-label="Delete ${esc(item.name)}">delete</button>`}`;
+    li.querySelector(".load").addEventListener("click", () => {
+      state = { name: item.name, author: item.author || "", variant: item.variant || "auto", colors: { ...item.colors } };
+      render();
+      say(`Loaded “${item.name}”`);
+    });
+    const del = li.querySelector(".del");
+    if (del) del.addEventListener("click", () => {
+      library.splice(item.index, 1);
+      store.set("b16-library", library);
+      renderPresets();
+      renderCurrent(); // the deleted entry may have been the current draft's own save
+      say(`Deleted “${item.name}”`);
+    });
+    lib.appendChild(li);
+  }
+}
+
+// ---------- Actions ----------
+
+function applyText(text) {
+  try {
+    state = parseYaml(text);
+    render();
+    say(`Applied “${state.name}”`);
+  } catch (e) {
+    say(e.message, true);
+  }
+}
+
+document.getElementById("name").addEventListener("input", e => { state.name = e.target.value; render(); });
+document.getElementById("author").addEventListener("input", e => { state.author = e.target.value; render(); });
+
+document.getElementById("apply").addEventListener("click", () =>
+  applyText(document.getElementById("paste").value));
+
+document.getElementById("open").addEventListener("click", () => document.getElementById("file").click());
+document.getElementById("file").addEventListener("change", async e => {
+  const f = e.target.files[0];
+  if (f) applyText(await f.text());
+  e.target.value = "";
+});
+
+document.getElementById("copy").addEventListener("click", async () => {
+  const text = document.getElementById("yaml").textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    // Fallback for browsers that block the async clipboard on file://
+    const ta = Object.assign(document.createElement("textarea"), { value: text });
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
+  }
+  say("YAML copied");
+});
+
+document.getElementById("download").addEventListener("click", () => {
+  const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "scheme";
+  const blob = new Blob([toYaml(fmt)], { type: "text/yaml" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: slug + ".yaml" });
+  a.click();
+  URL.revokeObjectURL(a.href);
+  say(`Downloaded ${slug}.yaml`);
+});
+
+// Saving under an existing name replaces that entry.
+function saveCurrent() {
+  const entry = { name: state.name || "Untitled", author: state.author, variant: state.variant, colors: { ...state.colors } };
+  const i = library.findIndex(p => p.name === entry.name);
+  if (i >= 0) library[i] = entry; else library.push(entry);
+  store.set("b16-library", library);
+  renderPresets();
+  renderCurrent();
+  say(`Saved “${entry.name}”`);
+}
+document.getElementById("curSave").addEventListener("click", saveCurrent);
+
+// ---------- Color picker ----------
+// Two synchronized views of the same color: the HSV square/bar (quick
+// picking) and OKLCH sliders (precise lightness / chroma / hue control).
+
+const $ = id => document.getElementById(id);
+const P = {
+  el: $("picker"), sv: $("sv"), hue: $("hue"), svKnob: $("svKnob"), hueKnob: $("hueKnob"),
+  cmp: $("pCompare"), hex: $("pHex"), keyLabel: $("pKey"),
+  rL: $("rL"), rC: $("rC"), rH: $("rH"), oL: $("oL"), oC: $("oC"), oH: $("oH"),
+  key: null, orig: null, anchor: null,
+  pending: null,   // your edited color
+  showOrig: false, // Before/After state: true while the original is shown
+  saved: null,     // slider state of your edit, restored when going back to After
+  hsv: null, // current HSV
+  lch: null, // requested OKLCH (C may exceed what the screen can show)
+};
+
+const clamp = (x, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x));
+const C_MAX = 0.33;
+
+// Grays have no hue: keep the previous one so sliders don't jump to red.
+function syncHsv(hex) {
+  const hsv = hexToHsv(hex);
+  if (P.hsv && hsv.s < 0.001) hsv.h = P.hsv.h;
+  P.hsv = hsv;
+}
+function syncLch(hex) {
+  const lch = hexToOklch(hex);
+  if (P.lch && lch.c < 0.002) lch.h = P.lch.h;
+  P.lch = lch;
+}
+
+// Any edit becomes "your" color and switches the view back to After.
+function commit(hex) {
+  P.pending = hex;
+  P.showOrig = false;
+  setColor(P.key, hex);
+  pickerDraw();
+}
+
+const shown = () => (P.showOrig ? P.orig : P.pending);
+
+// Before/After: flip between the original and your edit. The sliders follow
+// what is shown; your exact slider state is kept and restored on the way back.
+function toggleCompare() {
+  if (!P.key || P.pending === P.orig) return;
+  if (!P.showOrig) {
+    P.saved = { hsv: { ...P.hsv }, lch: { ...P.lch } };
+    P.showOrig = true;
+    syncHsv(P.orig);
+    syncLch(P.orig);
+  } else {
+    P.showOrig = false;
+    P.hsv = P.saved.hsv;
+    P.lch = P.saved.lch;
+  }
+  setColor(P.key, shown());
+  pickerDraw();
+}
+
+// Gradient preview on a slider track: what the color would become at each point.
+function track(make) {
+  const stops = [];
+  for (let i = 0; i <= 16; i++) stops.push("#" + oklchToHex(make(i / 16)));
+  return `linear-gradient(to right, ${stops.join(", ")})`;
+}
+
+function pickerDraw() {
+  const { h, s, v } = P.hsv;
+  const { l, c, h: lh } = P.lch;
+  const hex = shown();
+
+  P.sv.style.background =
+    `linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, hsl(${h}, 100%, 50%))`;
+  P.svKnob.style.left = s * 100 + "%";
+  P.svKnob.style.top = (1 - v) * 100 + "%";
+  P.hueKnob.style.top = (h / 360) * 100 + "%";
+
+  P.rL.value = l * 100;
+  P.rC.value = c;
+  P.rH.value = lh;
+  P.rL.style.background = track(t => ({ l: t, c, h: lh }));
+  P.rC.style.background = track(t => ({ l, c: t * C_MAX, h: lh }));
+  P.rH.style.background = track(t => ({ l, c, h: t * 360 }));
+
+  // Show the chroma actually used; mark when the requested one isn't displayable.
+  const realC = hexToOklch(hex).c;
+  P.oL.textContent = (l * 100).toFixed(1);
+  P.oC.textContent = realC.toFixed(3) + (c - realC > 0.003 ? " (clamped)" : "");
+  P.oH.textContent = lh.toFixed(0) + "°";
+
+  // Nothing to compare until the color has actually changed.
+  P.cmp.disabled = P.pending === P.orig;
+  P.cmp.setAttribute("aria-pressed", String(P.showOrig));
+  if (document.activeElement !== P.hex) P.hex.value = "#" + hex;
+}
+
+function openPicker(key, anchor) {
+  if (P.key) closePicker(true);
+  P.key = key;
+  P.anchor = anchor;
+  P.orig = P.pending = state.colors[key];
+  P.showOrig = false;
+  P.keyLabel.textContent = key;
+  P.hsv = P.lch = null;
+  syncHsv(P.orig); // start from the color being edited
+  syncLch(P.orig);
+  P.el.hidden = false;
+  pickerDraw();
+
+  // Place under the swatch, flip above / shift left if it would overflow.
+  const a = anchor.getBoundingClientRect(), w = P.el.offsetWidth, h = P.el.offsetHeight;
+  P.el.style.left = clamp(a.left, 8, innerWidth - w - 8) + "px";
+  P.el.style.top = (a.bottom + 6 + h > innerHeight ? Math.max(8, a.top - h - 6) : a.bottom + 6) + "px";
+  P.sv.focus();
+}
+
+// keep=false restores the color the picker opened with.
+function closePicker(keep) {
+  if (!P.key) return;
+  setColor(P.key, keep ? shown() : P.orig);
+  P.el.hidden = true;
+  const anchor = P.anchor;
+  P.key = null;
+  anchor.focus();
+}
+
+// HSV changed -> derive hex, then OKLCH from it.
+function fromHsv() {
+  const hex = hsvToHex(P.hsv);
+  syncLch(hex);
+  commit(hex);
+}
+
+// OKLCH changed -> derive hex (gamut-limited), then HSV from it.
+// P.lch keeps the requested chroma, so dragging L back restores it.
+function fromLch() {
+  const hex = oklchToHex(P.lch);
+  syncHsv(hex);
+  commit(hex);
+}
+
+// Drag handling shared by the square and the hue bar.
+function draggable(area, onMove) {
+  area.addEventListener("pointerdown", e => { area.setPointerCapture(e.pointerId); onMove(e); });
+  area.addEventListener("pointermove", e => { if (area.hasPointerCapture(e.pointerId)) onMove(e); });
+}
+
+draggable(P.sv, e => {
+  const r = P.sv.getBoundingClientRect();
+  P.hsv.s = clamp((e.clientX - r.left) / r.width);
+  P.hsv.v = 1 - clamp((e.clientY - r.top) / r.height);
+  fromHsv();
+});
+draggable(P.hue, e => {
+  const r = P.hue.getBoundingClientRect();
+  P.hsv.h = clamp((e.clientY - r.top) / r.height) * 359.9;
+  fromHsv();
+});
+
+// Arrow keys on the square/bar; Shift makes steps 5x larger.
+P.sv.addEventListener("keydown", e => {
+  const step = e.shiftKey ? 0.05 : 0.01;
+  const d = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] }[e.key];
+  if (!d) return;
+  e.preventDefault();
+  P.hsv.s = clamp(P.hsv.s + d[0]);
+  P.hsv.v = clamp(P.hsv.v + d[1]);
+  fromHsv();
+});
+P.hue.addEventListener("keydown", e => {
+  const d = { ArrowUp: -1, ArrowDown: 1 }[e.key];
+  if (!d) return;
+  e.preventDefault();
+  P.hsv.h = (P.hsv.h + d * (e.shiftKey ? 10 : 2) + 360) % 360;
+  fromHsv();
+});
+
+P.rL.addEventListener("input", () => { P.lch.l = +P.rL.value / 100; fromLch(); });
+P.rC.addEventListener("input", () => { P.lch.c = +P.rC.value; fromLch(); });
+P.rH.addEventListener("input", () => { P.lch.h = +P.rH.value; fromLch(); });
+
+P.hex.addEventListener("input", () => {
+  const hex = normHex(P.hex.value);
+  P.hex.classList.toggle("bad", !hex);
+  if (!hex) return;
+  syncHsv(hex);
+  syncLch(hex);
+  commit(hex);
+});
+P.hex.addEventListener("keydown", e => { if (e.key === "Enter") closePicker(true); });
+
+P.cmp.addEventListener("click", toggleCompare);
+
+// "\" toggles Before/After too (as in Lightroom), unless typing in the hex field.
+document.addEventListener("keydown", e => {
+  if (e.key === "\\" && P.key && e.target !== P.hex) { e.preventDefault(); toggleCompare(); }
+});
+
+$("pOk").addEventListener("click", () => closePicker(true));
+$("pCancel").addEventListener("click", () => closePicker(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape") closePicker(false); });
+
+// Clicking anywhere outside keeps the chosen color and closes the picker.
+document.addEventListener("pointerdown", e => {
+  if (P.key && !P.el.contains(e.target) && !e.target.closest(".swatch")) closePicker(true);
+});
+
+buildRows();
+render();
+renderPresets();
+</script>
+</body>
+</html>

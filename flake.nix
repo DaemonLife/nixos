@@ -46,13 +46,13 @@
     # mangowm,
     ...
   }: let
-    user = "user";
+    username = "user";
     system = "x86_64-linux";
 
     # Configuration make function
     mkNixosConfig = device: {
       inherit system;
-      specialArgs.username = user;
+      specialArgs.username = username;
       modules = builtins.concatLists [
         [
           ./configuration.nix # main config
@@ -60,12 +60,16 @@
           # mangowm.nixosModules.mango
           stylix.nixosModules.stylix
           home-manager.nixosModules.home-manager
+          {networking.hostName = device;}
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs.username = user;
-              users.${user}.imports = [
+              extraSpecialArgs = {
+                username = username;
+                device = device;
+              };
+              users.${username}.imports = [
                 ./home.nix # main home config
                 ./devices/${device}/home.nix # device home config
               ];

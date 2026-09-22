@@ -2,14 +2,22 @@
   pkgs,
   config,
   lib,
+  username,
   ...
 }: let
+  # bc full path is not allowed
   image_bg = ../images/current_bg/bg.png;
+  # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
+  # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+  # base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-savanna.yaml";
+  theme = ./themes/bosque-my-variant.yaml;
+  # theme = ./themes/cherrymoon.yaml;
 in {
   stylix = {
     enable = true;
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
+    # themes: https://tinted-theming.github.io/tinted-gallery/
+
+    base16Scheme = theme;
 
     image = image_bg;
 

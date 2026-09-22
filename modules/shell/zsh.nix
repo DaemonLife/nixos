@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  device,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -69,9 +73,9 @@
 
     shellAliases = {
       # --upgrade --offline
-      "oss" = ''nix flake update --flake $HOME/nix/. && sudo nixos-rebuild switch --flake $HOME/nix/.\#lenovo -v'';
-      "osb" = ''nix flake update --flake $HOME/nix/. && sudo nixos-rebuild boot --flake $HOME/nix/.\#lenovo -v'';
-      "ost" = ''sudo nixos-rebuild test --flake $HOME/nix/.\#lenovo -v'';
+      "oss" = ''cd $HOME/nix && git add -A && cd - && nix flake update --flake $HOME/nix/. && sudo nixos-rebuild switch --flake $HOME/nix/.\#${device} -v'';
+      "osb" = ''cd $HOME/nix && git add -A && cd - && nix flake update --flake $HOME/nix/. && sudo nixos-rebuild boot --flake $HOME/nix/.\#${device} -v'';
+      "ost" = ''cd $HOME/nix && git add -A && cd - && sudo nixos-rebuild test --flake $HOME/nix/.\#${device} -v'';
       "osc" = ''sudo nix-collect-garbage --delete-older-than 3d'';
 
       # --- Other ---
