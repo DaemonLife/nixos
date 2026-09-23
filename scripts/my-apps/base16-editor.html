@@ -51,6 +51,7 @@ input, textarea, button, pre { font: inherit; color: inherit; }
 h1, h2 { margin: 0; font-weight: 700; }
 h1 { font-size: 30px; line-height: 1.2; }
 h2 { font-size: 20px; line-height: 1.3; margin-bottom: 16px; }
+h1::before { content: "# "; color: var(--muted); font-weight: 400; }
 h2::before { content: "## "; color: var(--muted); font-weight: 400; }
 .sub { font-size: 13px; color: var(--muted); margin: 0 0 8px; font-weight: 400; }
 
@@ -132,12 +133,12 @@ input.hex.bad { border-color: var(--err); color: var(--err); }
 .statusline span { padding: 0 1ch; }
 .statusline .end { margin-left: auto; }
 .cmdline { padding: 0 1ch; white-space: pre; }
-.modemsg { color: var(--b0B); font-weight: 700; }
+.modemsg { color: var(--b0B); }
 .search { background: var(--b0A); color: var(--b01); }
 .visual { background: var(--b02); }
 .cursor { background: var(--b05); color: var(--b00); }
 
-.c { color: var(--b03); font-style: italic; }
+.c { color: var(--b03); }
 .d { color: var(--b0F); }
 .k { color: var(--b0E); }
 .f { color: var(--b0D); }
@@ -150,11 +151,10 @@ input.hex.bad { border-color: var(--err); color: var(--err); }
 .term { padding: 8px 12px; white-space: pre; }
 .a1 { color: var(--b08); } .a2 { color: var(--b0B); } .a3 { color: var(--b0A); }
 .a4 { color: var(--b0D); } .a5 { color: var(--b0E); } .a6 { color: var(--b0C); }
-.a15 { color: var(--b07); }
+.meta-git { font-weight: 700; }
 .bold { font-weight: 700; }
-.ansi { display: inline-grid; grid-template-columns: repeat(8, 4ch); vertical-align: top; }
-.ansi span { text-align: center; color: var(--b00); }
-.ansi span:first-child { color: var(--b05); }
+.pal { display: inline-grid; grid-template-columns: repeat(8, 4ch); vertical-align: top; }
+.pal span { text-align: center; }
 
 /* ---------- Bottom: three equal boxes, actions underneath ---------- */
 .bottom {
@@ -283,25 +283,25 @@ footer { padding: 0 0 40px; color: var(--muted); font-size: 12px; }
 <div class="vl"><span class="sign"> </span><span class="ln">1</span><span><span class="k">import</span> re</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">2</span><span><span class="k">from</span> dataclasses <span class="k">import</span> dataclass</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">3</span><span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">4</span><span><span class="search">HEX</span> = re.<span class="f">compile</span>(<span class="s">r&quot;^#?(</span><span class="e">[0-9a-f]{6}</span><span class="s">)$&quot;</span>, re.<span class="n">I</span>)</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">4</span><span><span class="search">HEX</span> = re.compile(<span class="s">r&quot;^#?([0-9a-f]{6})$&quot;</span>, re.I)</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">5</span><span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">6</span><span><span class="t">@</span><span class="f">dataclass</span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">7</span><span><span class="k">class</span> <span class="t">Scheme</span>:</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">6</span><span><span class="k">@</span><span class="f">dataclass</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">7</span><span><span class="k">class</span> <span class="f">Scheme</span>:</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">8</span><span>    <span class="s">&quot;&quot;&quot;A base16 color scheme.&quot;&quot;&quot;</span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">9</span><span>    <span class="v">name</span>: <span class="e">str</span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">10</span><span>    <span class="v">colors</span>: <span class="e">dict</span>[<span class="e">str</span>, <span class="e">str</span>]</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">9</span><span>    name: <span class="f">str</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">10</span><span>    colors: <span class="f">dict</span>[<span class="f">str</span>, <span class="f">str</span>]</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">11</span><span></span></div>
-<div class="vl"><span class="sign chg">~</span><span class="ln">12</span><span>    <span class="k">def</span> <span class="f">load</span>(<span class="v">self</span>, <span class="v">path</span>: <span class="e">str</span>, <span class="v">strict</span>: <span class="e">bool</span> = <span class="n">True</span>) -&gt; <span class="s">&quot;Scheme&quot;</span>:</span></div>
+<div class="vl"><span class="sign chg">~</span><span class="ln">12</span><span>    <span class="k">def</span> <span class="f">load</span>(self, path: <span class="f">str</span>, strict: <span class="f">bool</span> = <span class="k">True</span>) -&gt; <span class="s">&quot;Scheme&quot;</span>:</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">13</span><span>        <span class="c"># parse &quot;key: value&quot; lines</span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">14</span><span>        <span class="k">for</span> n, line <span class="k">in</span> <span class="e">enumerate</span>(<span class="e">open</span>(<span class="v">path</span>), <span class="n">1</span>):</span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">15</span><span>            key, _, value = line.<span class="f">partition</span>(<span class="s">&quot;:&quot;</span>)</span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">16</span><span>            <span class="k">if not</span> <span class="search">HEX</span>.<span class="f">match</span>(value.<span class="f">strip</span>()):</span></div>
-<div class="vl"><span class="sign add">+</span><span class="ln">17</span><span>                <span class="k">raise</span> <span class="e">ValueError</span>(<span class="s">f&quot;line {n}: bad color</span><span class="e">\n</span><span class="s">&quot;</span>)</span></div>
-<div class="vl cur"><span class="sign add">+</span><span class="ln">18</span><span>            <span class="v">self</span>.colors[key] = <span class="visual">value.<span class="f">strip</span>().<span class="f">lower</span>(</span><span class="cursor">)</span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">19</span><span>        <span class="k">return</span> <span class="v">self</span> <span class="k">if</span> <span class="v">strict</span> <span class="k">else</span> <span class="n">None</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">14</span><span>        <span class="k">for</span> n, line <span class="k">in</span> <span class="f">enumerate</span>(<span class="f">open</span>(path), <span class="n">1</span>):</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">15</span><span>            key, _, value = line.partition(<span class="s">&quot;:&quot;</span>)</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">16</span><span>            <span class="k">if</span> <span class="k">not</span> <span class="search">HEX</span>.match(value.strip()):</span></div>
+<div class="vl"><span class="sign add">+</span><span class="ln">17</span><span>                <span class="v">raise</span> <span class="k">ValueError</span>(<span class="s">f&quot;line {n}: bad color</span><span class="e">\n</span><span class="s">&quot;</span>)</span></div>
+<div class="vl cur"><span class="sign add">+</span><span class="ln">18</span><span>            self.colors[key] = <span class="visual">value.strip().lower(</span><span class="cursor">)</span></span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">19</span><span>        <span class="k">return</span> self <span class="k">if</span> strict <span class="k">else</span> <span class="k">None</span></span></div>
 <div class="vl"><span class="sign del">_</span><span class="ln">20</span><span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">21</span><span>    <span class="d">@deprecated(&quot;use load() instead&quot;)</span></span></div>
-<div class="vl"><span class="sign"> </span><span class="ln">22</span><span>    <span class="k">def</span> <span class="f">read</span>(<span class="v">self</span>, <span class="v">path</span>):</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">21</span><span>    <span class="k">@</span><span class="f">deprecated</span>(<span class="s">&quot;use load() instead&quot;</span>)</span></div>
+<div class="vl"><span class="sign"> </span><span class="ln">22</span><span>    <span class="k">def</span> <span class="f">read</span>(self, path):</span></div>
 <div class="vl"><span class="sign"> </span><span class="ln">23</span><span class="fold">+--  2 lines: return self.load(path)·························</span></div>
 <div class="vl"><span class="tilde">~</span></div>
 <div class="vl"><span class="tilde">~</span></div>
@@ -310,32 +310,25 @@ footer { padding: 0 0 40px; color: var(--muted); font-size: 12px; }
 <div class="cmdline"><span class="modemsg">-- VISUAL --</span></div>
 </div>
 <div class="sub">bash</div>
-<div class="pane"><div class="term scroll"><span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ ls -F
-<span class="a2 bold">build.sh*</span>  <span class="a5 bold">cover.png</span>  gruvbox.yaml  <span class="a6 bold">latest@</span>  <span class="a4 bold">music/</span>  <span class="a1 bold">nord.tar.gz</span>  <span class="a6">track.flac</span>
-<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ grep -n --color base0D *.yaml
-<span class="a5">gruvbox.yaml</span><span class="a6">:</span><span class="a2">17</span><span class="a6">:</span>  <span class="a1 bold">base0D</span>: "#83a598"
-<span class="a5">nord.yaml</span><span class="a6">:</span><span class="a2">17</span><span class="a6">:</span>  <span class="a1 bold">base0D</span>: "#81a1c1"
-<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ git diff
-<span class="a15 bold">diff --git a/nord.yaml b/nord.yaml</span>
-<span class="a15 bold">--- a/nord.yaml</span>
-<span class="a15 bold">+++ b/nord.yaml</span>
-<span class="a6">@@ -9,3 +9,3 @@</span> palette:
-   base07: "#8fbcbb"
-<span class="a1">-  base08: "#bf616a"</span>
-<span class="a2">+  base08: "#d0707a"</span>
-<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ for i in {0..15}; do printf "\e[48;5;${i}m%3d " $i; done
-<span class="ansi"><span style="background:var(--b00)">0</span><span style="background:var(--b08)">1</span><span style="background:var(--b0B)">2</span><span style="background:var(--b0A)">3</span><span style="background:var(--b0D)">4</span><span style="background:var(--b0E)">5</span><span style="background:var(--b0C)">6</span><span style="background:var(--b05)">7</span></span>
-<span class="ansi"><span style="background:var(--b03)">8</span><span style="background:var(--b08)">9</span><span style="background:var(--b0B)">10</span><span style="background:var(--b0A)">11</span><span style="background:var(--b0D)">12</span><span style="background:var(--b0E)">13</span><span style="background:var(--b0C)">14</span><span style="background:var(--b07)">15</span></span>
-<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ sl
-bash: sl: command not found
-<span class="a2 bold">user@nixos</span> <span class="a4 bold">~/themes</span> <span class="a3">(main)</span> $ <span class="cursor"> </span></div></div>
+<div class="pane"><div class="term scroll" id="term"></div></div>
 
   </section>
 </main>
 
 <div class="bottom">
   <section>
-    <h2>yaml</h2>
+    <h2>import yaml</h2>
+    <textarea class="box" id="paste" placeholder="paste the YAML of any base16 scheme" spellcheck="false"></textarea>
+    <div class="actions">
+      <button id="apply" class="primary">apply</button>
+      <button id="open">open file</button>
+      <input type="file" id="file" accept=".yaml,.yml,text/yaml" hidden>
+      <span class="msg" id="msg" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>export yaml</h2>
     <pre class="box" id="yaml"></pre>
     <div class="actions">
       <div class="seg" id="format" role="group" aria-label="YAML format">
@@ -343,17 +336,6 @@ bash: sl: command not found
       </div>
       <button id="copy">copy</button>
       <button id="download" class="primary">download</button>
-    </div>
-  </section>
-
-  <section>
-    <h2>import</h2>
-    <textarea class="box" id="paste" placeholder="paste the YAML of any base16 scheme" spellcheck="false"></textarea>
-    <div class="actions">
-      <button id="apply" class="primary">apply</button>
-      <button id="open">open file</button>
-      <input type="file" id="file" accept=".yaml,.yml,text/yaml" hidden>
-      <span class="msg" id="msg" aria-live="polite"></span>
     </div>
   </section>
 
@@ -670,9 +652,87 @@ function buildRows() {
   });
 }
 
+// The most recent edit ({ key, from, to }), shown as `git diff` in the
+// terminal preview. Repeated edits of one slot keep the first "from";
+// editing it back to where it started clears the change.
+let lastChange = null;
+
 function setColor(key, value, source) {
-  state.colors[key] = normHex(value);
+  const hex = normHex(value), prev = state.colors[key];
+  if (hex !== prev) {
+    if (lastChange && lastChange.key === key) lastChange.to = hex;
+    else lastChange = { key, from: prev, to: hex };
+    if (lastChange.from === lastChange.to) lastChange = null;
+  }
+  state.colors[key] = hex;
   render(source);
+}
+
+// ---------- Terminal preview ----------
+
+const slugOf = name => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "scheme";
+const sp = (cls, text) => `<span class="${cls}">${text}</span>`;
+
+// Everything here is derived from the palette being edited: file names,
+// the grep hit, the diff of your last change and the palette dump.
+function renderTerm() {
+  const file = slugOf(state.name) + ".yaml";
+  const prompt = `${sp("a2 bold", "user@nixos")} ${sp("a4 bold", "~/themes")} ${sp("a3", "(main)")} $ `;
+  const lineOf = k => 6 + KEYS.indexOf(k); // line in the exported tinted-theming YAML
+  const kv = (k, hex) => `  ${k}: "#${hex}"`;
+  let out = "";
+
+  // ls -F: scheme files plus a few typical neighbours, colored by type.
+  const yamls = [...new Set([file, "gruvbox.yaml", "nord.yaml"])].sort();
+  out += prompt + "ls -F\n" + [
+    ...yamls.map(esc),
+    sp("a6 bold", "current.yaml@"),
+    sp("a2 bold", "preview.sh*"),
+    sp("a4 bold", "templates/"),
+    sp("a5 bold", "wallpaper.png"),
+    sp("a1 bold", "backup.tar.gz"),
+  ].join("  ") + "\n";
+
+  // grep: the real base0D of your scheme next to Nord's.
+  const hits = [[file, state.colors.base0D]];
+  if (file !== "nord.yaml") hits.push(["nord.yaml", PRESETS.find(p => p.name === "Nord").colors.base0D]);
+  out += prompt + `grep -n base0D ${hits.map(h => esc(h[0])).join(" ")}\n`;
+  for (const [f, hex] of hits) {
+    const name = hits.length > 1 ? `${sp("a5", esc(f))}${sp("a6", ":")}` : "";
+    out += `${name}${sp("a2", lineOf("base0D"))}${sp("a6", ":")}  ${sp("a1 bold", "base0D")}: "#${hex}"\n`;
+  }
+
+  // git: your last edit as a diff, or a clean tree if nothing changed yet.
+  if (lastChange) {
+    const { key, from, to } = lastChange;
+    const i = KEYS.indexOf(key);
+    const start = i > 0 ? lineOf(key) - 1 : lineOf(key);
+    const count = (i > 0) + 1 + (i < 15);
+    out += prompt + `git diff ${esc(file)}\n`;
+    // git's "meta" color is plain bold: the terminal's default fg (base05).
+    const idx = (from + to).replace(/[^0-9a-f]/g, "").padEnd(14, "0");
+    out += sp("meta-git", `diff --git a/${esc(file)} b/${esc(file)}`) + "\n";
+    out += sp("meta-git", `index ${idx.slice(0, 7)}..${idx.slice(7, 14)} 100644`) + "\n";
+    out += sp("meta-git", `--- a/${esc(file)}`) + "\n" + sp("meta-git", `+++ b/${esc(file)}`) + "\n";
+    out += sp("a6", `@@ -${start},${count} +${start},${count} @@`) + " palette:\n";
+    if (i > 0) out += " " + kv(KEYS[i - 1], state.colors[KEYS[i - 1]]) + "\n";
+    out += sp("a1", "-" + kv(key, from)) + "\n" + sp("a2", "+" + kv(key, to)) + "\n";
+    if (i < 15) out += " " + kv(KEYS[i + 1], state.colors[KEYS[i + 1]]) + "\n";
+  } else {
+    out += prompt + "git status\nOn branch main\nnothing to commit, working tree clean\n";
+  }
+
+  // The palette itself, in base00..base0F order, labelled by slot.
+  out += prompt + `./preview.sh ${esc(file)}\n`;
+  for (const row of [KEYS.slice(0, 8), KEYS.slice(8)]) {
+    out += '<span class="pal">' + row.map(k => {
+      const ink = hexToOklch(state.colors[k]).l > 0.6 ? "#000" : "#fff";
+      return `<span style="background:#${state.colors[k]};color:${ink}">${k.slice(4)}</span>`;
+    }).join("") + "</span>\n";
+  }
+
+  out += prompt + '<span class="cursor"> </span>';
+  document.getElementById("term").innerHTML = out;
 }
 
 // ---------- Render ----------
@@ -709,6 +769,7 @@ function render(skipInput) {
   document.title = `${state.name || "base16"} — palette editor`;
   store.set("b16-current", state);
   renderCurrent();
+  renderTerm();
 }
 
 // The pinned card at the top of Presets: always mirrors `state` live, so
@@ -742,6 +803,7 @@ function renderPresets() {
       ${item.builtin ? "" : `<button class="del" aria-label="Delete ${esc(item.name)}">delete</button>`}`;
     li.querySelector(".load").addEventListener("click", () => {
       state = { name: item.name, author: item.author || "", variant: item.variant || "auto", colors: { ...item.colors } };
+      lastChange = null;
       render();
       say(`Loaded “${item.name}”`);
     });
@@ -762,6 +824,7 @@ function renderPresets() {
 function applyText(text) {
   try {
     state = parseYaml(text);
+    lastChange = null;
     render();
     say(`Applied “${state.name}”`);
   } catch (e) {
@@ -795,7 +858,7 @@ document.getElementById("copy").addEventListener("click", async () => {
 });
 
 document.getElementById("download").addEventListener("click", () => {
-  const slug = state.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "scheme";
+  const slug = slugOf(state.name);
   const blob = new Blob([toYaml(fmt)], { type: "text/yaml" });
   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: slug + ".yaml" });
   a.click();

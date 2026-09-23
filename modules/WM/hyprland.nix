@@ -306,17 +306,17 @@
   # ------------------------
   # wallpaper
   # ------------------------
-  services = {
-    hyprpaper = {
-      enable = true;
-      settings.wallpaper = [
-        {
-          monitor = "";
-          path = "/home/user/Pictures/gowall/bg.png";
-        }
-      ];
-    };
-  };
+  # services = {
+  #   hyprpaper = {
+  #     enable = true;
+  #     settings.wallpaper = [
+  #       {
+  #         monitor = "";
+  #         path = "/home/user/Pictures/gowall/bg.png";
+  #       }
+  #     ];
+  #   };
+  # };
 
   # ------------------------
   # hypridle and lock

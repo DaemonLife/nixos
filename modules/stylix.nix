@@ -6,11 +6,12 @@
   ...
 }: let
   # bc full path is not allowed
-  image_bg = ../images/current_bg/bg.png;
+  image_bg = ../images/current_bg/pathos-2.jpg;
   # base16Scheme = "${pkgs.base16-schemes}/share/themes/horizon-terminal-dark.yaml";
   # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-hard.yaml";
   # base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-savanna.yaml";
-  theme = ./themes/bosque-my-variant.yaml;
+  # theme = ./themes/bosque-my-variant.yaml;
+  theme = ./themes/soma.yaml;
   # theme = ./themes/cherrymoon.yaml;
 in {
   stylix = {
