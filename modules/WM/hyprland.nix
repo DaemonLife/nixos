@@ -57,7 +57,7 @@
           output = "desc:Shenzhen KTC Technology Group H27S17 0x00000001";
           mode = "highres";
           position = "auto-left";
-          scale = 1.33;
+          scale = 1.6;
           bitdepth = 10; # 8 (default) or 10
           vrr = 0; # 0 (default) or 1
           # supports_hdr = 0; # -1, 0 (auto, default), 1

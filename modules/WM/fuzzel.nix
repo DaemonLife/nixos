@@ -19,10 +19,10 @@
       colors = {
         # background = "${base00}ff";
         text = lib.mkForce "${base05}ff";
-        match = lib.mkForce "${base0D}ff";
-        selection = lib.mkForce "${base0D}ff";
-        selection-match = lib.mkForce "${base07}ff";
-        selection-text = lib.mkForce "${base01}ff";
+        match = lib.mkForce "${base08}ff";
+        selection = lib.mkForce "${base02}ff";
+        selection-match = lib.mkForce "${base08}ff";
+        selection-text = lib.mkForce "${base05}ff";
         # border = "${base0D}ff";
       };
 

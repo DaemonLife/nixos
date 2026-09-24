@@ -45,7 +45,7 @@ in {
 
       sizes = {
         applications = 16;
-        terminal = 18;
+        terminal = 16;
         # Window titles, status bars, and other general elements of the desktop.
         desktop = 16;
         popups = config.stylix.fonts.sizes.desktop;
