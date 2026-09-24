@@ -11,4 +11,4 @@ repeat = "Off"
 country = "none"
 
 [plugins]
-allowed_binaries = "trash-put"
+allowed_binaries = "trash-put, mv"

@@ -91,10 +91,10 @@
         general = {
           gaps_in = 0;
           gaps_out = 0;
-          border_size = 4;
+          border_size = 3;
           col = {
-            active_border = lib.mkForce "rgba(${base0D}ff)";
-            inactive_border = lib.mkForce "rgba(${base03}ff)";
+            active_border = lib.mkForce "rgb(${base0D})";
+            inactive_border = lib.mkForce "rgb(${base01})";
           };
           resize_on_border = true;
           # layout = "dwindle";
