@@ -52,12 +52,13 @@
           mode = "2560x1440@119.99Hz";
           position = "auto-left";
           # position = "auto";
-          scale = 1.25;
+          # scale = 1.25;
+          scale = 1;
           bitdepth = 10; # 8 (default) or 10
           # bitdepth = 8; # 8 (default) or 10
           vrr = 0; # off bc bugs
           supports_hdr = -1; # -1, 0 (auto, default), 1
-          # icc = "/home/user/nix/devices/screens/msk_fast.icc";
+          icc = "/home/user/nix/devices/screens/msk_ktc_2026-09-27.icc";
         }
         # msk acer
         {
@@ -161,6 +162,7 @@
         };
 
         # render.icc_vcgt_enabled = true; # vcgt (curves correct) support for icc
+        # render.use_fp16 = 0; # it's for hdr. disable to fix 10bit error with no hdr
       };
 
       env = [
@@ -194,118 +196,120 @@
 
     extraConfig = ''
 
-      -- -------------
-      -- VARIABLES
-      -- -------------
+            -- -------------
+            -- VARIABLES
+            -- -------------
 
-      hl.env("GDK_BACKEND", "wayland,x11,*")
-      hl.env("QT_QPA_PLATFORM", "wayland;xcb")
-      hl.env("SDL_VIDEODRIVER", "wayland,x11")
-      hl.env("CLUTTER_BACKEND", "wayland")
-      hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
-      hl.env("XDG_SESSION_TYPE", "wayland")
-      hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-      hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
-      hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-      hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
+            hl.env("GDK_BACKEND", "wayland,x11,*")
+            hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+            hl.env("SDL_VIDEODRIVER", "wayland,x11")
+            hl.env("CLUTTER_BACKEND", "wayland")
+            hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+            hl.env("XDG_SESSION_TYPE", "wayland")
+            hl.env("XDG_SESSION_DESKTOP", "Hyprland")
+            hl.env("QT_AUTO_SCREEN_SCALE_FACTOR", "1")
+            hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+            hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
 
-      -- -------------
-      -- AUTOSTART
-      -- -------------
+            -- -------------
+            -- AUTOSTART
+            -- -------------
 
-      local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+            local mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
-      hl.on("hyprland.start", function ()
-        hl.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ on")
-        hl.exec_cmd("pkill -9 -f waybar; sleep 2; waybar")
-        hl.exec_cmd("mako")
-        hl.exec_cmd("udiskie -a")
-        hl.exec_cmd("xrandr --output DP-1 --primary")
-      end)
+            hl.on("hyprland.start", function ()
+              hl.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ on")
+              hl.exec_cmd("waybar")
+              hl.exec_cmd("mako")
+              hl.exec_cmd("udiskie -a")
+              hl.exec_cmd("xrandr --output DP-1 --primary")
+            end)
 
-      -- -------------
-      -- PROGRAMS
-      -- -------------
+            -- -------------
+            -- PROGRAMS
+            -- -------------
 
-      hl.bind(mainMod .. " + return", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot'))
-      hl.bind(mainMod .. " + a", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; fuzzel'))
-      hl.bind(mainMod .. " + d", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot --hold zsh -c "n"'))
-      hl.bind(mainMod .. " + t", hl.dsp.exec_cmd('org.telegram.desktop'))
-      -- hl.bind(mainMod .. " + D", hl.dsp.exec_cmd('bash $HOME/nix/scripts/run_darktable.sh'))
+            hl.bind(mainMod .. " + return", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot'))
+            hl.bind(mainMod .. " + a", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; fuzzel'))
+            hl.bind(mainMod .. " + d", hl.dsp.exec_cmd('hyprctl switchxkblayout all 0; foot --hold zsh -c "n"'))
+            hl.bind(mainMod .. " + t", hl.dsp.exec_cmd('org.telegram.desktop'))
+            -- hl.bind(mainMod .. " + D", hl.dsp.exec_cmd('bash $HOME/nix/scripts/run_darktable.sh'))
 
-      -- -------------
-      -- KEYS
-      -- -------------
+            -- -------------
+            -- KEYS
+            -- -------------
 
-      -- Screenshot
-      hl.bind(mainMod .. " + SHIFT + s", hl.dsp.exec_cmd('grim -g "$(slurp -d)" - | wl-copy && wl-paste > $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png'))
-      hl.bind(mainMod .. " + s", hl.dsp.exec_cmd('grim - | wl-copy && wl-paste > $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png'))
+            -- Screenshot
+            hl.bind(mainMod .. " + SHIFT + s", hl.dsp.exec_cmd('grim -g "$(slurp -d)" - | wl-copy && wl-paste > $HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H:%M:%S).png'))
+            hl.bind(mainMod .. " + s", hl.dsp.exec_cmd(
+        'f="$HOME/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png"; grim "$f" && wl-copy < "$f"'
+      ))
 
-      -- Window focus move
-      hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))
-      hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
-      hl.bind(mainMod .. " + k",    hl.dsp.focus({ direction = "up" }))
-      hl.bind(mainMod .. " + j",  hl.dsp.focus({ direction = "down" }))
+            -- Window focus move
+            hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))
+            hl.bind(mainMod .. " + l", hl.dsp.focus({ direction = "right" }))
+            hl.bind(mainMod .. " + k",    hl.dsp.focus({ direction = "up" }))
+            hl.bind(mainMod .. " + j",  hl.dsp.focus({ direction = "down" }))
 
-      -- Window move
-      hl.bind(mainMod .. " + SHIFT + h",  hl.dsp.window.move({ direction = "left" }))
-      hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
-      hl.bind(mainMod .. " + SHIFT + k",    hl.dsp.window.move({ direction = "up" }))
-      hl.bind(mainMod .. " + SHIFT + j",  hl.dsp.window.move({ direction = "down" }))
-      for i = 1, 10 do
-          local key = i % 10 -- 10 maps to key 0
-          hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i}))
-          hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-      end
+            -- Window move
+            hl.bind(mainMod .. " + SHIFT + h",  hl.dsp.window.move({ direction = "left" }))
+            hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.move({ direction = "right" }))
+            hl.bind(mainMod .. " + SHIFT + k",    hl.dsp.window.move({ direction = "up" }))
+            hl.bind(mainMod .. " + SHIFT + j",  hl.dsp.window.move({ direction = "down" }))
+            for i = 1, 10 do
+                local key = i % 10 -- 10 maps to key 0
+                hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i}))
+                hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+            end
 
-      -- Window resize
-      hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.resize({ x = 25, y = 0, relative = true }), { repeating = true }, { description = "Increase window width with keyboard" })
-      hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.resize({ x = -25, y = 0, relative = true }), { repeating = true }, { description = "Reduce window width with keyboard" })
-      hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.resize({ x = 0, y = 25, relative = true }), { repeating = true }, { description = "Increase window height with keyboard" })
-      hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.resize({ x = 0, y = -25, relative = true }), { repeating = true }, { description = "Reduce window height with keyboard" })
+            -- Window resize
+            hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.resize({ x = 25, y = 0, relative = true }), { repeating = true }, { description = "Increase window width with keyboard" })
+            hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.resize({ x = -25, y = 0, relative = true }), { repeating = true }, { description = "Reduce window width with keyboard" })
+            hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.resize({ x = 0, y = 25, relative = true }), { repeating = true }, { description = "Increase window height with keyboard" })
+            hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.resize({ x = 0, y = -25, relative = true }), { repeating = true }, { description = "Reduce window height with keyboard" })
 
-      -- Scroll through existing workspaces
-      hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e+1" }))
-      hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
-      hl.bind(mainMod .. " + n", hl.dsp.focus({ workspace = "e+1" }))
-      hl.bind(mainMod .. " + SHIFT + n",   hl.dsp.focus({ workspace = "e-1" }))
+            -- Scroll through existing workspaces
+            hl.bind(mainMod .. " + mouse_up",   hl.dsp.focus({ workspace = "e+1" }))
+            hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
+            hl.bind(mainMod .. " + n", hl.dsp.focus({ workspace = "e+1" }))
+            hl.bind(mainMod .. " + SHIFT + n",   hl.dsp.focus({ workspace = "e-1" }))
 
-      -- Split toggle
-      hl.bind(mainMod .. " + e", hl.dsp.layout("togglesplit"))    -- dwindle only
+            -- Split toggle
+            hl.bind(mainMod .. " + e", hl.dsp.layout("togglesplit"))    -- dwindle only
 
-      -- Laptop multimedia keys for volume and LCD brightness
-      hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-      hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-      hl.bind(mainMod .. " + ALT + j", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
-      hl.bind(mainMod .. " + ALT + k", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
-      hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
-      hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
-      hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-      hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
-      hl.bind(mainMod .. " + ALT + l",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
-      hl.bind(mainMod .. " + ALT + h",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
-      hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
-      hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-      hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-      hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
+            -- Laptop multimedia keys for volume and LCD brightness
+            hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+            hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
+            hl.bind(mainMod .. " + ALT + j", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+            hl.bind(mainMod .. " + ALT + k", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),      { locked = true, repeating = true })
+            hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),     { locked = true, repeating = true })
+            hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { locked = true, repeating = true })
+            hl.bind("XF86MonBrightnessUp",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
+            hl.bind("XF86MonBrightnessDown",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+            hl.bind(mainMod .. " + ALT + l",  hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { locked = true, repeating = true })
+            hl.bind(mainMod .. " + ALT + h",hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { locked = true, repeating = true })
+            hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })
+            hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+            hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+            hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
-      -- Lock, shutdown, hibernate
-      hl.bind("F10",  hl.dsp.exec_cmd("pidof hyprlock || (hyprctl switchxkblayout all 0; hyprlock)"))
-      hl.bind(mainMod .. " + CTRL + ALT + l",  hl.dsp.exec_cmd("pidof hyprlock || (hyprctl switchxkblayout all 0; hyprlock)"))
-      hl.bind(mainMod .. " + CTRL + ALT + p", hl.dsp.exec_cmd("shutdown now"), { locked = true })
-      hl.bind(mainMod .. " + CTRL + ALT + h", hl.dsp.exec_cmd("systemctl hibernate"), { locked = true })
+            -- Lock, shutdown, hibernate
+            hl.bind("F10",  hl.dsp.exec_cmd("pidof hyprlock || (hyprctl switchxkblayout all 0; hyprlock)"))
+            hl.bind(mainMod .. " + CTRL + ALT + l",  hl.dsp.exec_cmd("pidof hyprlock || (hyprctl switchxkblayout all 0; hyprlock)"))
+            hl.bind(mainMod .. " + CTRL + ALT + p", hl.dsp.exec_cmd("shutdown now"), { locked = true })
+            hl.bind(mainMod .. " + CTRL + ALT + h", hl.dsp.exec_cmd("systemctl hibernate"), { locked = true })
 
-      -- Laptop closing and opening
-      -- Trigger when the switch is toggled
-      hl.bind("switch:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || (hyprctl switchxkblayout all 0; hyprlock)"), { locked = true })
-      -- Trigger when the switch is turning on.
-      hl.bind("switch:on:Lid Switch", hl.dsp.dpms({ action = "disable" }), { locked = true })
-      -- Trigger when the switch is turning off.
-      hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
+            -- Laptop closing and opening
+            -- Trigger when the switch is toggled
+            hl.bind("switch:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || (hyprctl switchxkblayout all 0; hyprlock)"), { locked = true })
+            -- Trigger when the switch is turning on.
+            hl.bind("switch:on:Lid Switch", hl.dsp.dpms({ action = "disable" }), { locked = true })
+            -- Trigger when the switch is turning off.
+            hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ action = "enable" }), { locked = true })
 
-      -- Other
-      hl.bind(mainMod .. " + u",  hl.dsp.exec_cmd("hyprctl switchxkblayout all 0"),   { locked = true })
-      hl.bind(mainMod .. " + r",  hl.dsp.exec_cmd("hyprctl switchxkblayout all 1"),   { locked = true })
+            -- Other
+            hl.bind(mainMod .. " + u",  hl.dsp.exec_cmd("hyprctl switchxkblayout all 0"),   { locked = true })
+            hl.bind(mainMod .. " + r",  hl.dsp.exec_cmd("hyprctl switchxkblayout all 1"),   { locked = true })
 
     '';
   };
