@@ -17,10 +17,10 @@
     brightnessctl
     grim # screenshot
     slurp # area for screenshot
-    # fsel
     wl-clipboard # wayland clipboard
     wl-clip-persist # persist wayland clipboard
     xrandr # for setting x11 primary monitor
+    wlr-randr # wayland monitor configuration
   ];
 
   # ------------------------
@@ -29,8 +29,8 @@
   wayland.windowManager.hyprland = {
     enable = true;
     # # set the Hyprland and XDPH packages to null to use the ones from the NixOS module
-    # package = null;
-    # portalPackage = null;
+    package = null;
+    portalPackage = null;
 
     configType = lib.mkForce "lua";
 
@@ -39,44 +39,25 @@
       terminal._var = "foot";
       browser._var = "librewolf";
       filemanager._var = "nautilus";
-      # menu._var = ''foot bash -c "fsel -d"'';
       menu._var = ''fuzzel'';
 
       # hyprctl monitors all
       monitor = [
-        # lenovo
-        {
-          output = "desc:Lenovo Group Limited 0x9121";
-          mode = "highres";
-          position = "auto";
-          scale = 1.75;
-          icc = "/home/user/nix/devices/screens/lenovo_slow.icc";
-        }
         # msk ktc
         {
           output = "desc:Shenzhen KTC Technology Group H27S17 0x00000001";
-          mode = "highres";
+          # mode = "highres";
+          # mode = "2560x1440@164.998001Hz";
+          # mode = "2560x1440@59.951000Hz";
+          mode = "2560x1440@119.99Hz";
           position = "auto-left";
-          scale = 1.6;
+          # position = "auto";
+          scale = 1.25;
           bitdepth = 10; # 8 (default) or 10
-          vrr = 0; # 0 (default) or 1
-          # supports_hdr = 0; # -1, 0 (auto, default), 1
-          icc = "/home/user/nix/devices/screens/msk_fast.icc";
-        }
-        # gg
-        {
-          output = "desc:Acer Technologies Acer A231H LQT0W0084320";
-          mode = "highres";
-          position = "auto-right";
-          scale = 1;
-        }
-        # gpd 3
-        {
-          output = "DSI-1";
-          mode = "preferred";
-          position = "auto-left";
-          scale = 1.87500;
-          transform = 3;
+          # bitdepth = 8; # 8 (default) or 10
+          vrr = 0; # off bc bugs
+          supports_hdr = -1; # -1, 0 (auto, default), 1
+          # icc = "/home/user/nix/devices/screens/msk_fast.icc";
         }
         # msk acer
         {
@@ -84,6 +65,30 @@
           mode = "2560x1440@143.91Hz";
           position = "auto";
           scale = 1.25;
+        }
+        # gg acer
+        {
+          output = "desc:Acer Technologies Acer A231H LQT0W0084320";
+          mode = "highres";
+          position = "auto-right";
+          scale = 1;
+        }
+        # laptop: lenovo
+        {
+          output = "desc:Lenovo Group Limited 0x9121";
+          mode = "highres";
+          position = "auto";
+          scale = 2;
+          icc = "/home/user/nix/devices/screens/lenovo_slow.icc";
+        }
+        # laptop: gpd 3
+        {
+          output = "DSI-1";
+          mode = "preferred";
+          position = "auto-left";
+          scale = 2;
+          transform = 3;
+          # need touch transform
         }
       ];
 
@@ -154,6 +159,8 @@
         misc = {
           force_default_wallpaper = 0;
         };
+
+        # render.icc_vcgt_enabled = true; # vcgt (curves correct) support for icc
       };
 
       env = [
@@ -210,7 +217,7 @@
 
       hl.on("hyprland.start", function ()
         hl.exec_cmd("pactl set-source-mute @DEFAULT_SOURCE@ on")
-        hl.exec_cmd("waybar")
+        hl.exec_cmd("pkill -9 -f waybar; sleep 2; waybar")
         hl.exec_cmd("mako")
         hl.exec_cmd("udiskie -a")
         hl.exec_cmd("xrandr --output DP-1 --primary")

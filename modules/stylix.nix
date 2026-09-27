@@ -17,14 +17,13 @@ in {
   stylix = {
     enable = true;
     # themes: https://tinted-theming.github.io/tinted-gallery/
-
     base16Scheme = theme;
-
     image = image_bg;
 
     fonts = let
       package = pkgs.nerd-fonts.iosevka-term;
       name = "IosevkaTerm Nerd Font Mono";
+      size = 20;
     in {
       monospace = {
         package = package;
@@ -44,10 +43,10 @@ in {
       };
 
       sizes = {
-        applications = 16;
-        terminal = 16;
+        applications = size;
+        terminal = size;
         # Window titles, status bars, and other general elements of the desktop.
-        desktop = 16;
+        desktop = size;
         popups = config.stylix.fonts.sizes.desktop;
       };
     };
