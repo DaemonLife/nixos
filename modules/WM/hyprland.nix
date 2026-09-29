@@ -52,8 +52,8 @@
           mode = "2560x1440@119.99Hz";
           position = "auto-left";
           # position = "auto";
-          # scale = 1.25;
-          scale = 1;
+          scale = 1.25;
+          # scale = 1;
           bitdepth = 10; # 8 (default) or 10
           # bitdepth = 8; # 8 (default) or 10
           vrr = 0; # off bc bugs
