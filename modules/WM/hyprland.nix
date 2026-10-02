@@ -366,6 +366,7 @@
       }
     '';
   };
+  services.hyprpolkitagent.enable = true; # authetication agent
 
   services.hypridle.enable = true;
   home.file.".config/hypr/hypridle.conf".text = ''

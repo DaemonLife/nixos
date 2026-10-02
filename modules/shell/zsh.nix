@@ -73,9 +73,9 @@
 
     shellAliases = {
       # --upgrade --offline
-      "oss" = ''cd $HOME/nix && git add -A && cd - && nix flake update --flake $HOME/nix/. && sudo nixos-rebuild switch --flake $HOME/nix/.\#${device} -v'';
-      "osb" = ''cd $HOME/nix && git add -A && cd - && nix flake update --flake $HOME/nix/. && sudo nixos-rebuild boot --flake $HOME/nix/.\#${device} -v'';
-      "ost" = ''cd $HOME/nix && git add -A && cd - && sudo nixos-rebuild test --flake $HOME/nix/.\#${device} -v'';
+      "oss" = "$HOME/nix/scripts/nix_rebuild.sh ${device} switch";
+      "osb" = "$HOME/nix/scripts/nix_rebuild.sh ${device} boot";
+      "ost" = "$HOME/nix/scripts/nix_rebuild.sh ${device} test";
       "osc" = ''sudo nix-collect-garbage --delete-older-than 3d'';
 
       # --- Other ---
